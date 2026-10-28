@@ -18,20 +18,11 @@
   * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
   html, body {
     font-family: 'Vazirmatn', Tahoma, sans-serif;
-    background: #050a14;
-    color: #fff;
-    min-height: 100vh;
-    overflow: hidden;
-    user-select: none;
+    background: #050a14; color: #fff;
+    min-height: 100vh; overflow: hidden; user-select: none;
   }
-  body {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 8px;
-  }
+  body { display: flex; justify-content: center; align-items: center; padding: 8px; }
 
-  /* ============ پس‌زمینه ============ */
   .bg-orbs { position: fixed; inset: 0; overflow: hidden; z-index: 0; pointer-events: none; }
   .orb {
     position: absolute; border-radius: 50%; filter: blur(70px); opacity: 0.35;
@@ -46,26 +37,19 @@
     66% { transform: translate(-50px,70px) scale(0.9); }
   }
 
-  /* ============ باکس اصلی ============ */
   .game-wrap {
-    position: relative;
-    width: 100%;
-    max-width: 480px;
-    height: 96vh;
-    max-height: 820px;
-    background: #0a2818;
-    border-radius: 24px;
-    overflow: hidden;
+    position: relative; width: 100%; max-width: 480px;
+    height: 96vh; max-height: 820px;
+    background: #0a2818; border-radius: 24px; overflow: hidden;
     box-shadow: 0 25px 80px rgba(0,0,0,0.7), 0 0 0 1px rgba(74,222,128,0.15);
     z-index: 1;
   }
 
-  /* ============ زمین چمن ============ */
+  /* ============ زمین ============ */
   .field {
     position: absolute; inset: 0;
     background: linear-gradient(180deg, #0f3d22 0%, #1a5c33 25%, #2d8a4a 55%, #45b865 100%);
-    overflow: hidden;
-    transition: background 0.5s;
+    overflow: hidden; transition: background 0.5s;
   }
   .field.night {
     background: linear-gradient(180deg, #061a0a 0%, #0a2812 30%, #143a1e 65%, #1e5528 100%);
@@ -73,10 +57,8 @@
   .field.snow {
     background: linear-gradient(180deg, #d0e8f0 0%, #e8f4f8 30%, #f0f8fc 65%, #ffffff 100%);
   }
-  .field.snow .chalk-line { background: rgba(150,180,200,0.5); }
-  .field.snow .chalk-circle { border-color: rgba(150,180,200,0.5); }
+  .field.snow .chalk-line, .field.snow .chalk-circle { background-color: rgba(150,180,200,0.5); border-color: rgba(150,180,200,0.5); }
 
-  /* نوارهای چمن */
   .grass-stripes {
     position: absolute; inset: 0;
     background-image: repeating-linear-gradient(180deg, transparent 0px, transparent 60px, rgba(0,0,0,0.05) 60px, rgba(0,0,0,0.05) 120px);
@@ -86,92 +68,49 @@
     background-image: repeating-linear-gradient(180deg, transparent 0px, transparent 60px, rgba(255,255,255,0.02) 60px, rgba(255,255,255,0.02) 120px);
   }
 
-  /* خطوط زمین */
   .chalk-line { position: absolute; background: rgba(255,255,255,0.35); }
-  .chalk-circle {
-    position: absolute; border: 2px solid rgba(255,255,255,0.35);
-    border-radius: 50%;
-  }
-  .center-circle {
-    width: 30%; aspect-ratio: 1; top: 50%; left: 50%;
-    transform: translate(-50%, -50%);
-  }
-  .center-spot {
-    width: 8px; height: 8px; border-radius: 50%;
-    background: rgba(255,255,255,0.5);
-    top: 50%; left: 50%; transform: translate(-50%, -50%);
-  }
-  .penalty-arc {
-    width: 25%; aspect-ratio: 1; top: 15%; left: 50%;
-    transform: translateX(-50%);
-    border-radius: 0 0 50% 50%;
-    border-top: none;
-  }
-  .goal-area {
-    width: 55%; height: 8%; top: 15%; left: 50%;
-    transform: translateX(-50%);
-    border: 2px solid rgba(255,255,255,0.35);
-    border-top: none;
-  }
+  .chalk-circle { position: absolute; border: 2px solid rgba(255,255,255,0.35); border-radius: 50%; }
+  .center-circle { width: 30%; aspect-ratio: 1; top: 50%; left: 50%; transform: translate(-50%, -50%); }
+  .center-spot { width: 8px; height: 8px; border-radius: 50%; background: rgba(255,255,255,0.5); top: 50%; left: 50%; transform: translate(-50%, -50%); }
+  .penalty-arc { width: 25%; aspect-ratio: 1; top: 15%; left: 50%; transform: translateX(-50%); border-radius: 0 0 50% 50%; border-top: none; }
+  .goal-area { width: 55%; height: 8%; top: 15%; left: 50%; transform: translateX(-50%); border: 2px solid rgba(255,255,255,0.35); border-top: none; }
 
   /* ============ دروازه ============ */
   .goal {
-    position: absolute;
-    top: 15%;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 70%;
-    height: 22%;
-    z-index: 2;
-    perspective: 800px;
+    position: absolute; top: 15%; left: 50%; transform: translateX(-50%);
+    width: 70%; height: 22%; z-index: 2;
   }
   .goal-frame {
-    position: absolute;
-    inset: 0;
-    border: 5px solid #fff;
-    border-bottom: none;
+    position: absolute; inset: 0;
+    border: 5px solid #fff; border-bottom: none;
     border-radius: 4px 4px 0 0;
     box-shadow: 0 0 30px rgba(255,255,255,0.4), inset 0 0 40px rgba(0,0,0,0.4);
   }
   .goal-net {
-    position: absolute;
-    inset: 0;
+    position: absolute; inset: 0;
     background-image:
       repeating-linear-gradient(90deg, transparent 0px, transparent 14px, rgba(255,255,255,0.25) 14px, rgba(255,255,255,0.25) 15px),
       repeating-linear-gradient(0deg, transparent 0px, transparent 14px, rgba(255,255,255,0.25) 14px, rgba(255,255,255,0.25) 15px);
     opacity: 0.7;
   }
   .goal-shadow {
-    position: absolute;
-    bottom: -8px;
-    left: -5%;
-    right: -5%;
-    height: 12px;
+    position: absolute; bottom: -8px; left: -5%; right: -5%; height: 12px;
     background: radial-gradient(ellipse at center, rgba(0,0,0,0.4) 0%, transparent 70%);
   }
 
   /* ============ تماشاگرها ============ */
   .crowd {
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 12%;
+    position: absolute; top: 0; left: 0; right: 0; height: 12%;
     background: linear-gradient(180deg, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.3) 50%, transparent 100%);
-    z-index: 1;
-    overflow: hidden;
+    z-index: 1; overflow: hidden;
   }
   .crowd-dots {
-    position: absolute;
-    inset: 0;
-    display: grid;
-    grid-template-columns: repeat(40, 1fr);
-    grid-template-rows: repeat(3, 1fr);
-    gap: 2px;
-    padding: 4px 8px;
+    position: absolute; inset: 0;
+    display: grid; grid-template-columns: repeat(40, 1fr); grid-template-rows: repeat(3, 1fr);
+    gap: 2px; padding: 4px 8px;
   }
   .crowd-dot {
-    width: 100%;
-    aspect-ratio: 1;
-    border-radius: 50%;
+    width: 100%; aspect-ratio: 1; border-radius: 50%;
     animation: crowdBounce 2s infinite ease-in-out;
   }
   @keyframes crowdBounce {
@@ -181,24 +120,17 @@
 
   /* ============ دروازه‌بان ============ */
   .keeper-wrap {
-    position: absolute;
-    z-index: 3;
+    position: absolute; z-index: 3;
     transition: left 0.1s cubic-bezier(0.34, 1.56, 0.64, 1);
-    will-change: left;
-    pointer-events: none;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    will-change: left; pointer-events: none;
+    display: flex; align-items: center; justify-content: center;
   }
   .keeper-emoji {
     font-size: 64px;
     filter: drop-shadow(0 8px 16px rgba(0,0,0,0.6));
-    transition: transform 0.15s;
-    line-height: 1;
+    transition: transform 0.15s; line-height: 1;
   }
-  @media (max-width: 400px) {
-    .keeper-emoji { font-size: 52px; }
-  }
+  @media (max-width: 400px) { .keeper-emoji { font-size: 52px; } }
   .keeper-wrap.diving .keeper-emoji {
     animation: diveAnim 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
   }
@@ -210,22 +142,13 @@
 
   /* ============ توپ ============ */
   .ball-wrap {
-    position: absolute;
-    z-index: 4;
-    pointer-events: none;
+    position: absolute; z-index: 4; pointer-events: none;
     filter: drop-shadow(0 8px 16px rgba(0,0,0,0.6));
     will-change: left, top, transform;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    display: flex; align-items: center; justify-content: center;
   }
-  .ball-svg {
-    width: 44px;
-    height: 44px;
-  }
-  @media (max-width: 400px) {
-    .ball-svg { width: 38px; height: 38px; }
-  }
+  .ball-svg { width: 44px; height: 44px; }
+  @media (max-width: 400px) { .ball-svg { width: 38px; height: 38px; } }
 
   /* ============ HUD ============ */
   .hud {
@@ -249,6 +172,25 @@
     border-radius: 10px; width: 34px; height: 34px; font-size: 16px;
     cursor: pointer; backdrop-filter: blur(10px); color: #fff;
     display: flex; align-items: center; justify-content: center;
+  }
+
+  /* ============ نسخه داخل بازی ============ */
+  .version-tag {
+    position: absolute;
+    top: 60px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0,0,0,0.5);
+    backdrop-filter: blur(8px);
+    color: rgba(255,255,255,0.7);
+    font-size: 10px;
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: 12px;
+    border: 1px solid rgba(255,255,255,0.1);
+    z-index: 11;
+    pointer-events: none;
+    letter-spacing: 0.5px;
   }
 
   /* ============ راهنما ============ */
@@ -301,7 +243,7 @@
   }
 
   .combo-display {
-    position: absolute; top: 62px; right: 14px;
+    position: absolute; top: 88px; right: 14px;
     background: linear-gradient(135deg, #fbbf24, #f59e0b);
     color: #050a14; padding: 5px 12px; border-radius: 18px;
     font-size: 12px; font-weight: 900; z-index: 10; display: none;
@@ -312,7 +254,7 @@
   @keyframes comboPop { from { transform: scale(0.5); } to { transform: scale(1); } }
 
   .coin-display {
-    position: absolute; top: 62px; left: 14px;
+    position: absolute; top: 88px; left: 14px;
     background: linear-gradient(135deg, rgba(251,191,36,0.9), rgba(245,158,11,0.9));
     color: #050a14; padding: 5px 12px; border-radius: 18px;
     font-size: 12px; font-weight: 900; z-index: 10;
@@ -326,7 +268,6 @@
     background: linear-gradient(135deg, #050a14 0%, #0a2818 100%);
     display: flex; flex-direction: column;
     padding: 20px 18px; z-index: 100; overflow-y: auto;
-    transition: opacity 0.4s ease;
   }
   .screen.hidden { display: none; }
   .screen h1 {
@@ -338,7 +279,6 @@
   .screen .brand-line { text-align: center; font-size: 10px; color: #666; margin-bottom: 14px; }
   .screen .brand-line a { color: #4ade80; text-decoration: none; font-weight: 700; }
 
-  /* ============ تب‌ها ============ */
   .tabs {
     display: flex; gap: 6px; margin-bottom: 14px;
     background: rgba(255,255,255,0.05);
@@ -360,7 +300,6 @@
   .tab-content.active { display: block; animation: fadeIn 0.3s ease; }
   @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-  /* ============ کشورها ============ */
   .country-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 7px; margin-bottom: 12px; }
   @media (max-width: 360px) { .country-grid { grid-template-columns: repeat(3, 1fr); } }
   .country-btn {
@@ -380,7 +319,6 @@
   .country-btn .flag { font-size: 26px; display: block; margin-bottom: 3px; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.4)); }
   .country-btn .name { font-size: 9px; color: #ccc; font-weight: 600; }
 
-  /* ============ فروشگاه ============ */
   .shop-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
   .shop-item {
     background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
@@ -408,7 +346,6 @@
   .shop-item .buy-item-btn.equip { background: linear-gradient(135deg, #fbbf24, #f59e0b); }
   .shop-item .buy-item-btn.equipped { background: rgba(255,255,255,0.1); color: #4ade80; cursor: default; }
 
-  /* ============ آپگرید ============ */
   .upgrade-item {
     background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
     border-radius: 12px; padding: 12px 14px; margin-bottom: 8px;
@@ -428,7 +365,6 @@
   }
   .upgrade-buy-btn:disabled { opacity: 0.4; cursor: not-allowed; }
 
-  /* ============ پاداش روزانه ============ */
   .daily-box {
     background: linear-gradient(135deg, rgba(251,191,36,0.15), rgba(245,158,11,0.08));
     border: 2px solid rgba(251,191,36,0.4);
@@ -447,7 +383,6 @@
   .daily-claim-btn:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(251,191,36,0.6); }
   .daily-claim-btn:disabled { opacity: 0.4; cursor: not-allowed; box-shadow: none; }
 
-  /* ============ دکمه شروع ============ */
   .start-btn {
     background: linear-gradient(135deg, #4ade80, #22c55e, #16a34a);
     background-size: 200% 200%;
@@ -483,7 +418,6 @@
   .league-gold { background: linear-gradient(135deg, #ffd700, #daa520); color: #050a14; }
   .league-diamond { background: linear-gradient(135deg, #b9f2ff, #00bfff); color: #050a14; }
 
-  /* ============ صفحه پایان ============ */
   .gameover-screen {
     position: absolute; inset: 0;
     background: rgba(5,10,20,0.94);
@@ -541,7 +475,6 @@
   }
   .btn-share:hover { transform: translateY(-2px); }
 
-  /* ============ مودال ============ */
   .modal-overlay {
     position: fixed; inset: 0;
     background: rgba(5,10,20,0.88);
@@ -644,9 +577,11 @@
     <button class="sound-btn" id="soundBtn">🔊</button>
   </div>
 
+  <div class="version-tag">نسخه 4.2.0</div>
+
   <div class="coin-display" id="coinDisplay">🪙 <span id="coinCount">0</span></div>
   <div class="combo-display" id="comboDisplay"></div>
-  <div class="hint" id="hint">👆 توپ رو بگیر و بکش به سمت دروازه</div>
+  <div class="hint" id="hint">👆 توپ رو بگیر و به سمت دروازه بکش</div>
 
   <div class="screen" id="startScreen">
     <h1>⚽ گلستان</h1>
@@ -711,7 +646,7 @@
     <h3>🎮 چطور بازی کنم؟</h3>
     <p>
       1️⃣ توپ پایین رو بگیر<br>
-      2️⃣ بکش به سمت دروازه<br>
+      2️⃣ <strong>به سمت دروازه بکش</strong> (بالا)<br>
       3️⃣ ولش کن تا شوت بشه ⚽<br>
       4️⃣ گوشه‌ها = امتیاز بیشتر ✨<br>
       5️⃣ هر گل = سکه! 🪙
@@ -721,7 +656,7 @@
 </div>
 
 <script>
-const VERSION = '4.1.0';
+const VERSION = '4.2.0';
 const SITE_URL = 'https://amirrezagholami86.github.io/coin-factory-game-1/';
 
 const COUNTRIES = [
@@ -753,10 +688,10 @@ const KEEPERS = {
 };
 
 const BALLS = {
-  classic: { id: 'classic', name: 'کلاسیک', icon: '⚽', price: 0, colors: { base: '#fff', accent: '#111' } },
-  gold: { id: 'gold', name: 'طلایی', icon: '🏆', price: 1000, colors: { base: '#fbbf24', accent: '#92400e' } },
-  fire: { id: 'fire', name: 'آتشین', icon: '🔥', price: 4000, colors: { base: '#ef4444', accent: '#fbbf24' } },
-  ice: { id: 'ice', name: 'یخی', icon: '❄️', price: 2500, colors: { base: '#60a5fa', accent: '#1e40af' } },
+  classic: { id: 'classic', name: 'کلاسیک', icon: '⚽', price: 0 },
+  gold: { id: 'gold', name: 'طلایی', icon: '🏆', price: 1000 },
+  fire: { id: 'fire', name: 'آتشین', icon: '🔥', price: 4000 },
+  ice: { id: 'ice', name: 'یخی', icon: '❄️', price: 2500 },
 };
 
 const FIELDS = {
@@ -773,28 +708,18 @@ const UPGRADES = [
 ];
 
 let state = {
-  bestScore: 0,
-  coins: 0,
-  selectedCountry: null,
-  soundOn: true,
-  tutorialSeen: false,
-  ownedKeepers: ['cat'],
-  ownedBalls: ['classic'],
-  ownedFields: ['grass'],
-  equippedKeeper: 'cat',
-  equippedBall: 'classic',
-  equippedField: 'grass',
+  bestScore: 0, coins: 0, selectedCountry: null, soundOn: true,
+  tutorialSeen: false, ownedKeepers: ['cat'], ownedBalls: ['classic'], ownedFields: ['grass'],
+  equippedKeeper: 'cat', equippedBall: 'classic', equippedField: 'grass',
   upgrades: { power: 0, accuracy: 0, brain: 0, speed: 0 },
-  lastDailyClaim: 0,
-  dailyStreak: 0,
-  totalGoals: 0,
+  lastDailyClaim: 0, dailyStreak: 0, totalGoals: 0,
 };
 
 function loadState() {
-  const saved = localStorage.getItem('goalestan_v41');
+  const saved = localStorage.getItem('goalestan_v42');
   if (saved) { try { state = Object.assign(state, JSON.parse(saved)); } catch(e) {} }
 }
-function saveState() { localStorage.setItem('goalestan_v41', JSON.stringify(state)); }
+function saveState() { localStorage.setItem('goalestan_v42', JSON.stringify(state)); }
 
 const fieldEl = document.getElementById('field');
 const keeperWrap = document.getElementById('keeperWrap');
@@ -813,14 +738,12 @@ const bestBox = document.getElementById('bestBox');
 const bestDisplay = document.getElementById('bestDisplay');
 const leagueBadge = document.getElementById('leagueBadge');
 const comboDisplay = document.getElementById('comboDisplay');
-const coinDisplay = document.getElementById('coinDisplay');
 const coinCount = document.getElementById('coinCount');
 const soundBtn = document.getElementById('soundBtn');
 const shopCoins = document.getElementById('shopCoins');
 const upgradeCoins = document.getElementById('upgradeCoins');
 const crowdDots = document.getElementById('crowdDots');
 
-// تماشاگرها
 const CROWD_COLORS = ['#ef4444','#f59e0b','#22c55e','#3b82f6','#8b5cf6','#ec4899','#fbbf24','#10b981','#6366f1'];
 function initCrowd() {
   for (let i = 0; i < 120; i++) {
@@ -1331,8 +1254,9 @@ function handlePointerUp(e) {
   game.drag.active = false;
 
   const b = game.ball;
-  const dx = game.drag.startX - game.drag.currentX;
-  const dy = game.drag.startY - game.drag.currentY;
+  // شوت به سمت دروازه (بالا): جهت کشش = جهت پرتاب
+  const dx = game.drag.currentX - game.drag.startX;
+  const dy = game.drag.currentY - game.drag.startY;
   const dist = Math.sqrt(dx*dx + dy*dy);
   const dragTime = Date.now() - game.drag.startTime;
 
@@ -1345,6 +1269,7 @@ function handlePointerUp(e) {
   const powerMult = 1 + powerLvl * 0.08;
   const accMult = 1 - accLvl * 0.02;
   const power = Math.min(dist * 8 * powerMult, 1400 * powerMult);
+  // جهت شوت = جهت کشش (توپ به سمت دروازه می‌ره)
   const angle = Math.atan2(dy, dx) + (Math.random() - 0.5) * 0.2 * accMult;
 
   b.vx = Math.cos(angle) * power;
