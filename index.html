@@ -291,6 +291,50 @@
     font-size: 12px;
   }
 
+  /* تبلیغ داخلی — پیج‌های خودت */
+  .promo-box {
+    background: linear-gradient(135deg, rgba(131,58,180,0.15), rgba(225,48,99,0.15), rgba(252,176,69,0.15));
+    border: 1px solid rgba(225,48,99,0.4);
+    border-radius: 14px;
+    padding: 15px;
+    margin: 15px 0;
+  }
+  .promo-box .promo-title {
+    font-size: 12px;
+    color: #ffd700;
+    margin-bottom: 10px;
+    font-weight: bold;
+  }
+  .promo-bio {
+    font-size: 11px;
+    color: #ccc;
+    line-height: 1.9;
+    text-align: center;
+    margin-bottom: 12px;
+  }
+  .promo-links {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .promo-links a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 10px;
+    border-radius: 10px;
+    color: #fff;
+    text-decoration: none;
+    font-size: 12px;
+    font-weight: bold;
+    transition: 0.2s;
+  }
+  .promo-links a:hover { transform: translateY(-2px); filter: brightness(1.15); }
+  .promo-links a.ig { background: linear-gradient(135deg, #833AB4, #FD1D1D, #FCB045); }
+  .promo-links a.virasty { background: linear-gradient(135deg, #1e40af, #3b82f6); }
+  .promo-links a.mydot { background: linear-gradient(135deg, #16a34a, #22c55e); }
+
   .achievements { margin-top: 20px; text-align: right; }
   .achievements h2 { font-size: 16px; margin-bottom: 10px; color: #aaa; }
   .ach-list {
@@ -317,7 +361,6 @@
     box-shadow: 0 0 10px rgba(255,215,0,0.2);
   }
 
-  /* مودال خوش‌آمدگویی */
   .welcome-modal {
     max-width: 420px;
   }
@@ -381,7 +424,7 @@
   <div class="brand">
     ساخته شده توسط <a href="https://www.instagram.com/amirrezagholamiofficialpage/" target="_blank">amirrezagholami 1386</a>
   </div>
-  <div class="version">نسخه 1.3.0</div>
+  <div class="version">نسخه 1.3.1</div>
 
   <div class="coins" id="coins">0</div>
   <div class="per-sec" id="perSec"></div>
@@ -390,7 +433,7 @@
   <button class="click-btn" id="clickBtn">🪙</button>
   <button class="special-btn" id="specialBtn">⚡ کلیک طوفانی! (۱۰ ثانیه)</button>
 
-  <button class="ad-btn" id="adBtn">📺 تماشای تبلیغ — جایزه ۵۰٪ سکه فعلی</button>
+  <button class="ad-btn" id="adBtn">📸 حمایت از ما — جایزه ۵۰٪ سکه فعلی</button>
   <button class="social-reward" id="socialReward">📸 ما رو دنبال کن +۵۰۰ سکه (یک بار)</button>
 
   <div class="upgrades">
@@ -418,7 +461,7 @@
       </a>
     </div>
     © ۲۰۲۶ <a href="https://www.instagram.com/amirrezagholamiofficialpage/" target="_blank">amirrezagholami 1386</a> — همه حقوق محفوظ است
-    <br><span style="font-size:10px;">نسخه 1.3.0</span>
+    <br><span style="font-size:10px;">نسخه 1.3.1</span>
   </footer>
 </div>
 
@@ -446,14 +489,27 @@
   </div>
 </div>
 
-<!-- مودال تبلیغ -->
+<!-- مودال تبلیغ (الان = تبلیغ پیج خودت) -->
 <div class="modal-overlay" id="adModal">
   <div class="modal">
-    <h3>📺 تبلیغ</h3>
-    <div class="ad-fake">
-      فضای تبلیغات شما<br>
-      (بعداً به AdSense یا شبکه تبلیغاتی وصل می‌شه)
+    <h3>📸 حمایت از ما</h3>
+    <p>با دیدن پیج ما و دنبال کردن، هم حمایت می‌کنی هم جایزه می‌گیری ❤️</p>
+
+    <div class="promo-box">
+      <div class="promo-title">🇮🇷 Amirreza Gholami — حساب رسمی</div>
+      <div class="promo-bio">
+        ⚽ Football | 🏋️ Fitness | 📸 Lifestyle<br>
+        🕌 Faith • Family • Life<br>
+        ✨ Just getting started...<br>
+        <span style="color:#ffd700; font-size:10px;">#امیررضا #زندگی #فوتبال #ورزش #ایران</span>
+      </div>
+      <div class="promo-links">
+        <a href="https://www.instagram.com/amirrezagholamiofficialpage/" target="_blank" class="ig">📸 اینستاگرام</a>
+        <a href="https://virasty.com/Amirrezagholami_ir" target="_blank" class="virasty">ویراستی</a>
+        <a href="https://mydot.one/profile/Amirrezagh" target="_blank" class="mydot">● مای‌دات</a>
+      </div>
     </div>
+
     <p>تا <span id="adTimer">5</span> ثانیه دیگه جایزه می‌گیری...</p>
     <button class="modal-btn" id="adClaim" disabled>دریافت جایزه</button>
     <button class="modal-btn ghost" id="adClose">بستن</button>
@@ -470,7 +526,7 @@
 </div>
 
 <script>
-const VERSION = '1.3.0';
+const VERSION = '1.3.1';
 
 const SOCIAL_LINKS = {
   instagram: 'https://www.instagram.com/amirrezagholamiofficialpage/',
@@ -570,7 +626,6 @@ function render() {
     stormBtn.style.display = 'none';
   }
 
-  // دکمه شبکه اجتماعی
   const socialBtn = document.getElementById('socialReward');
   if (state.socialFollowed) {
     socialBtn.disabled = true;
@@ -704,7 +759,6 @@ document.getElementById('adClose').addEventListener('click', () => {
   document.getElementById('adModal').classList.remove('active');
 });
 
-// ---- پاداش شبکه اجتماعی ----
 document.getElementById('socialReward').addEventListener('click', () => {
   if (state.socialFollowed) return;
   window.open(SOCIAL_LINKS.instagram, '_blank');
@@ -716,7 +770,6 @@ document.getElementById('socialReward').addEventListener('click', () => {
   render();
 });
 
-// ---- درآمد آفلاین ----
 function checkOffline() {
   const now = Date.now();
   const diff = (now - (state.lastSeen || now)) / 1000;
@@ -736,7 +789,6 @@ function checkOffline() {
   };
 }
 
-// ---- مودال خوش‌آمدگویی ----
 function checkWelcome() {
   if (state.welcomeSeen) return;
   document.getElementById('welcomeModal').classList.add('active');
@@ -768,4 +820,4 @@ checkAchievements();
 render();
 </script>
 </body>
- </html>
+     </html>
