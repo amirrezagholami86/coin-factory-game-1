@@ -45,18 +45,13 @@
     z-index: 1;
   }
 
-  /* ============ زمین ============ */
   .field {
     position: absolute; inset: 0;
     background: linear-gradient(180deg, #0f3d22 0%, #1a5c33 25%, #2d8a4a 55%, #45b865 100%);
     overflow: hidden; transition: background 0.5s;
   }
-  .field.night {
-    background: linear-gradient(180deg, #061a0a 0%, #0a2812 30%, #143a1e 65%, #1e5528 100%);
-  }
-  .field.snow {
-    background: linear-gradient(180deg, #d0e8f0 0%, #e8f4f8 30%, #f0f8fc 65%, #ffffff 100%);
-  }
+  .field.night { background: linear-gradient(180deg, #061a0a 0%, #0a2812 30%, #143a1e 65%, #1e5528 100%); }
+  .field.snow { background: linear-gradient(180deg, #d0e8f0 0%, #e8f4f8 30%, #f0f8fc 65%, #ffffff 100%); }
   .field.snow .chalk-line, .field.snow .chalk-circle { background-color: rgba(150,180,200,0.5); border-color: rgba(150,180,200,0.5); }
 
   .grass-stripes {
@@ -75,11 +70,12 @@
   .penalty-arc { width: 25%; aspect-ratio: 1; top: 15%; left: 50%; transform: translateX(-50%); border-radius: 0 0 50% 50%; border-top: none; }
   .goal-area { width: 55%; height: 8%; top: 15%; left: 50%; transform: translateX(-50%); border: 2px solid rgba(255,255,255,0.35); border-top: none; }
 
-  /* ============ دروازه ============ */
   .goal {
     position: absolute; top: 15%; left: 50%; transform: translateX(-50%);
     width: 70%; height: 22%; z-index: 2;
+    transition: width 0.5s, height 0.5s;
   }
+  .goal.small { width: 50%; height: 16%; }
   .goal-frame {
     position: absolute; inset: 0;
     border: 5px solid #fff; border-bottom: none;
@@ -98,7 +94,6 @@
     background: radial-gradient(ellipse at center, rgba(0,0,0,0.4) 0%, transparent 70%);
   }
 
-  /* ============ تماشاگرها ============ */
   .crowd {
     position: absolute; top: 0; left: 0; right: 0; height: 12%;
     background: linear-gradient(180deg, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.3) 50%, transparent 100%);
@@ -118,7 +113,6 @@
     50% { transform: translateY(-3px); }
   }
 
-  /* ============ دروازه‌بان ============ */
   .keeper-wrap {
     position: absolute; z-index: 3;
     transition: left 0.1s cubic-bezier(0.34, 1.56, 0.64, 1);
@@ -140,7 +134,6 @@
     100% { transform: scale(1) rotate(0deg); }
   }
 
-  /* ============ توپ ============ */
   .ball-wrap {
     position: absolute; z-index: 4; pointer-events: none;
     filter: drop-shadow(0 8px 16px rgba(0,0,0,0.6));
@@ -149,8 +142,8 @@
   }
   .ball-svg { width: 44px; height: 44px; }
   @media (max-width: 400px) { .ball-svg { width: 38px; height: 38px; } }
+  .ball-wrap.golden .ball-svg { filter: drop-shadow(0 0 20px #fbbf24) drop-shadow(0 8px 16px rgba(0,0,0,0.6)); }
 
-  /* ============ HUD ============ */
   .hud {
     position: absolute; top: 0; left: 0; right: 0;
     padding: 12px 14px;
@@ -174,26 +167,15 @@
     display: flex; align-items: center; justify-content: center;
   }
 
-  /* ============ نسخه داخل بازی ============ */
   .version-tag {
-    position: absolute;
-    top: 60px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: rgba(0,0,0,0.5);
-    backdrop-filter: blur(8px);
-    color: rgba(255,255,255,0.7);
-    font-size: 10px;
-    font-weight: 600;
-    padding: 3px 10px;
-    border-radius: 12px;
+    position: absolute; top: 60px; left: 50%; transform: translateX(-50%);
+    background: rgba(0,0,0,0.5); backdrop-filter: blur(8px);
+    color: rgba(255,255,255,0.7); font-size: 10px; font-weight: 600;
+    padding: 3px 10px; border-radius: 12px;
     border: 1px solid rgba(255,255,255,0.1);
-    z-index: 11;
-    pointer-events: none;
-    letter-spacing: 0.5px;
+    z-index: 11; pointer-events: none; letter-spacing: 0.5px;
   }
 
-  /* ============ راهنما ============ */
   .hint {
     position: absolute; bottom: 18px; left: 50%; transform: translateX(-50%);
     background: rgba(0,0,0,0.75); backdrop-filter: blur(12px);
@@ -208,7 +190,6 @@
   }
   .hint.hidden { display: none; }
 
-  /* ============ افکت گل ============ */
   .goal-flash {
     position: absolute; inset: 0;
     background: radial-gradient(circle, rgba(74,222,128,0.8) 0%, transparent 70%);
@@ -231,6 +212,7 @@
     100% { opacity: 0; transform: translate(-50%, -50%) scale(1.5); }
   }
   .goal-text.perfect { color: #4ade80; text-shadow: 0 0 40px rgba(74,222,128,0.9), 0 0 80px rgba(74,222,128,0.6); }
+  .goal-text.golden { color: #fbbf24; font-size: 72px; text-shadow: 0 0 60px rgba(251,191,36,1), 0 0 100px rgba(251,191,36,0.7); }
 
   .particle {
     position: absolute; width: 10px; height: 10px; border-radius: 50%;
@@ -262,7 +244,17 @@
     display: flex; align-items: center; gap: 4px;
   }
 
-  /* ============ صفحه‌ها ============ */
+  .daily-challenge {
+    position: absolute; top: 88px; left: 50%; transform: translateX(-50%);
+    background: linear-gradient(135deg, rgba(59,130,246,0.9), rgba(29,161,242,0.9));
+    color: #fff; padding: 5px 14px; border-radius: 18px;
+    font-size: 11px; font-weight: 700; z-index: 10;
+    box-shadow: 0 0 15px rgba(59,130,246,0.4);
+    display: none; align-items: center; gap: 6px;
+  }
+  .daily-challenge.show { display: flex; }
+  .daily-challenge.completed { background: linear-gradient(135deg, #4ade80, #22c55e); color: #050a14; }
+
   .screen {
     position: absolute; inset: 0;
     background: linear-gradient(135deg, #050a14 0%, #0a2818 100%);
@@ -280,15 +272,15 @@
   .screen .brand-line a { color: #4ade80; text-decoration: none; font-weight: 700; }
 
   .tabs {
-    display: flex; gap: 6px; margin-bottom: 14px;
+    display: flex; gap: 4px; margin-bottom: 14px;
     background: rgba(255,255,255,0.05);
     padding: 4px; border-radius: 12px;
     backdrop-filter: blur(10px);
   }
   .tab-btn {
     flex: 1; background: none; border: none; color: #888;
-    font-family: inherit; font-size: 12px; font-weight: 700;
-    padding: 8px 4px; border-radius: 8px; cursor: pointer;
+    font-family: inherit; font-size: 11px; font-weight: 700;
+    padding: 8px 2px; border-radius: 8px; cursor: pointer;
     transition: all 0.25s;
   }
   .tab-btn.active {
@@ -299,6 +291,19 @@
   .tab-content { display: none; }
   .tab-content.active { display: block; animation: fadeIn 0.3s ease; }
   @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+  .mode-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 12px; }
+  .mode-card {
+    background: rgba(255,255,255,0.05);
+    border: 2px solid rgba(255,255,255,0.08);
+    border-radius: 12px; padding: 12px; cursor: pointer;
+    transition: 0.25s; text-align: center; font-family: inherit; color: #fff;
+  }
+  .mode-card:hover { background: rgba(74,222,128,0.15); border-color: rgba(74,222,128,0.5); transform: translateY(-2px); }
+  .mode-card.selected { background: rgba(74,222,128,0.2); border-color: #4ade80; box-shadow: 0 0 20px rgba(74,222,128,0.4); }
+  .mode-icon { font-size: 28px; display: block; margin-bottom: 4px; }
+  .mode-name { font-size: 12px; font-weight: 700; margin-bottom: 2px; }
+  .mode-desc { font-size: 9px; color: #999; }
 
   .country-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 7px; margin-bottom: 12px; }
   @media (max-width: 360px) { .country-grid { grid-template-columns: repeat(3, 1fr); } }
@@ -382,6 +387,35 @@
   }
   .daily-claim-btn:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(251,191,36,0.6); }
   .daily-claim-btn:disabled { opacity: 0.4; cursor: not-allowed; box-shadow: none; }
+
+  .achievements-list {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 8px;
+  }
+  .achievement-item {
+    background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 12px; padding: 12px 10px; text-align: center;
+    transition: 0.2s; opacity: 0.5;
+  }
+  .achievement-item.unlocked {
+    opacity: 1;
+    background: rgba(251,191,36,0.15);
+    border-color: rgba(251,191,36,0.5);
+    box-shadow: 0 0 15px rgba(251,191,36,0.3);
+  }
+  .ach-icon { font-size: 28px; display: block; margin-bottom: 4px; }
+  .ach-name { font-size: 11px; font-weight: 700; margin-bottom: 2px; }
+  .ach-desc { font-size: 9px; color: #999; }
+  .ach-reward { font-size: 10px; color: #fbbf24; font-weight: 700; margin-top: 4px; }
+
+  .profile-stats {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 12px;
+  }
+  .profile-stat {
+    background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 12px; padding: 12px; text-align: center;
+  }
+  .profile-stat-val { font-size: 22px; font-weight: 900; color: #4ade80; display: block; }
+  .profile-stat-label { font-size: 10px; color: #999; margin-top: 2px; }
 
   .start-btn {
     background: linear-gradient(135deg, #4ade80, #22c55e, #16a34a);
@@ -505,6 +539,64 @@
     font-size: 13px; cursor: pointer; margin: 4px; transition: 0.25s;
   }
   .modal-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(74,222,128,0.4); }
+
+  .toast {
+    position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
+    background: linear-gradient(135deg, #fbbf24, #f59e0b);
+    color: #050a14; padding: 12px 22px; border-radius: 14px;
+    font-weight: 900; font-size: 13px; z-index: 2000;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.5);
+    animation: toastIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    max-width: 90vw; text-align: center;
+  }
+  @keyframes toastIn {
+    from { opacity: 0; transform: translate(-50%, 30px); }
+    to { opacity: 1; transform: translate(-50%, 0); }
+  }
+
+  .loot-box-overlay {
+    position: fixed; inset: 0;
+    background: rgba(5,10,20,0.95);
+    backdrop-filter: blur(20px);
+    display: none; justify-content: center; align-items: center;
+    z-index: 1500; padding: 20px;
+    flex-direction: column;
+  }
+  .loot-box-overlay.active { display: flex; }
+  .loot-box {
+    width: 180px; height: 180px;
+    background: linear-gradient(135deg, #fbbf24, #f59e0b);
+    border-radius: 24px; display: flex;
+    align-items: center; justify-content: center;
+    font-size: 90px; cursor: pointer;
+    box-shadow: 0 20px 60px rgba(251,191,36,0.6);
+    animation: lootPulse 0.8s infinite;
+    border: 4px solid #fff;
+  }
+  @keyframes lootPulse {
+    0%,100% { transform: scale(1) rotate(0deg); }
+    50% { transform: scale(1.08) rotate(5deg); }
+  }
+  .loot-box.opening {
+    animation: lootOpen 0.6s ease forwards;
+  }
+  @keyframes lootOpen {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.4); opacity: 0.8; }
+    100% { transform: scale(0); opacity: 0; }
+  }
+  .loot-reveal {
+    font-size: 80px; margin: 20px 0;
+    animation: lootReveal 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  @keyframes lootReveal {
+    from { opacity: 0; transform: scale(0.3); }
+    to { opacity: 1; transform: scale(1); }
+  }
+  .loot-msg {
+    font-size: 18px; font-weight: 900; color: #fbbf24;
+    margin-bottom: 20px; text-shadow: 0 0 20px rgba(251,191,36,0.6);
+  }
 </style>
 </head>
 <body>
@@ -577,10 +669,11 @@
     <button class="sound-btn" id="soundBtn">🔊</button>
   </div>
 
-  <div class="version-tag">نسخه 4.2.0</div>
+  <div class="version-tag">نسخه 5.0.0</div>
 
   <div class="coin-display" id="coinDisplay">🪙 <span id="coinCount">0</span></div>
   <div class="combo-display" id="comboDisplay"></div>
+  <div class="daily-challenge" id="dailyChallenge"></div>
   <div class="hint" id="hint">👆 توپ رو بگیر و به سمت دروازه بکش</div>
 
   <div class="screen" id="startScreen">
@@ -596,7 +689,9 @@
     <div class="tabs">
       <button class="tab-btn active" data-tab="play">🎮 بازی</button>
       <button class="tab-btn" data-tab="shop">🛒 فروشگاه</button>
-      <button class="tab-btn" data-tab="upgrade">⬆️ آپگرید</button>
+      <button class="tab-btn" data-tab="upgrade">⬆️ ارتقا</button>
+      <button class="tab-btn" data-tab="ach">🏆 دستاورد</button>
+      <button class="tab-btn" data-tab="profile">👤 پروفایل</button>
     </div>
 
     <div class="tab-content active" id="tab-play">
@@ -605,7 +700,32 @@
         <p id="dailyText">هر روز بیا و سکه بگیر!</p>
         <button class="daily-claim-btn" id="dailyClaimBtn">دریافت پاداش</button>
       </div>
-      <div style="font-size:12px; color:#888; text-align:center; margin-bottom:8px;">🌍 کشورت رو انتخاب کن</div>
+
+      <div style="font-size:12px; color:#888; text-align:center; margin-bottom:8px;">🎯 حالت بازی</div>
+      <div class="mode-grid">
+        <button class="mode-card selected" data-mode="normal">
+          <span class="mode-icon">⚽</span>
+          <div class="mode-name">عادی</div>
+          <div class="mode-desc">همیشگی</div>
+        </button>
+        <button class="mode-card" data-mode="attack">
+          <span class="mode-icon">⚡</span>
+          <div class="mode-name">حمله</div>
+          <div class="mode-desc">۳۰ ثانیه</div>
+        </button>
+        <button class="mode-card" data-mode="accuracy">
+          <span class="mode-icon">🎯</span>
+          <div class="mode-name">دقت</div>
+          <div class="mode-desc">فقط گوشه‌ها</div>
+        </button>
+        <button class="mode-card" data-mode="survival">
+          <span class="mode-icon">💀</span>
+          <div class="mode-name">بقا</div>
+          <div class="mode-desc">یه باخت = پایان</div>
+        </button>
+      </div>
+
+      <div style="font-size:12px; color:#888; text-align:center; margin-bottom:8px;">🌍 کشورت</div>
       <div class="country-grid" id="countryGrid"></div>
       <button class="start-btn" id="startBtn" disabled>⚽ شروع بازی</button>
     </div>
@@ -624,6 +744,41 @@
       <div style="font-size:12px; color:#aaa; text-align:center; margin-bottom:10px;">🪙 سکه‌هات: <strong id="upgradeCoins" style="color:#fbbf24;">0</strong></div>
       <div id="upgradeList"></div>
     </div>
+
+    <div class="tab-content" id="tab-ach">
+      <div style="font-size:12px; color:#aaa; text-align:center; margin-bottom:10px;">🏆 دستاوردهای بازی</div>
+      <div class="achievements-list" id="achievementsList"></div>
+    </div>
+
+    <div class="tab-content" id="tab-profile">
+      <div class="profile-stats">
+        <div class="profile-stat">
+          <span class="profile-stat-val" id="profBest">0</span>
+          <div class="profile-stat-label">بهترین رکورد</div>
+        </div>
+        <div class="profile-stat">
+          <span class="profile-stat-val" id="profTotalGoals">0</span>
+          <div class="profile-stat-label">کل گل‌ها</div>
+        </div>
+        <div class="profile-stat">
+          <span class="profile-stat-val" id="profMaxCombo">0</span>
+          <div class="profile-stat-label">بهترین کمبو</div>
+        </div>
+        <div class="profile-stat">
+          <span class="profile-stat-val" id="profGames">0</span>
+          <div class="profile-stat-label">کل بازی‌ها</div>
+        </div>
+        <div class="profile-stat">
+          <span class="profile-stat-val" id="profAch">0</span>
+          <div class="profile-stat-label">دستاوردها</div>
+        </div>
+        <div class="profile-stat">
+          <span class="profile-stat-val" id="profKeeper">🐱</span>
+          <div class="profile-stat-label">دروازه‌بان فعال</div>
+        </div>
+      </div>
+      <button class="btn-share" style="width:100%; margin-top:10px;" id="shareProfileBtn">📤 اشتراک‌گذاری پروفایل</button>
+    </div>
   </div>
 
   <div class="gameover-screen" id="gameoverScreen">
@@ -641,6 +796,7 @@
 
 </div>
 
+<!-- مودال راهنما -->
 <div class="modal-overlay" id="tutorialModal">
   <div class="modal">
     <h3>🎮 چطور بازی کنم؟</h3>
@@ -655,8 +811,17 @@
   </div>
 </div>
 
+<!-- جعبه شانس -->
+<div class="loot-box-overlay" id="lootBoxOverlay">
+  <div style="color:#fbbf24; font-size:16px; font-weight:900; margin-bottom:20px; text-shadow:0 0 20px rgba(251,191,36,0.6);">🎁 جعبه شانس</div>
+  <div class="loot-box" id="lootBox">🎁</div>
+  <div class="loot-reveal" id="lootReveal" style="display:none;"></div>
+  <div class="loot-msg" id="lootMsg" style="display:none;"></div>
+  <button class="modal-btn" id="lootClose" style="display:none;">دریافت</button>
+</div>
+
 <script>
-const VERSION = '4.2.0';
+const VERSION = '5.0.0';
 const SITE_URL = 'https://amirrezagholami86.github.io/coin-factory-game-1/';
 
 const COUNTRIES = [
@@ -707,21 +872,48 @@ const UPGRADES = [
   { id: 'speed', name: '⚡ سرعت', desc: 'توپ سریع‌تر', baseCost: 250, maxLevel: 10 },
 ];
 
+const ACHIEVEMENTS = [
+  { id: 'first_goal', icon: '⚽', name: 'اولین گل', desc: 'اولین گل رو بزن', check: s => s.totalGoals >= 1, reward: 50 },
+  { id: 'goals_10', icon: '🎯', name: '۱۰ گل', desc: '۱۰ گل بزن', check: s => s.totalGoals >= 10, reward: 100 },
+  { id: 'goals_50', icon: '🔥', name: '۵۰ گل', desc: '۵۰ گل بزن', check: s => s.totalGoals >= 50, reward: 300 },
+  { id: 'goals_100', icon: '💯', name: '۱۰۰ گل', desc: '۱۰۰ گل بزن', check: s => s.totalGoals >= 100, reward: 500 },
+  { id: 'goals_500', icon: '👑', name: '۵۰۰ گل', desc: '۵۰۰ گل بزن', check: s => s.totalGoals >= 500, reward: 2000 },
+  { id: 'combo_3', icon: '🔗', name: 'کمبو ۳', desc: '۳ گل پشت سر هم', check: s => s.maxCombo >= 3, reward: 100 },
+  { id: 'combo_5', icon: '⚡', name: 'کمبو ۵', desc: '۵ گل پشت سر هم', check: s => s.maxCombo >= 5, reward: 200 },
+  { id: 'combo_10', icon: '💫', name: 'کمبو ۱۰', desc: '۱۰ گل پشت سر هم', check: s => s.maxCombo >= 10, reward: 500 },
+  { id: 'score_20', icon: '🥉', name: 'رکورد ۲۰', desc: 'رکورد ۲۰ گل', check: s => s.bestScore >= 20, reward: 300 },
+  { id: 'score_50', icon: '🥈', name: 'رکورد ۵۰', desc: 'رکورد ۵۰ گل', check: s => s.bestScore >= 50, reward: 1000 },
+  { id: 'score_100', icon: '🥇', name: 'رکورد ۱۰۰', desc: 'رکورد ۱۰۰ گل', check: s => s.bestScore >= 100, reward: 3000 },
+  { id: 'games_10', icon: '🎮', name: '۱۰ بازی', desc: '۱۰ بار بازی کن', check: s => s.totalGames >= 10, reward: 100 },
+  { id: 'games_50', icon: '🎯', name: '۵۰ بازی', desc: '۵۰ بار بازی کن', check: s => s.totalGames >= 50, reward: 500 },
+  { id: 'all_keepers', icon: '🐾', name: 'کلکسیونر', desc: 'همه دروازه‌بان‌ها', check: s => s.ownedKeepers.length >= 6, reward: 2000 },
+  { id: 'all_fields', icon: '🏟️', name: 'همه زمین‌ها', desc: 'همه زمین‌ها', check: s => s.ownedFields.length >= 3, reward: 1000 },
+  { id: 'all_balls', icon: '⚽', name: 'همه توپ‌ها', desc: 'همه توپ‌ها', check: s => s.ownedBalls.length >= 4, reward: 1500 },
+  { id: 'daily_3', icon: '🎁', name: '۳ روز متوالی', desc: '۳ روز پاداش بگیر', check: s => s.dailyStreak >= 3, reward: 300 },
+  { id: 'daily_7', icon: '🌟', name: '۷ روز متوالی', desc: '۷ روز پاداش بگیر', check: s => s.dailyStreak >= 7, reward: 1000 },
+  { id: 'loot_5', icon: '🎲', name: '۵ جعبه', desc: '۵ جعبه شانس باز کن', check: s => s.lootBoxesOpened >= 5, reward: 200 },
+  { id: 'loot_20', icon: '🎰', name: '۲۰ جعبه', desc: '۲۰ جعبه شانس باز کن', check: s => s.lootBoxesOpened >= 20, reward: 1000 },
+];
+
 let state = {
   bestScore: 0, coins: 0, selectedCountry: null, soundOn: true,
   tutorialSeen: false, ownedKeepers: ['cat'], ownedBalls: ['classic'], ownedFields: ['grass'],
   equippedKeeper: 'cat', equippedBall: 'classic', equippedField: 'grass',
   upgrades: { power: 0, accuracy: 0, brain: 0, speed: 0 },
-  lastDailyClaim: 0, dailyStreak: 0, totalGoals: 0,
+  lastDailyClaim: 0, dailyStreak: 0, totalGoals: 0, totalGames: 0,
+  maxCombo: 0, unlockedAch: [], lootBoxesOpened: 0,
+  selectedMode: 'normal', dailyChallengeDone: 0, dailyChallengeDate: '',
+  goalsSinceLastBox: 0,
 };
 
 function loadState() {
-  const saved = localStorage.getItem('goalestan_v42');
+  const saved = localStorage.getItem('goalestan_v50');
   if (saved) { try { state = Object.assign(state, JSON.parse(saved)); } catch(e) {} }
 }
-function saveState() { localStorage.setItem('goalestan_v42', JSON.stringify(state)); }
+function saveState() { localStorage.setItem('goalestan_v50', JSON.stringify(state)); }
 
 const fieldEl = document.getElementById('field');
+const goalEl = document.getElementById('goal');
 const keeperWrap = document.getElementById('keeperWrap');
 const keeperEmoji = document.getElementById('keeperEmoji');
 const ballWrap = document.getElementById('ballWrap');
@@ -743,6 +935,7 @@ const soundBtn = document.getElementById('soundBtn');
 const shopCoins = document.getElementById('shopCoins');
 const upgradeCoins = document.getElementById('upgradeCoins');
 const crowdDots = document.getElementById('crowdDots');
+const dailyChallengeEl = document.getElementById('dailyChallenge');
 
 const CROWD_COLORS = ['#ef4444','#f59e0b','#22c55e','#3b82f6','#8b5cf6','#ec4899','#fbbf24','#10b981','#6366f1'];
 function initCrowd() {
@@ -777,6 +970,19 @@ function soundShoot() { playTone(220,0.12,'square',0.1); setTimeout(()=>playTone
 function soundGoal() { playTone(523,0.12,'sine',0.15); setTimeout(()=>playTone(659,0.12,'sine',0.15),110); setTimeout(()=>playTone(784,0.25,'sine',0.18),220); }
 function soundMiss() { playTone(300,0.18,'sawtooth',0.1); setTimeout(()=>playTone(200,0.25,'sawtooth',0.1),110); }
 function soundCombo() { playTone(880,0.08,'sine',0.12); setTimeout(()=>playTone(1100,0.12,'sine',0.12),70); }
+function soundGolden() { playTone(660,0.15,'sine',0.2); setTimeout(()=>playTone(880,0.15,'sine',0.2),100); setTimeout(()=>playTone(1320,0.3,'sine',0.2),200); }
+
+function showToast(msg, duration=2500) {
+  const t = document.createElement('div');
+  t.className = 'toast';
+  t.textContent = msg;
+  document.body.appendChild(t);
+  setTimeout(() => {
+    t.style.transition = 'opacity 0.5s';
+    t.style.opacity = '0';
+  }, duration);
+  setTimeout(() => t.remove(), duration + 600);
+}
 
 function updateHUD() {
   hudBest.textContent = state.bestScore.toLocaleString('fa-IR');
@@ -881,34 +1087,38 @@ function renderShop() {
 function handleShopAction(action, id) {
   if (action === 'buy-keeper') {
     const k = KEEPERS[id];
-    if (state.coins < k.price) { alert('سکه کافی نداری!'); return; }
+    if (state.coins < k.price) { showToast('سکه کافی نداری!'); return; }
     state.coins -= k.price;
     state.ownedKeepers.push(id);
     state.equippedKeeper = id;
     saveState(); updateHUD(); renderShop();
     keeperEmoji.textContent = k.icon;
+    showToast(`🎉 ${k.name} خریدی!`);
   } else if (action === 'equip-keeper') {
     state.equippedKeeper = id; saveState(); renderShop();
     keeperEmoji.textContent = KEEPERS[id].icon;
   } else if (action === 'buy-ball') {
     const b = BALLS[id];
-    if (state.coins < b.price) { alert('سکه کافی نداری!'); return; }
+    if (state.coins < b.price) { showToast('سکه کافی نداری!'); return; }
     state.coins -= b.price;
     state.ownedBalls.push(id);
     state.equippedBall = id;
     saveState(); updateHUD(); renderShop();
+    showToast(`🎉 توپ ${b.name} خریدی!`);
   } else if (action === 'equip-ball') {
     state.equippedBall = id; saveState(); renderShop();
   } else if (action === 'buy-field') {
     const f = FIELDS[id];
-    if (state.coins < f.price) { alert('سکه کافی نداری!'); return; }
+    if (state.coins < f.price) { showToast('سکه کافی نداری!'); return; }
     state.coins -= f.price;
     state.ownedFields.push(id);
     state.equippedField = id;
     saveState(); updateHUD(); renderShop(); applyField();
+    showToast(`🎉 زمین ${f.name} خریدی!`);
   } else if (action === 'equip-field') {
     state.equippedField = id; saveState(); renderShop(); applyField();
   }
+  checkAchievements();
 }
 
 function applyField() {
@@ -953,8 +1163,54 @@ function renderUpgrades() {
       state.coins -= cost;
       state.upgrades[up.id] = (state.upgrades[up.id] || 0) + 1;
       saveState(); updateHUD(); renderUpgrades();
+      showToast(`⬆️ ${up.name} ارتقا یافت!`);
     };
   });
+}
+
+function renderAchievements() {
+  const list = document.getElementById('achievementsList');
+  list.innerHTML = '';
+  ACHIEVEMENTS.forEach(a => {
+    const unlocked = state.unlockedAch.includes(a.id);
+    const div = document.createElement('div');
+    div.className = 'achievement-item' + (unlocked ? ' unlocked' : '');
+    div.innerHTML = `
+      <span class="ach-icon">${a.icon}</span>
+      <div class="ach-name">${a.name}</div>
+      <div class="ach-desc">${a.desc}</div>
+      <div class="ach-reward">${unlocked ? '✓ دریافت شد' : `🪙 ${a.reward}`}</div>
+    `;
+    list.appendChild(div);
+  });
+}
+
+function checkAchievements() {
+  let newUnlock = false;
+  ACHIEVEMENTS.forEach(a => {
+    if (state.unlockedAch.includes(a.id)) return;
+    if (a.check(state)) {
+      state.unlockedAch.push(a.id);
+      state.coins += a.reward;
+      showToast(`🏆 دستاورد: ${a.name} +${a.reward} سکه`);
+      newUnlock = true;
+    }
+  });
+  if (newUnlock) {
+    saveState();
+    updateHUD();
+    renderAchievements();
+    renderProfile();
+  }
+}
+
+function renderProfile() {
+  document.getElementById('profBest').textContent = state.bestScore.toLocaleString('fa-IR');
+  document.getElementById('profTotalGoals').textContent = state.totalGoals.toLocaleString('fa-IR');
+  document.getElementById('profMaxCombo').textContent = state.maxCombo.toLocaleString('fa-IR');
+  document.getElementById('profGames').textContent = state.totalGames.toLocaleString('fa-IR');
+  document.getElementById('profAch').textContent = state.unlockedAch.length + '/' + ACHIEVEMENTS.length;
+  document.getElementById('profKeeper').textContent = KEEPERS[state.equippedKeeper].icon;
 }
 
 function checkDaily() {
@@ -979,10 +1235,30 @@ function checkDaily() {
       state.dailyStreak = streak;
       saveState(); updateHUD();
       box.style.display = 'none';
-      alert(`🎁 ${reward} سکه گرفتی!`);
+      showToast(`🎁 ${reward} سکه گرفتی!`);
+      checkAchievements();
     };
   } else {
     box.style.display = 'none';
+  }
+}
+
+function initDailyChallenge() {
+  const today = new Date().toDateString();
+  if (state.dailyChallengeDate !== today) {
+    state.dailyChallengeDate = today;
+    state.dailyChallengeDone = 0;
+    saveState();
+  }
+  const goalsToday = state.dailyChallengeDone || 0;
+  const target = 15;
+  const reward = 200;
+  if (goalsToday >= target) {
+    dailyChallengeEl.className = 'daily-challenge show completed';
+    dailyChallengeEl.innerHTML = `✅ چالش روزانه تکمیل شد!`;
+  } else {
+    dailyChallengeEl.className = 'daily-challenge show';
+    dailyChallengeEl.innerHTML = `🎯 چالش: ${goalsToday}/${target} گل`;
   }
 }
 
@@ -991,14 +1267,20 @@ function renderAll() {
   renderCountries();
   renderShop();
   renderUpgrades();
+  renderAchievements();
+  renderProfile();
   applyField();
   keeperEmoji.textContent = KEEPERS[state.equippedKeeper].icon;
   checkDaily();
+  initDailyChallenge();
   if (state.selectedCountry) {
     hudFlag.textContent = state.selectedCountry.flag;
     hudCountry.textContent = state.selectedCountry.name;
     startBtn.disabled = false;
   }
+  document.querySelectorAll('.mode-card').forEach(m => {
+    m.classList.toggle('selected', m.dataset.mode === state.selectedMode);
+  });
 }
 
 document.querySelectorAll('.tab-btn').forEach(btn => {
@@ -1007,6 +1289,15 @@ document.querySelectorAll('.tab-btn').forEach(btn => {
     document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
     btn.classList.add('active');
     document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
+  };
+});
+
+document.querySelectorAll('.mode-card').forEach(card => {
+  card.onclick = () => {
+    document.querySelectorAll('.mode-card').forEach(m => m.classList.remove('selected'));
+    card.classList.add('selected');
+    state.selectedMode = card.dataset.mode;
+    saveState();
   };
 });
 
@@ -1019,7 +1310,7 @@ function startGame() {
   initAudio();
 
   const wrapRect = document.querySelector('.game-wrap').getBoundingClientRect();
-  const goalRect = document.getElementById('goal').getBoundingClientRect();
+  const goalRect = goalEl.getBoundingClientRect();
 
   const goalLeft = goalRect.left - wrapRect.left;
   const goalTop = goalRect.top - wrapRect.top;
@@ -1030,7 +1321,11 @@ function startGame() {
 
   game = {
     score: 0, combo: 0, maxCombo: 0, isPlaying: true,
-    ball: { x: wrapRect.width / 2, y: wrapRect.height * 0.85, vx: 0, vy: 0, isMoving: false },
+    mode: state.selectedMode,
+    startTime: Date.now(),
+    timeLimit: state.selectedMode === 'attack' ? 30000 : 0,
+    goldenActive: false,
+    ball: { x: wrapRect.width / 2, y: wrapRect.height * 0.85, vx: 0, vy: 0, isMoving: false, golden: false },
     keeper: {
       x: goalLeft + goalWidth / 2, y: goalTop + goalHeight - 35,
       direction: 1, speed: 120 * keeperData.speed,
@@ -1048,6 +1343,8 @@ function startGame() {
   ballWrap.style.display = 'block';
   ballWrap.style.left = (game.ball.x - 22) + 'px';
   ballWrap.style.top = (game.ball.y - 22) + 'px';
+  ballWrap.classList.remove('golden');
+  goalEl.classList.remove('small');
 
   hudScore.textContent = '0';
   comboDisplay.classList.remove('show');
@@ -1064,6 +1361,16 @@ function gameLoop(now) {
   if (!game || !game.isPlaying) return;
   const dt = Math.min((now - lastTime) / 1000, 0.05);
   lastTime = now;
+
+  // حالت حمله: تایمر
+  if (game.timeLimit > 0) {
+    const elapsed = Date.now() - game.startTime;
+    if (elapsed >= game.timeLimit) {
+      endGame('زمان تموم شد! ⏰');
+      return;
+    }
+  }
+
   updateKeeper(dt);
   updateBall(dt);
   animationFrame = requestAnimationFrame(gameLoop);
@@ -1126,19 +1433,33 @@ function scoreGoal() {
   if (relX < 0.2 || relX > 0.8) accuracy = 3;
   else if (relX < 0.35 || relX > 0.65) accuracy = 2;
 
-  game.score += accuracy;
+  // حالت دقت: فقط گوشه‌ها
+  if (game.mode === 'accuracy' && accuracy < 3) {
+    soundMiss();
+    game.combo = 0;
+    endGame('فقط گوشه‌ها! 🎯');
+    return;
+  }
+
+  // گل طلایی
+  const isGolden = b.golden;
+  const multiplier = isGolden ? 3 : 1;
+
+  game.score += accuracy * multiplier;
   game.goalsScored++;
   state.totalGoals++;
+  state.dailyChallengeDone = (state.dailyChallengeDone || 0) + 1;
   game.combo++;
   if (game.combo > game.maxCombo) game.maxCombo = game.combo;
+  if (game.combo > state.maxCombo) state.maxCombo = game.combo;
 
-  const coinsFromGoal = 10 + (accuracy - 1) * 10;
+  const coinsFromGoal = (10 + (accuracy - 1) * 10) * multiplier;
   state.coins += coinsFromGoal;
   game.coinsEarned += coinsFromGoal;
 
   hudScore.textContent = game.score.toLocaleString('fa-IR');
-  soundGoal();
-  spawnParticles(accuracy === 3);
+  if (isGolden) soundGolden(); else soundGoal();
+  spawnParticles(accuracy === 3 || isGolden);
 
   const flash = document.createElement('div');
   flash.className = 'goal-flash';
@@ -1146,8 +1467,8 @@ function scoreGoal() {
   setTimeout(() => flash.remove(), 800);
 
   const gtext = document.createElement('div');
-  gtext.className = 'goal-text' + (accuracy === 3 ? ' perfect' : '');
-  gtext.textContent = accuracy === 3 ? '⚽ عالی!' : (accuracy === 2 ? '⚽ گل!' : '⚽ گل');
+  gtext.className = 'goal-text' + (isGolden ? ' golden' : accuracy === 3 ? ' perfect' : '');
+  gtext.textContent = isGolden ? '⚡ گل طلایی!' : accuracy === 3 ? '⚽ عالی!' : (accuracy === 2 ? '⚽ گل!' : '⚽ گل');
   document.querySelector('.game-wrap').appendChild(gtext);
   setTimeout(() => gtext.remove(), 1100);
 
@@ -1157,10 +1478,35 @@ function scoreGoal() {
     soundCombo();
   }
 
+  // جعبه شانس هر ۵ گل
+  state.goalsSinceLastBox = (state.goalsSinceLastBox || 0) + 1;
+  if (state.goalsSinceLastBox >= 5) {
+    state.goalsSinceLastBox = 0;
+    saveState();
+    setTimeout(() => openLootBox(), 800);
+    return;
+  }
+
   game.keeper.speed = 120 * KEEPERS[state.equippedKeeper].speed + game.score * 15;
   game.keeper.smartLevel = Math.min(game.score / 5, 3);
 
-  saveState(); updateHUD(); resetBall();
+  // الگوهای سخت‌تر
+  if (game.score >= 20 && !goalEl.classList.contains('small')) {
+    goalEl.classList.add('small');
+    setTimeout(() => {
+      const rect = goalEl.getBoundingClientRect();
+      const wrapRect = document.querySelector('.game-wrap').getBoundingClientRect();
+      game.goal.left = rect.left - wrapRect.left;
+      game.goal.top = rect.top - wrapRect.top;
+      game.goal.width = rect.width;
+      game.goal.height = rect.height;
+      game.keeper.minX = game.goal.left + 35;
+      game.keeper.maxX = game.goal.left + game.goal.width - 35;
+    }, 550);
+  }
+
+  initDailyChallenge();
+  saveState(); updateHUD(); checkAchievements(); resetBall();
 }
 
 function spawnParticles(isPerfect) {
@@ -1190,6 +1536,16 @@ function resetBall() {
   ballWrap.style.left = (b.x - 22) + 'px';
   ballWrap.style.top = (b.y - 22) + 'px';
   ballWrap.style.transform = 'rotate(0deg)';
+
+  // گل طلایی تصادفی
+  if (Math.random() < 0.1 && game.score >= 3) {
+    b.golden = true;
+    ballWrap.classList.add('golden');
+  } else {
+    b.golden = false;
+    ballWrap.classList.remove('golden');
+  }
+
   hint.classList.remove('hidden');
 }
 
@@ -1200,7 +1556,8 @@ function endGame(reason) {
   const finalScore = game.score;
   const isNewRecord = finalScore > state.bestScore;
   if (isNewRecord) state.bestScore = finalScore;
-  saveState(); updateHUD();
+  state.totalGames++;
+  saveState(); updateHUD(); checkAchievements();
 
   document.getElementById('goTitle').textContent = reason || 'پایان بازی!';
   document.getElementById('goScore').textContent = finalScore.toLocaleString('fa-IR');
@@ -1217,6 +1574,90 @@ function endGame(reason) {
   gameoverScreen.classList.add('active');
   hint.classList.add('hidden');
   comboDisplay.classList.remove('show');
+}
+
+// جعبه شانس
+function openLootBox() {
+  state.lootBoxesOpened = (state.lootBoxesOpened || 0) + 1;
+  saveState();
+  const overlay = document.getElementById('lootBoxOverlay');
+  const box = document.getElementById('lootBox');
+  const reveal = document.getElementById('lootReveal');
+  const msg = document.getElementById('lootMsg');
+  const closeBtn = document.getElementById('lootClose');
+
+  overlay.classList.add('active');
+  box.style.display = 'flex';
+  box.classList.remove('opening');
+  reveal.style.display = 'none';
+  msg.style.display = 'none';
+  closeBtn.style.display = 'none';
+
+  box.onclick = () => {
+    box.classList.add('opening');
+    setTimeout(() => {
+      box.style.display = 'none';
+      const roll = Math.random();
+      let resultIcon = '🪙', resultText = '', reward = 0;
+      if (roll < 0.5) {
+        reward = 50 + Math.floor(Math.random() * 100);
+        resultIcon = '🪙';
+        resultText = `${reward} سکه!`;
+        state.coins += reward;
+      } else if (roll < 0.8) {
+        reward = 150 + Math.floor(Math.random() * 200);
+        resultIcon = '💰';
+        resultText = `${reward} سکه!`;
+        state.coins += reward;
+      } else if (roll < 0.95) {
+        // آیتم تصادفی
+        const availableKeepers = Object.values(KEEPERS).filter(k => !state.ownedKeepers.includes(k.id));
+        const availableBalls = Object.values(BALLS).filter(b => !state.ownedBalls.includes(b.id));
+        const availableFields = Object.values(FIELDS).filter(f => !state.ownedFields.includes(f.id));
+        const allAvail = [
+          ...availableKeepers.map(k => ({type: 'keeper', item: k})),
+          ...availableBalls.map(b => ({type: 'ball', item: b})),
+          ...availableFields.map(f => ({type: 'field', item: f})),
+        ];
+        if (allAvail.length > 0) {
+          const pick = allAvail[Math.floor(Math.random() * allAvail.length)];
+          if (pick.type === 'keeper') {
+            state.ownedKeepers.push(pick.item.id);
+            resultIcon = pick.item.icon;
+            resultText = `${pick.item.name} باز شد!`;
+          } else if (pick.type === 'ball') {
+            state.ownedBalls.push(pick.item.id);
+            resultIcon = pick.item.icon;
+            resultText = `توپ ${pick.item.name}!`;
+          } else {
+            state.ownedFields.push(pick.item.id);
+            resultIcon = pick.item.icon;
+            resultText = `زمین ${pick.item.name}!`;
+          }
+        } else {
+          reward = 300;
+          resultIcon = '💎';
+          resultText = '۳۰۰ سکه!';
+          state.coins += reward;
+        }
+      } else {
+        reward = 1000;
+        resultIcon = '💎';
+        resultText = '۱۰۰۰ سکه! جکپات!';
+        state.coins += reward;
+      }
+      reveal.textContent = resultIcon;
+      reveal.style.display = 'block';
+      msg.textContent = resultText;
+      msg.style.display = 'block';
+      closeBtn.style.display = 'inline-block';
+      saveState(); updateHUD(); renderShop(); checkAchievements();
+    }, 600);
+  };
+
+  closeBtn.onclick = () => {
+    overlay.classList.remove('active');
+  };
 }
 
 function getPointerPos(e) {
@@ -1254,7 +1695,6 @@ function handlePointerUp(e) {
   game.drag.active = false;
 
   const b = game.ball;
-  // شوت به سمت دروازه (بالا): جهت کشش = جهت پرتاب
   const dx = game.drag.currentX - game.drag.startX;
   const dy = game.drag.currentY - game.drag.startY;
   const dist = Math.sqrt(dx*dx + dy*dy);
@@ -1269,7 +1709,6 @@ function handlePointerUp(e) {
   const powerMult = 1 + powerLvl * 0.08;
   const accMult = 1 - accLvl * 0.02;
   const power = Math.min(dist * 8 * powerMult, 1400 * powerMult);
-  // جهت شوت = جهت کشش (توپ به سمت دروازه می‌ره)
   const angle = Math.atan2(dy, dx) + (Math.random() - 0.5) * 0.2 * accMult;
 
   b.vx = Math.cos(angle) * power;
@@ -1317,6 +1756,7 @@ document.getElementById('menuBtn').onclick = () => {
   gameoverScreen.classList.remove('active');
   startScreen.classList.remove('hidden');
   ballWrap.style.display = 'none';
+  goalEl.classList.remove('small');
   renderAll();
 };
 
@@ -1327,7 +1767,7 @@ document.getElementById('shareBtn').onclick = () => {
     navigator.share({ title: 'گلستان', text: text }).catch(() => {});
   } else {
     navigator.clipboard.writeText(text).then(() => {
-      alert('📋 متن کپی شد!');
+      showToast('📋 متن کپی شد!');
     }).catch(() => {
       const ta = document.createElement('textarea');
       ta.value = text;
@@ -1335,7 +1775,26 @@ document.getElementById('shareBtn').onclick = () => {
       ta.select();
       document.execCommand('copy');
       ta.remove();
-      alert('📋 متن کپی شد!');
+      showToast('📋 متن کپی شد!');
+    });
+  }
+};
+
+document.getElementById('shareProfileBtn').onclick = () => {
+  const text = `👤 پروفایل من توی بازی «گلستان»\n\n🏆 بهترین رکورد: ${state.bestScore} گل\n⚽ کل گل‌ها: ${state.totalGoals}\n🔥 بهترین کمبو: ${state.maxCombo}\n🏅 دستاوردها: ${state.unlockedAch.length}/${ACHIEVEMENTS.length}\n\n🎮 بازی کن: ${SITE_URL}\n\nساخته امیررضا غلامی`;
+  if (navigator.share) {
+    navigator.share({ title: 'پروفایل گلستان', text: text }).catch(() => {});
+  } else {
+    navigator.clipboard.writeText(text).then(() => {
+      showToast('📋 پروفایل کپی شد!');
+    }).catch(() => {
+      const ta = document.createElement('textarea');
+      ta.value = text;
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand('copy');
+      ta.remove();
+      showToast('📋 پروفایل کپی شد!');
     });
   }
 };
@@ -1350,6 +1809,7 @@ soundBtn.onclick = () => {
 loadState();
 initCrowd();
 renderAll();
+setInterval(initDailyChallenge, 60000);
 </script>
 </body>
  </html>
