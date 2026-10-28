@@ -5,9 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <title>⚽ گلستان | بازی امیررضا غلامی</title>
 <meta name="author" content="امیررضا غلامی">
-<meta name="description" content="بازی گلستان - گل بزن، سکه بگیر، دروازه‌بان بخر! ساخته امیررضا غلامی">
+<meta name="description" content="بازی گلستان - گل بزن، رکورد بشکن! ساخته امیررضا غلامی">
 <meta property="og:title" content="⚽ گلستان | بازی امیررضا غلامی">
-<meta property="og:description" content="گل بزن، سکه بگیر، دروازه‌بان بخر! تو می‌تونی رکورد منو بشکنی؟">
+<meta property="og:description" content="گل بزن، رکورد بشکن! تو می‌تونی رکورد منو بشکنی؟">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://amirrezagholami86.github.io/coin-factory-game-1/">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚽</text></svg>">
@@ -31,9 +31,8 @@
     padding: 8px;
   }
 
-  .bg-orbs {
-    position: fixed; inset: 0; overflow: hidden; z-index: 0; pointer-events: none;
-  }
+  /* ============ پس‌زمینه ============ */
+  .bg-orbs { position: fixed; inset: 0; overflow: hidden; z-index: 0; pointer-events: none; }
   .orb {
     position: absolute; border-radius: 50%; filter: blur(70px); opacity: 0.35;
     animation: orbFloat 22s infinite ease-in-out;
@@ -47,16 +46,17 @@
     66% { transform: translate(-50px,70px) scale(0.9); }
   }
 
+  /* ============ باکس اصلی ============ */
   .game-wrap {
     position: relative;
     width: 100%;
     max-width: 480px;
     height: 96vh;
     max-height: 820px;
-    background: linear-gradient(180deg, #0a2818 0%, #0d3a22 100%);
+    background: #0a2818;
     border-radius: 24px;
     overflow: hidden;
-    box-shadow: 0 25px 80px rgba(0,0,0,0.7), 0 0 0 1px rgba(74,222,128,0.15), inset 0 0 120px rgba(74,222,128,0.05);
+    box-shadow: 0 25px 80px rgba(0,0,0,0.7), 0 0 0 1px rgba(74,222,128,0.15);
     z-index: 1;
   }
 
@@ -73,38 +73,49 @@
   .field.snow {
     background: linear-gradient(180deg, #d0e8f0 0%, #e8f4f8 30%, #f0f8fc 65%, #ffffff 100%);
   }
-  .field.snow .chalk { background: rgba(150,180,200,0.5); }
-  .field::before {
-    content: '';
+  .field.snow .chalk-line { background: rgba(150,180,200,0.5); }
+  .field.snow .chalk-circle { border-color: rgba(150,180,200,0.5); }
+
+  /* نوارهای چمن */
+  .grass-stripes {
     position: absolute; inset: 0;
-    background-image: repeating-linear-gradient(180deg, transparent 0px, transparent 55px, rgba(0,0,0,0.06) 55px, rgba(0,0,0,0.06) 110px);
+    background-image: repeating-linear-gradient(180deg, transparent 0px, transparent 60px, rgba(0,0,0,0.05) 60px, rgba(0,0,0,0.05) 120px);
+    pointer-events: none;
   }
-  .field.night::before {
-    background-image: repeating-linear-gradient(180deg, transparent 0px, transparent 55px, rgba(255,255,255,0.03) 55px, rgba(255,255,255,0.03) 110px);
-  }
-  .chalk {
-    position: absolute; background: rgba(255,255,255,0.35);
-  }
-  .chalk-penalty {
-    width: 55%; height: 22%; border: 3px solid rgba(255,255,255,0.4);
-    border-top: none; border-radius: 0 0 6px 6px;
-    top: 15%; left: 50%; transform: translateX(-50%);
-    background: transparent;
+  .field.night .grass-stripes {
+    background-image: repeating-linear-gradient(180deg, transparent 0px, transparent 60px, rgba(255,255,255,0.02) 60px, rgba(255,255,255,0.02) 120px);
   }
 
-  /* ============ نورافکن ============ */
-  .floodlight {
-    position: absolute; width: 200px; height: 200px;
-    background: radial-gradient(circle, rgba(255,255,200,0.25) 0%, transparent 70%);
-    border-radius: 50%; pointer-events: none;
-    top: -50px; opacity: 0; transition: opacity 0.5s;
+  /* خطوط زمین */
+  .chalk-line { position: absolute; background: rgba(255,255,255,0.35); }
+  .chalk-circle {
+    position: absolute; border: 2px solid rgba(255,255,255,0.35);
+    border-radius: 50%;
   }
-  .field.night .floodlight { opacity: 1; }
-  .floodlight:nth-child(3) { left: 10%; }
-  .floodlight:nth-child(4) { right: 10%; }
+  .center-circle {
+    width: 30%; aspect-ratio: 1; top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  .center-spot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: rgba(255,255,255,0.5);
+    top: 50%; left: 50%; transform: translate(-50%, -50%);
+  }
+  .penalty-arc {
+    width: 25%; aspect-ratio: 1; top: 15%; left: 50%;
+    transform: translateX(-50%);
+    border-radius: 0 0 50% 50%;
+    border-top: none;
+  }
+  .goal-area {
+    width: 55%; height: 8%; top: 15%; left: 50%;
+    transform: translateX(-50%);
+    border: 2px solid rgba(255,255,255,0.35);
+    border-top: none;
+  }
 
-  /* ============ دروازه SVG ============ */
-  .goal-svg {
+  /* ============ دروازه ============ */
+  .goal {
     position: absolute;
     top: 15%;
     left: 50%;
@@ -112,7 +123,60 @@
     width: 70%;
     height: 22%;
     z-index: 2;
-    filter: drop-shadow(0 8px 20px rgba(0,0,0,0.5));
+    perspective: 800px;
+  }
+  .goal-frame {
+    position: absolute;
+    inset: 0;
+    border: 5px solid #fff;
+    border-bottom: none;
+    border-radius: 4px 4px 0 0;
+    box-shadow: 0 0 30px rgba(255,255,255,0.4), inset 0 0 40px rgba(0,0,0,0.4);
+  }
+  .goal-net {
+    position: absolute;
+    inset: 0;
+    background-image:
+      repeating-linear-gradient(90deg, transparent 0px, transparent 14px, rgba(255,255,255,0.25) 14px, rgba(255,255,255,0.25) 15px),
+      repeating-linear-gradient(0deg, transparent 0px, transparent 14px, rgba(255,255,255,0.25) 14px, rgba(255,255,255,0.25) 15px);
+    opacity: 0.7;
+  }
+  .goal-shadow {
+    position: absolute;
+    bottom: -8px;
+    left: -5%;
+    right: -5%;
+    height: 12px;
+    background: radial-gradient(ellipse at center, rgba(0,0,0,0.4) 0%, transparent 70%);
+  }
+
+  /* ============ تماشاگرها ============ */
+  .crowd {
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 12%;
+    background: linear-gradient(180deg, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.3) 50%, transparent 100%);
+    z-index: 1;
+    overflow: hidden;
+  }
+  .crowd-dots {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    grid-template-columns: repeat(40, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    gap: 2px;
+    padding: 4px 8px;
+  }
+  .crowd-dot {
+    width: 100%;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    animation: crowdBounce 2s infinite ease-in-out;
+  }
+  @keyframes crowdBounce {
+    0%,100% { transform: translateY(0); }
+    50% { transform: translateY(-3px); }
   }
 
   /* ============ دروازه‌بان ============ */
@@ -122,27 +186,45 @@
     transition: left 0.1s cubic-bezier(0.34, 1.56, 0.64, 1);
     will-change: left;
     pointer-events: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
-  .keeper-svg {
+  .keeper-emoji {
+    font-size: 64px;
     filter: drop-shadow(0 8px 16px rgba(0,0,0,0.6));
     transition: transform 0.15s;
+    line-height: 1;
   }
-  .keeper-wrap.diving .keeper-svg {
+  @media (max-width: 400px) {
+    .keeper-emoji { font-size: 52px; }
+  }
+  .keeper-wrap.diving .keeper-emoji {
     animation: diveAnim 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
   }
   @keyframes diveAnim {
-    0% { transform: scale(1) rotate(0deg) translateY(0); }
-    40% { transform: scale(1.25) rotate(var(--dive-rot, 20deg)) translateY(-15px); }
-    100% { transform: scale(1) rotate(0deg) translateY(0); }
+    0% { transform: scale(1) rotate(0deg); }
+    40% { transform: scale(1.3) rotate(var(--dive-rot, 25deg)); }
+    100% { transform: scale(1) rotate(0deg); }
   }
 
-  /* ============ توپ SVG ============ */
+  /* ============ توپ ============ */
   .ball-wrap {
     position: absolute;
     z-index: 4;
     pointer-events: none;
     filter: drop-shadow(0 8px 16px rgba(0,0,0,0.6));
     will-change: left, top, transform;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .ball-svg {
+    width: 44px;
+    height: 44px;
+  }
+  @media (max-width: 400px) {
+    .ball-svg { width: 38px; height: 38px; }
   }
 
   /* ============ HUD ============ */
@@ -151,7 +233,7 @@
     padding: 12px 14px;
     display: flex; justify-content: space-between; align-items: center;
     z-index: 10;
-    background: linear-gradient(180deg, rgba(0,0,0,0.55) 0%, transparent 100%);
+    background: linear-gradient(180deg, rgba(0,0,0,0.6) 0%, transparent 100%);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
   }
@@ -169,7 +251,7 @@
     display: flex; align-items: center; justify-content: center;
   }
 
-  /* ============ پیام راهنما ============ */
+  /* ============ راهنما ============ */
   .hint {
     position: absolute; bottom: 18px; left: 50%; transform: translateX(-50%);
     background: rgba(0,0,0,0.75); backdrop-filter: blur(12px);
@@ -325,11 +407,6 @@
   .shop-item .buy-item-btn:disabled { opacity: 0.4; cursor: not-allowed; }
   .shop-item .buy-item-btn.equip { background: linear-gradient(135deg, #fbbf24, #f59e0b); }
   .shop-item .buy-item-btn.equipped { background: rgba(255,255,255,0.1); color: #4ade80; cursor: default; }
-  .shop-item .lock-badge {
-    position: absolute; top: 8px; left: 8px;
-    font-size: 10px; background: rgba(0,0,0,0.5);
-    padding: 2px 6px; border-radius: 6px; color: #aaa;
-  }
 
   /* ============ آپگرید ============ */
   .upgrade-item {
@@ -495,7 +572,6 @@
     font-size: 13px; cursor: pointer; margin: 4px; transition: 0.25s;
   }
   .modal-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(74,222,128,0.4); }
-  .modal-btn.ghost { background: none; border: 1px solid #555; color: #aaa; }
 </style>
 </head>
 <body>
@@ -509,34 +585,49 @@
 <div class="game-wrap">
 
   <div class="field" id="field">
-    <div class="chalk chalk-penalty"></div>
-    <div class="floodlight"></div>
-    <div class="floodlight"></div>
+    <div class="crowd" id="crowd">
+      <div class="crowd-dots" id="crowdDots"></div>
+    </div>
+    <div class="grass-stripes"></div>
 
-    <!-- دروازه SVG -->
-    <svg class="goal-svg" id="goalSvg" viewBox="0 0 300 100" preserveAspectRatio="none">
-      <defs>
-        <pattern id="netPattern" x="0" y="0" width="12" height="12" patternUnits="userSpaceOnUse">
-          <path d="M 12 0 L 0 0 0 12" fill="none" stroke="rgba(255,255,255,0.35)" stroke-width="0.8"/>
-        </pattern>
-      </defs>
-      <rect x="0" y="0" width="300" height="100" fill="url(#netPattern)" opacity="0.6"/>
-      <rect x="0" y="0" width="300" height="100" fill="none" stroke="#fff" stroke-width="4" rx="3"/>
-      <rect x="0" y="0" width="300" height="8" fill="#fff" opacity="0.9"/>
-    </svg>
+    <div class="chalk-line" style="width: 100%; height: 2px; top: 15%;"></div>
+    <div class="chalk-line" style="width: 100%; height: 2px; top: 50%;"></div>
+    <div class="chalk-circle center-circle"></div>
+    <div class="chalk-line center-spot"></div>
+    <div class="goal-area"></div>
+    <div class="chalk-circle penalty-arc"></div>
 
-    <!-- دروازه‌بان -->
-    <div class="keeper-wrap" id="keeperWrap">
-      <svg class="keeper-svg" id="keeperSvg" width="70" height="70" viewBox="0 0 70 70"></svg>
+    <div class="goal" id="goal">
+      <div class="goal-frame"></div>
+      <div class="goal-net"></div>
+      <div class="goal-shadow"></div>
     </div>
 
-    <!-- توپ -->
+    <div class="keeper-wrap" id="keeperWrap">
+      <div class="keeper-emoji" id="keeperEmoji">🐱</div>
+    </div>
+
     <div class="ball-wrap" id="ballWrap" style="display:none;">
-      <svg id="ballSvg" width="40" height="40" viewBox="0 0 40 40"></svg>
+      <svg class="ball-svg" viewBox="0 0 44 44">
+        <defs>
+          <radialGradient id="ballShine" cx="35%" cy="30%">
+            <stop offset="0%" stop-color="#fff" stop-opacity="0.9"/>
+            <stop offset="60%" stop-color="#f0f0f0"/>
+            <stop offset="100%" stop-color="#d0d0d0"/>
+          </radialGradient>
+        </defs>
+        <circle cx="22" cy="22" r="20" fill="url(#ballShine)"/>
+        <circle cx="22" cy="22" r="20" fill="none" stroke="#333" stroke-width="1"/>
+        <polygon points="22,8 29,16 26,25 18,25 15,16" fill="#111"/>
+        <line x1="22" y1="8" x2="22" y2="2" stroke="#111" stroke-width="1.2"/>
+        <line x1="29" y1="16" x2="38" y2="12" stroke="#111" stroke-width="1.2"/>
+        <line x1="26" y1="25" x2="30" y2="35" stroke="#111" stroke-width="1.2"/>
+        <line x1="18" y1="25" x2="14" y2="35" stroke="#111" stroke-width="1.2"/>
+        <line x1="15" y1="16" x2="6" y2="12" stroke="#111" stroke-width="1.2"/>
+      </svg>
     </div>
   </div>
 
-  <!-- HUD -->
   <div class="hud">
     <div class="hud-item">
       <span class="flag-badge" id="hudFlag">🇮🇷</span>
@@ -557,7 +648,6 @@
   <div class="combo-display" id="comboDisplay"></div>
   <div class="hint" id="hint">👆 توپ رو بگیر و بکش به سمت دروازه</div>
 
-  <!-- صفحه اصلی -->
   <div class="screen" id="startScreen">
     <h1>⚽ گلستان</h1>
     <div class="subtitle">گل بزن، سکه بگیر، دروازه‌بان بخر!</div>
@@ -574,20 +664,17 @@
       <button class="tab-btn" data-tab="upgrade">⬆️ آپگرید</button>
     </div>
 
-    <!-- تب بازی -->
     <div class="tab-content active" id="tab-play">
       <div class="daily-box" id="dailyBox" style="display:none;">
         <h3>🎁 پاداش روزانه</h3>
         <p id="dailyText">هر روز بیا و سکه بگیر!</p>
         <button class="daily-claim-btn" id="dailyClaimBtn">دریافت پاداش</button>
       </div>
-
       <div style="font-size:12px; color:#888; text-align:center; margin-bottom:8px;">🌍 کشورت رو انتخاب کن</div>
       <div class="country-grid" id="countryGrid"></div>
       <button class="start-btn" id="startBtn" disabled>⚽ شروع بازی</button>
     </div>
 
-    <!-- تب فروشگاه -->
     <div class="tab-content" id="tab-shop">
       <div style="font-size:12px; color:#aaa; text-align:center; margin-bottom:10px;">🪙 سکه‌هات: <strong id="shopCoins" style="color:#fbbf24;">0</strong></div>
       <div style="font-size:11px; color:#888; margin-bottom:6px;">🐾 دروازه‌بان‌ها</div>
@@ -598,14 +685,12 @@
       <div class="shop-grid" id="fieldShop"></div>
     </div>
 
-    <!-- تب آپگرید -->
     <div class="tab-content" id="tab-upgrade">
       <div style="font-size:12px; color:#aaa; text-align:center; margin-bottom:10px;">🪙 سکه‌هات: <strong id="upgradeCoins" style="color:#fbbf24;">0</strong></div>
       <div id="upgradeList"></div>
     </div>
   </div>
 
-  <!-- صفحه پایان -->
   <div class="gameover-screen" id="gameoverScreen">
     <h2 id="goTitle">پایان بازی!</h2>
     <div class="score-big" id="goScore">0</div>
@@ -621,7 +706,6 @@
 
 </div>
 
-<!-- مودال راهنما -->
 <div class="modal-overlay" id="tutorialModal">
   <div class="modal">
     <h3>🎮 چطور بازی کنم؟</h3>
@@ -637,13 +721,9 @@
 </div>
 
 <script>
-// ============================================================
-// گلستان v4.0.0
-// ============================================================
-const VERSION = '4.0.0';
+const VERSION = '4.1.0';
 const SITE_URL = 'https://amirrezagholami86.github.io/coin-factory-game-1/';
 
-// ---- کشورها ----
 const COUNTRIES = [
   { code: 'IR', name: 'ایران', flag: '🇮🇷' },
   { code: 'BR', name: 'برزیل', flag: '🇧🇷' },
@@ -663,53 +743,35 @@ const COUNTRIES = [
   { code: 'HR', name: 'کرواسی', flag: '🇭🇷' },
 ];
 
-// ---- دروازه‌بان‌ها ----
 const KEEPERS = {
-  cat: {
-    id: 'cat', name: 'گربه', icon: '🐱', price: 0,
-    speed: 1.0, smart: 1.0, desc: 'سریع و چابک',
-    colors: { body: '#f59e0b', accent: '#fff', eye: '#000' }
-  },
-  bear: {
-    id: 'bear', name: 'خرس', icon: '🐻', price: 500,
-    speed: 0.7, smart: 0.9, desc: 'قوی ولی کند',
-    colors: { body: '#78350f', accent: '#fbbf24', eye: '#000' }
-  },
-  turtle: {
-    id: 'turtle', name: 'لاک‌پشت', icon: '🐢', price: 1500,
-    speed: 0.5, smart: 1.5, desc: 'کند ولی دقیق',
-    colors: { body: '#16a34a', accent: '#a3a300', eye: '#000' }
-  },
-  fox: {
-    id: 'fox', name: 'روباه', icon: '🦊', price: 3000,
-    speed: 1.3, smart: 1.7, desc: 'حیله‌گر و سریع',
-    colors: { body: '#ea580c', accent: '#fff', eye: '#000' }
-  },
+  cat: { id: 'cat', name: 'گربه', icon: '🐱', price: 0, speed: 1.0, smart: 1.0, desc: 'سریع و چابک' },
+  dog: { id: 'dog', name: 'سگ', icon: '🐶', price: 300, speed: 1.1, smart: 0.9, desc: 'وفادار و پرانرژی' },
+  bear: { id: 'bear', name: 'خرس', icon: '🐻', price: 500, speed: 0.7, smart: 0.9, desc: 'قوی ولی کند' },
+  turtle: { id: 'turtle', name: 'لاک‌پشت', icon: '🐢', price: 1500, speed: 0.5, smart: 1.5, desc: 'کند ولی دقیق' },
+  fox: { id: 'fox', name: 'روباه', icon: '🦊', price: 3000, speed: 1.3, smart: 1.7, desc: 'حیله‌گر و سریع' },
+  panda: { id: 'panda', name: 'پاندا', icon: '🐼', price: 2000, speed: 0.8, smart: 1.3, desc: 'آرام و مطمئن' },
 };
 
-// ---- توپ‌ها ----
 const BALLS = {
-  classic: { id: 'classic', name: 'کلاسیک', icon: '⚽', price: 0, colors: { base: '#fff', accent: '#111' }, trail: '#fff' },
-  gold: { id: 'gold', name: 'طلایی', icon: '⚽', price: 1000, colors: { base: '#fbbf24', accent: '#92400e' }, trail: '#fbbf24' },
-  fire: { id: 'fire', name: 'آتشین', icon: '🔥', price: 4000, colors: { base: '#ef4444', accent: '#fbbf24' }, trail: '#ef4444' },
+  classic: { id: 'classic', name: 'کلاسیک', icon: '⚽', price: 0, colors: { base: '#fff', accent: '#111' } },
+  gold: { id: 'gold', name: 'طلایی', icon: '🏆', price: 1000, colors: { base: '#fbbf24', accent: '#92400e' } },
+  fire: { id: 'fire', name: 'آتشین', icon: '🔥', price: 4000, colors: { base: '#ef4444', accent: '#fbbf24' } },
+  ice: { id: 'ice', name: 'یخی', icon: '❄️', price: 2500, colors: { base: '#60a5fa', accent: '#1e40af' } },
 };
 
-// ---- زمین‌ها ----
 const FIELDS = {
   grass: { id: 'grass', name: 'چمن', icon: '🏟️', price: 0, cls: '' },
   night: { id: 'night', name: 'شب', icon: '🌙', price: 2000, cls: 'night' },
   snow: { id: 'snow', name: 'برفی', icon: '❄️', price: 5000, cls: 'snow' },
 };
 
-// ---- آپگریدها ----
 const UPGRADES = [
-  { id: 'power', name: '💪 قدرت شوت', desc: 'شوت سریع‌تر و قوی‌تر', baseCost: 200, maxLevel: 10 },
-  { id: 'accuracy', name: '🎯 دقت', desc: 'کنترل بیشتر روی جهت', baseCost: 300, maxLevel: 10 },
-  { id: 'brain', name: '🧠 هوش', desc: 'دروازه‌بان رو گول بزن', baseCost: 400, maxLevel: 10 },
-  { id: 'speed', name: '⚡ سرعت', desc: 'توپ سریع‌تر حرکت می‌کنه', baseCost: 250, maxLevel: 10 },
+  { id: 'power', name: '💪 قدرت شوت', desc: 'شوت سریع‌تر', baseCost: 200, maxLevel: 10 },
+  { id: 'accuracy', name: '🎯 دقت', desc: 'کنترل بیشتر', baseCost: 300, maxLevel: 10 },
+  { id: 'brain', name: '🧠 هوش', desc: 'فریب دروازه‌بان', baseCost: 400, maxLevel: 10 },
+  { id: 'speed', name: '⚡ سرعت', desc: 'توپ سریع‌تر', baseCost: 250, maxLevel: 10 },
 ];
 
-// ---- ذخیره ----
 let state = {
   bestScore: 0,
   coins: 0,
@@ -729,23 +791,15 @@ let state = {
 };
 
 function loadState() {
-  const saved = localStorage.getItem('goalestan_v4');
-  if (saved) {
-    try { state = Object.assign(state, JSON.parse(saved)); } catch(e) {}
-  }
+  const saved = localStorage.getItem('goalestan_v41');
+  if (saved) { try { state = Object.assign(state, JSON.parse(saved)); } catch(e) {} }
 }
+function saveState() { localStorage.setItem('goalestan_v41', JSON.stringify(state)); }
 
-function saveState() {
-  localStorage.setItem('goalestan_v4', JSON.stringify(state));
-}
-
-// ---- DOM ----
 const fieldEl = document.getElementById('field');
-const goalSvg = document.getElementById('goalSvg');
 const keeperWrap = document.getElementById('keeperWrap');
-const keeperSvg = document.getElementById('keeperSvg');
+const keeperEmoji = document.getElementById('keeperEmoji');
 const ballWrap = document.getElementById('ballWrap');
-const ballSvg = document.getElementById('ballSvg');
 const hudFlag = document.getElementById('hudFlag');
 const hudCountry = document.getElementById('hudCountry');
 const hudScore = document.getElementById('hudScore');
@@ -764,20 +818,30 @@ const coinCount = document.getElementById('coinCount');
 const soundBtn = document.getElementById('soundBtn');
 const shopCoins = document.getElementById('shopCoins');
 const upgradeCoins = document.getElementById('upgradeCoins');
+const crowdDots = document.getElementById('crowdDots');
 
-// ---- صدا ----
+// تماشاگرها
+const CROWD_COLORS = ['#ef4444','#f59e0b','#22c55e','#3b82f6','#8b5cf6','#ec4899','#fbbf24','#10b981','#6366f1'];
+function initCrowd() {
+  for (let i = 0; i < 120; i++) {
+    const dot = document.createElement('div');
+    dot.className = 'crowd-dot';
+    dot.style.background = CROWD_COLORS[Math.floor(Math.random() * CROWD_COLORS.length)];
+    dot.style.animationDelay = (Math.random() * 2) + 's';
+    dot.style.opacity = 0.5 + Math.random() * 0.5;
+    crowdDots.appendChild(dot);
+  }
+}
+
 let audioCtx = null;
 function initAudio() {
-  if (!audioCtx) {
-    try { audioCtx = new (window.AudioContext || window.webkitAudioContext)(); } catch(e) {}
-  }
+  if (!audioCtx) { try { audioCtx = new (window.AudioContext || window.webkitAudioContext)(); } catch(e) {} }
   if (audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
 }
 function playTone(freq, dur, type='sine', vol=0.15) {
   if (!state.soundOn || !audioCtx) return;
   try {
-    const o = audioCtx.createOscillator();
-    const g = audioCtx.createGain();
+    const o = audioCtx.createOscillator(), g = audioCtx.createGain();
     o.type = type;
     o.frequency.setValueAtTime(freq, audioCtx.currentTime);
     g.gain.setValueAtTime(vol, audioCtx.currentTime);
@@ -791,47 +855,6 @@ function soundGoal() { playTone(523,0.12,'sine',0.15); setTimeout(()=>playTone(6
 function soundMiss() { playTone(300,0.18,'sawtooth',0.1); setTimeout(()=>playTone(200,0.25,'sawtooth',0.1),110); }
 function soundCombo() { playTone(880,0.08,'sine',0.12); setTimeout(()=>playTone(1100,0.12,'sine',0.12),70); }
 
-// ---- SVG دروازه‌بان ----
-function drawKeeper(keeperId) {
-  const k = KEEPERS[keeperId];
-  const c = k.colors;
-  keeperSvg.innerHTML = `
-    <ellipse cx="35" cy="60" rx="22" ry="8" fill="rgba(0,0,0,0.3)"/>
-    <ellipse cx="35" cy="40" rx="18" ry="20" fill="${c.body}"/>
-    <ellipse cx="35" cy="38" rx="14" ry="16" fill="${c.accent}" opacity="0.6"/>
-    <circle cx="26" cy="32" r="2.5" fill="${c.eye}"/>
-    <circle cx="44" cy="32" r="2.5" fill="${c.eye}"/>
-    <ellipse cx="35" cy="44" rx="3" ry="2" fill="${c.eye}"/>
-    <path d="M 25 24 Q 35 18 45 24" stroke="${c.eye}" stroke-width="1.5" fill="none"/>
-    <ellipse cx="20" cy="55" rx="6" ry="4" fill="${c.body}"/>
-    <ellipse cx="50" cy="55" rx="6" ry="4" fill="${c.body}"/>
-  `;
-}
-
-// ---- SVG توپ ----
-function drawBall(ballId) {
-  const b = BALLS[ballId];
-  const c = b.colors;
-  ballSvg.innerHTML = `
-    <defs>
-      <radialGradient id="ballShine" cx="35%" cy="30%">
-        <stop offset="0%" stop-color="#fff" stop-opacity="0.7"/>
-        <stop offset="60%" stop-color="${c.base}"/>
-        <stop offset="100%" stop-color="${c.base}"/>
-      </radialGradient>
-    </defs>
-    <circle cx="20" cy="20" r="18" fill="url(#ballShine)"/>
-    <circle cx="20" cy="20" r="18" fill="none" stroke="${c.accent}" stroke-width="1.2"/>
-    <polygon points="20,8 26,15 23,23 17,23 14,15" fill="${c.accent}"/>
-    <line x1="20" y1="8" x2="20" y2="2" stroke="${c.accent}" stroke-width="1"/>
-    <line x1="26" y1="15" x2="33" y2="12" stroke="${c.accent}" stroke-width="1"/>
-    <line x1="23" y1="23" x2="27" y2="30" stroke="${c.accent}" stroke-width="1"/>
-    <line x1="17" y1="23" x2="13" y2="30" stroke="${c.accent}" stroke-width="1"/>
-    <line x1="14" y1="15" x2="7" y2="12" stroke="${c.accent}" stroke-width="1"/>
-  `;
-}
-
-// ---- ذخیره/بازیابی UI ----
 function updateHUD() {
   hudBest.textContent = state.bestScore.toLocaleString('fa-IR');
   coinCount.textContent = state.coins.toLocaleString('fa-IR');
@@ -850,7 +873,6 @@ function updateHUD() {
   soundBtn.textContent = state.soundOn ? '🔊' : '🔇';
 }
 
-// ---- رندر کشورها ----
 function renderCountries() {
   countryGrid.innerHTML = '';
   COUNTRIES.forEach(c => {
@@ -872,9 +894,7 @@ function renderCountries() {
   });
 }
 
-// ---- رندر فروشگاه ----
 function renderShop() {
-  // دروازه‌بان‌ها
   const keeperShop = document.getElementById('keeperShop');
   keeperShop.innerHTML = '';
   Object.values(KEEPERS).forEach(k => {
@@ -894,7 +914,6 @@ function renderShop() {
     keeperShop.appendChild(div);
   });
 
-  // توپ‌ها
   const ballShop = document.getElementById('ballShop');
   ballShop.innerHTML = '';
   Object.values(BALLS).forEach(b => {
@@ -913,7 +932,6 @@ function renderShop() {
     ballShop.appendChild(div);
   });
 
-  // زمین‌ها
   const fieldShop = document.getElementById('fieldShop');
   fieldShop.innerHTML = '';
   Object.values(FIELDS).forEach(f => {
@@ -932,7 +950,6 @@ function renderShop() {
     fieldShop.appendChild(div);
   });
 
-  // اتصال رویدادها
   document.querySelectorAll('[data-action]').forEach(btn => {
     btn.onclick = () => handleShopAction(btn.dataset.action, btn.dataset.id);
   });
@@ -945,45 +962,29 @@ function handleShopAction(action, id) {
     state.coins -= k.price;
     state.ownedKeepers.push(id);
     state.equippedKeeper = id;
-    saveState();
-    updateHUD();
-    renderShop();
-    drawKeeper(id);
+    saveState(); updateHUD(); renderShop();
+    keeperEmoji.textContent = k.icon;
   } else if (action === 'equip-keeper') {
-    state.equippedKeeper = id;
-    saveState();
-    renderShop();
-    drawKeeper(id);
+    state.equippedKeeper = id; saveState(); renderShop();
+    keeperEmoji.textContent = KEEPERS[id].icon;
   } else if (action === 'buy-ball') {
     const b = BALLS[id];
     if (state.coins < b.price) { alert('سکه کافی نداری!'); return; }
     state.coins -= b.price;
     state.ownedBalls.push(id);
     state.equippedBall = id;
-    saveState();
-    updateHUD();
-    renderShop();
-    drawBall(id);
+    saveState(); updateHUD(); renderShop();
   } else if (action === 'equip-ball') {
-    state.equippedBall = id;
-    saveState();
-    renderShop();
-    drawBall(id);
+    state.equippedBall = id; saveState(); renderShop();
   } else if (action === 'buy-field') {
     const f = FIELDS[id];
     if (state.coins < f.price) { alert('سکه کافی نداری!'); return; }
     state.coins -= f.price;
     state.ownedFields.push(id);
     state.equippedField = id;
-    saveState();
-    updateHUD();
-    renderShop();
-    applyField();
+    saveState(); updateHUD(); renderShop(); applyField();
   } else if (action === 'equip-field') {
-    state.equippedField = id;
-    saveState();
-    renderShop();
-    applyField();
+    state.equippedField = id; saveState(); renderShop(); applyField();
   }
 }
 
@@ -992,7 +993,6 @@ function applyField() {
   fieldEl.className = 'field ' + f.cls;
 }
 
-// ---- آپگرید ----
 function getUpgradeCost(up) {
   const lvl = state.upgrades[up.id] || 0;
   return Math.floor(up.baseCost * Math.pow(1.8, lvl));
@@ -1029,14 +1029,11 @@ function renderUpgrades() {
       if ((state.upgrades[up.id] || 0) >= up.maxLevel) return;
       state.coins -= cost;
       state.upgrades[up.id] = (state.upgrades[up.id] || 0) + 1;
-      saveState();
-      updateHUD();
-      renderUpgrades();
+      saveState(); updateHUD(); renderUpgrades();
     };
   });
 }
 
-// ---- پاداش روزانه ----
 function checkDaily() {
   const now = Date.now();
   const day = 24 * 60 * 60 * 1000;
@@ -1057,8 +1054,7 @@ function checkDaily() {
       state.coins += reward;
       state.lastDailyClaim = now;
       state.dailyStreak = streak;
-      saveState();
-      updateHUD();
+      saveState(); updateHUD();
       box.style.display = 'none';
       alert(`🎁 ${reward} سکه گرفتی!`);
     };
@@ -1067,15 +1063,13 @@ function checkDaily() {
   }
 }
 
-// ---- رندر اولیه ----
 function renderAll() {
   updateHUD();
   renderCountries();
   renderShop();
   renderUpgrades();
   applyField();
-  drawKeeper(state.equippedKeeper);
-  drawBall(state.equippedBall);
+  keeperEmoji.textContent = KEEPERS[state.equippedKeeper].icon;
   checkDaily();
   if (state.selectedCountry) {
     hudFlag.textContent = state.selectedCountry.flag;
@@ -1084,7 +1078,6 @@ function renderAll() {
   }
 }
 
-// ---- تب‌ها ----
 document.querySelectorAll('.tab-btn').forEach(btn => {
   btn.onclick = () => {
     document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
@@ -1094,7 +1087,6 @@ document.querySelectorAll('.tab-btn').forEach(btn => {
   };
 });
 
-// ---- بازی ----
 let game = null;
 let lastTime = 0;
 let animationFrame = null;
@@ -1104,7 +1096,7 @@ function startGame() {
   initAudio();
 
   const wrapRect = document.querySelector('.game-wrap').getBoundingClientRect();
-  const goalRect = goalSvg.getBoundingClientRect();
+  const goalRect = document.getElementById('goal').getBoundingClientRect();
 
   const goalLeft = goalRect.left - wrapRect.left;
   const goalTop = goalRect.top - wrapRect.top;
@@ -1114,41 +1106,25 @@ function startGame() {
   const keeperData = KEEPERS[state.equippedKeeper];
 
   game = {
-    score: 0,
-    combo: 0,
-    maxCombo: 0,
-    isPlaying: true,
-    ball: {
-      x: wrapRect.width / 2,
-      y: wrapRect.height * 0.85,
-      vx: 0,
-      vy: 0,
-      isMoving: false,
-      curve: 0,
-    },
+    score: 0, combo: 0, maxCombo: 0, isPlaying: true,
+    ball: { x: wrapRect.width / 2, y: wrapRect.height * 0.85, vx: 0, vy: 0, isMoving: false },
     keeper: {
-      x: goalLeft + goalWidth / 2,
-      y: goalTop + goalHeight - 30,
-      direction: 1,
-      speed: 120 * keeperData.speed,
-      minX: goalLeft + 30,
-      maxX: goalLeft + goalWidth - 30,
-      smartLevel: 0,
+      x: goalLeft + goalWidth / 2, y: goalTop + goalHeight - 35,
+      direction: 1, speed: 120 * keeperData.speed,
+      minX: goalLeft + 35, maxX: goalLeft + goalWidth - 35, smartLevel: 0,
     },
     goal: { left: goalLeft, top: goalTop, width: goalWidth, height: goalHeight },
     drag: { active: false, startX: 0, startY: 0, currentX: 0, currentY: 0, startTime: 0 },
     keeperId: state.equippedKeeper,
-    wrapWidth: wrapRect.width,
-    wrapHeight: wrapRect.height,
-    goalsScored: 0,
-    coinsEarned: 0,
+    wrapWidth: wrapRect.width, wrapHeight: wrapRect.height,
+    goalsScored: 0, coinsEarned: 0,
   };
 
-  keeperWrap.style.left = (game.keeper.x - 35) + 'px';
-  keeperWrap.style.top = (game.keeper.y - 35) + 'px';
+  keeperWrap.style.left = (game.keeper.x - 32) + 'px';
+  keeperWrap.style.top = (game.keeper.y - 32) + 'px';
   ballWrap.style.display = 'block';
-  ballWrap.style.left = (game.ball.x - 20) + 'px';
-  ballWrap.style.top = (game.ball.y - 20) + 'px';
+  ballWrap.style.left = (game.ball.x - 22) + 'px';
+  ballWrap.style.top = (game.ball.y - 22) + 'px';
 
   hudScore.textContent = '0';
   comboDisplay.classList.remove('show');
@@ -1176,37 +1152,26 @@ function updateKeeper(dt) {
   if (k.x <= k.minX) { k.x = k.minX; k.direction = 1; }
   if (k.x >= k.maxX) { k.x = k.maxX; k.direction = -1; }
 
-  // هوش
   if (k.smartLevel > 0 && game.ball.isMoving && Math.random() < 0.03 * k.smartLevel) {
     const pred = game.ball.x + game.ball.vx * 0.1;
     k.direction = pred < k.x ? -1 : 1;
   }
-
-  keeperWrap.style.left = (k.x - 35) + 'px';
+  keeperWrap.style.left = (k.x - 32) + 'px';
 }
 
 function updateBall(dt) {
   const b = game.ball;
   if (!b.isMoving) return;
-
-  // پیچ (curve)
-  if (b.curve !== 0) {
-    b.vx += b.curve * 200 * dt;
-    b.curve *= 0.98;
-  }
-
   b.x += b.vx * dt;
   b.y += b.vy * dt;
-
-  ballWrap.style.left = (b.x - 20) + 'px';
-  ballWrap.style.top = (b.y - 20) + 'px';
+  ballWrap.style.left = (b.x - 22) + 'px';
+  ballWrap.style.top = (b.y - 22) + 'px';
   ballWrap.style.transform = `rotate(${(b.x + b.y) * 2}deg)`;
 
-  // برخورد با دروازه‌بان
   const k = game.keeper;
   const dx = b.x - k.x;
   const dy = b.y - k.y;
-  if (Math.sqrt(dx*dx + dy*dy) < 42) {
+  if (Math.sqrt(dx*dx + dy*dy) < 45) {
     soundMiss();
     keeperWrap.classList.add('diving');
     keeperWrap.style.setProperty('--dive-rot', (Math.random() > 0.5 ? 25 : -25) + 'deg');
@@ -1216,7 +1181,6 @@ function updateBall(dt) {
     return;
   }
 
-  // گل
   const g = game.goal;
   if (b.y < g.top + g.height - 10 && b.x > g.left && b.x < g.left + g.width && b.y > g.top) {
     scoreGoal();
@@ -1234,10 +1198,7 @@ function updateBall(dt) {
 function scoreGoal() {
   const b = game.ball;
   const g = game.goal;
-
-  // امتیاز بر اساس دقت (نزدیکی به گوشه)
   const relX = (b.x - g.left) / g.width;
-  const relY = (b.y - g.top) / g.height;
   let accuracy = 1;
   if (relX < 0.2 || relX > 0.8) accuracy = 3;
   else if (relX < 0.35 || relX > 0.65) accuracy = 2;
@@ -1248,14 +1209,12 @@ function scoreGoal() {
   game.combo++;
   if (game.combo > game.maxCombo) game.maxCombo = game.combo;
 
-  // سکه
   const coinsFromGoal = 10 + (accuracy - 1) * 10;
   state.coins += coinsFromGoal;
   game.coinsEarned += coinsFromGoal;
 
   hudScore.textContent = game.score.toLocaleString('fa-IR');
   soundGoal();
-
   spawnParticles(accuracy === 3);
 
   const flash = document.createElement('div');
@@ -1275,13 +1234,10 @@ function scoreGoal() {
     soundCombo();
   }
 
-  // دروازه‌بان سریع‌تر
   game.keeper.speed = 120 * KEEPERS[state.equippedKeeper].speed + game.score * 15;
   game.keeper.smartLevel = Math.min(game.score / 5, 3);
 
-  saveState();
-  updateHUD();
-  resetBall();
+  saveState(); updateHUD(); resetBall();
 }
 
 function spawnParticles(isPerfect) {
@@ -1307,10 +1263,9 @@ function resetBall() {
   const b = game.ball;
   b.x = game.wrapWidth / 2;
   b.y = game.wrapHeight * 0.85;
-  b.vx = 0; b.vy = 0; b.curve = 0;
-  b.isMoving = false;
-  ballWrap.style.left = (b.x - 20) + 'px';
-  ballWrap.style.top = (b.y - 20) + 'px';
+  b.vx = 0; b.vy = 0; b.isMoving = false;
+  ballWrap.style.left = (b.x - 22) + 'px';
+  ballWrap.style.top = (b.y - 22) + 'px';
   ballWrap.style.transform = 'rotate(0deg)';
   hint.classList.remove('hidden');
 }
@@ -1321,11 +1276,8 @@ function endGame(reason) {
 
   const finalScore = game.score;
   const isNewRecord = finalScore > state.bestScore;
-  if (isNewRecord) {
-    state.bestScore = finalScore;
-  }
-  saveState();
-  updateHUD();
+  if (isNewRecord) state.bestScore = finalScore;
+  saveState(); updateHUD();
 
   document.getElementById('goTitle').textContent = reason || 'پایان بازی!';
   document.getElementById('goScore').textContent = finalScore.toLocaleString('fa-IR');
@@ -1344,7 +1296,6 @@ function endGame(reason) {
   comboDisplay.classList.remove('show');
 }
 
-// ---- کنترل کشیدن ----
 function getPointerPos(e) {
   const rect = document.querySelector('.game-wrap').getBoundingClientRect();
   if (e.touches) return { x: e.touches[0].clientX - rect.left, y: e.touches[0].clientY - rect.top };
@@ -1359,10 +1310,8 @@ function handlePointerDown(e) {
   const dy = pos.y - b.y;
   if (Math.sqrt(dx*dx + dy*dy) < 60) {
     game.drag.active = true;
-    game.drag.startX = b.x;
-    game.drag.startY = b.y;
-    game.drag.currentX = pos.x;
-    game.drag.currentY = pos.y;
+    game.drag.startX = b.x; game.drag.startY = b.y;
+    game.drag.currentX = pos.x; game.drag.currentY = pos.y;
     game.drag.startTime = Date.now();
     hint.classList.add('hidden');
     initAudio();
@@ -1373,8 +1322,7 @@ function handlePointerDown(e) {
 function handlePointerMove(e) {
   if (!game || !game.drag.active) return;
   const pos = getPointerPos(e);
-  game.drag.currentX = pos.x;
-  game.drag.currentY = pos.y;
+  game.drag.currentX = pos.x; game.drag.currentY = pos.y;
   e.preventDefault();
 }
 
@@ -1390,27 +1338,18 @@ function handlePointerUp(e) {
 
   if (dist < 20) return;
 
-  // آپگریدها
   const powerLvl = state.upgrades.power || 0;
   const accLvl = state.upgrades.accuracy || 0;
-  const speedLvl = state.upgrades.speed || 0;
   const brainLvl = state.upgrades.brain || 0;
 
   const powerMult = 1 + powerLvl * 0.08;
   const accMult = 1 - accLvl * 0.02;
-
   const power = Math.min(dist * 8 * powerMult, 1400 * powerMult);
   const angle = Math.atan2(dy, dx) + (Math.random() - 0.5) * 0.2 * accMult;
 
   b.vx = Math.cos(angle) * power;
   b.vy = Math.sin(angle) * power;
 
-  // پیچ: اگه کشش منحنی بود یا زمان کشش زیاد بود
-  if (dragTime > 400) {
-    b.curve = (Math.random() - 0.5) * 300;
-  }
-
-  // فریب: کشش سریع → دروازه‌بان گول می‌خوره
   if (dragTime < 200 && brainLvl > 0) {
     game.keeper.direction *= -1;
   }
@@ -1429,7 +1368,6 @@ gameWrap.addEventListener('touchstart', handlePointerDown, { passive: false });
 gameWrap.addEventListener('touchmove', handlePointerMove, { passive: false });
 gameWrap.addEventListener('touchend', handlePointerUp, { passive: false });
 
-// ---- دکمه‌ها ----
 startBtn.onclick = () => {
   if (!state.tutorialSeen) {
     document.getElementById('tutorialModal').classList.add('active');
@@ -1484,9 +1422,9 @@ soundBtn.onclick = () => {
   if (state.soundOn) initAudio();
 };
 
-// ---- شروع ----
 loadState();
+initCrowd();
 renderAll();
 </script>
 </body>
-       </html>
+ </html>
