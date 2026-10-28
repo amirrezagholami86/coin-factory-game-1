@@ -5,9 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <title>⚽ گلستان | بازی امیررضا غلامی</title>
 <meta name="author" content="امیررضا غلامی">
-<meta name="description" content="بازی گلستان - گل بزن، رکورد بشکن! ساخته امیررضا غلامی">
+<meta name="description" content="بازی گلستان - گل بزن، سکه بگیر، دروازه‌بان بخر! ساخته امیررضا غلامی">
 <meta property="og:title" content="⚽ گلستان | بازی امیررضا غلامی">
-<meta property="og:description" content="گل بزن، رکورد بشکن! تو می‌تونی رکورد منو بشکنی؟">
+<meta property="og:description" content="گل بزن، سکه بگیر، دروازه‌بان بخر! تو می‌تونی رکورد منو بشکنی؟">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://amirrezagholami86.github.io/coin-factory-game-1/">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚽</text></svg>">
@@ -28,185 +28,155 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 10px;
+    padding: 8px;
   }
 
-  /* ============ پس‌زمینه متحرک ============ */
   .bg-orbs {
-    position: fixed;
-    inset: 0;
-    overflow: hidden;
-    z-index: 0;
-    pointer-events: none;
+    position: fixed; inset: 0; overflow: hidden; z-index: 0; pointer-events: none;
   }
   .orb {
-    position: absolute;
-    border-radius: 50%;
-    filter: blur(60px);
-    opacity: 0.4;
-    animation: orbFloat 20s infinite ease-in-out;
+    position: absolute; border-radius: 50%; filter: blur(70px); opacity: 0.35;
+    animation: orbFloat 22s infinite ease-in-out;
   }
-  .orb:nth-child(1) { width: 300px; height: 300px; background: #22c55e; top: -100px; left: -100px; animation-delay: 0s; }
-  .orb:nth-child(2) { width: 250px; height: 250px; background: #fbbf24; bottom: -80px; right: -80px; animation-delay: -5s; }
-  .orb:nth-child(3) { width: 200px; height: 200px; background: #3b82f6; top: 50%; left: 50%; animation-delay: -10s; }
+  .orb:nth-child(1) { width: 320px; height: 320px; background: #22c55e; top: -120px; left: -120px; }
+  .orb:nth-child(2) { width: 280px; height: 280px; background: #fbbf24; bottom: -100px; right: -100px; animation-delay: -7s; }
+  .orb:nth-child(3) { width: 220px; height: 220px; background: #3b82f6; top: 50%; left: 50%; animation-delay: -14s; }
   @keyframes orbFloat {
-    0%, 100% { transform: translate(0, 0) scale(1); }
-    33% { transform: translate(60px, -40px) scale(1.2); }
-    66% { transform: translate(-40px, 60px) scale(0.9); }
+    0%,100% { transform: translate(0,0) scale(1); }
+    33% { transform: translate(70px,-50px) scale(1.2); }
+    66% { transform: translate(-50px,70px) scale(0.9); }
   }
 
-  /* ============ باکس اصلی ============ */
   .game-wrap {
     position: relative;
     width: 100%;
     max-width: 480px;
-    height: 95vh;
-    max-height: 800px;
+    height: 96vh;
+    max-height: 820px;
     background: linear-gradient(180deg, #0a2818 0%, #0d3a22 100%);
     border-radius: 24px;
     overflow: hidden;
-    box-shadow: 0 25px 80px rgba(0,0,0,0.6), 0 0 0 1px rgba(74,222,128,0.15), inset 0 0 100px rgba(74,222,128,0.05);
+    box-shadow: 0 25px 80px rgba(0,0,0,0.7), 0 0 0 1px rgba(74,222,128,0.15), inset 0 0 120px rgba(74,222,128,0.05);
     z-index: 1;
   }
 
-  /* ============ زمین ============ */
+  /* ============ زمین چمن ============ */
   .field {
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(180deg, #0f3d22 0%, #1a5c33 30%, #2d8a4a 65%, #45b865 100%);
+    position: absolute; inset: 0;
+    background: linear-gradient(180deg, #0f3d22 0%, #1a5c33 25%, #2d8a4a 55%, #45b865 100%);
     overflow: hidden;
+    transition: background 0.5s;
   }
+  .field.night {
+    background: linear-gradient(180deg, #061a0a 0%, #0a2812 30%, #143a1e 65%, #1e5528 100%);
+  }
+  .field.snow {
+    background: linear-gradient(180deg, #d0e8f0 0%, #e8f4f8 30%, #f0f8fc 65%, #ffffff 100%);
+  }
+  .field.snow .chalk { background: rgba(150,180,200,0.5); }
   .field::before {
     content: '';
-    position: absolute;
-    inset: 0;
-    background-image: repeating-linear-gradient(180deg, transparent 0px, transparent 50px, rgba(255,255,255,0.02) 50px, rgba(255,255,255,0.02) 100px);
-    animation: fieldScroll 8s linear infinite;
+    position: absolute; inset: 0;
+    background-image: repeating-linear-gradient(180deg, transparent 0px, transparent 55px, rgba(0,0,0,0.06) 55px, rgba(0,0,0,0.06) 110px);
   }
-  @keyframes fieldScroll {
-    from { transform: translateY(0); }
-    to { transform: translateY(100px); }
+  .field.night::before {
+    background-image: repeating-linear-gradient(180deg, transparent 0px, transparent 55px, rgba(255,255,255,0.03) 55px, rgba(255,255,255,0.03) 110px);
+  }
+  .chalk {
+    position: absolute; background: rgba(255,255,255,0.35);
+  }
+  .chalk-penalty {
+    width: 55%; height: 22%; border: 3px solid rgba(255,255,255,0.4);
+    border-top: none; border-radius: 0 0 6px 6px;
+    top: 15%; left: 50%; transform: translateX(-50%);
+    background: transparent;
   }
 
-  /* ============ دروازه ============ */
-  .goal {
+  /* ============ نورافکن ============ */
+  .floodlight {
+    position: absolute; width: 200px; height: 200px;
+    background: radial-gradient(circle, rgba(255,255,200,0.25) 0%, transparent 70%);
+    border-radius: 50%; pointer-events: none;
+    top: -50px; opacity: 0; transition: opacity 0.5s;
+  }
+  .field.night .floodlight { opacity: 1; }
+  .floodlight:nth-child(3) { left: 10%; }
+  .floodlight:nth-child(4) { right: 10%; }
+
+  /* ============ دروازه SVG ============ */
+  .goal-svg {
     position: absolute;
     top: 15%;
     left: 50%;
     transform: translateX(-50%);
     width: 70%;
     height: 22%;
-    border: 4px solid #fff;
-    border-bottom: none;
-    border-radius: 10px 10px 0 0;
-    background:
-      repeating-linear-gradient(90deg, transparent 0px, transparent 18px, rgba(255,255,255,0.12) 18px, rgba(255,255,255,0.12) 19px),
-      repeating-linear-gradient(0deg, transparent 0px, transparent 18px, rgba(255,255,255,0.12) 18px, rgba(255,255,255,0.12) 19px),
-      linear-gradient(180deg, rgba(0,0,0,0.2), rgba(0,0,0,0.4));
-    box-shadow: inset 0 0 40px rgba(0,0,0,0.5), 0 0 30px rgba(255,255,255,0.15);
     z-index: 2;
+    filter: drop-shadow(0 8px 20px rgba(0,0,0,0.5));
   }
 
   /* ============ دروازه‌بان ============ */
-  .keeper {
+  .keeper-wrap {
     position: absolute;
-    font-size: 48px;
     z-index: 3;
-    filter: drop-shadow(0 6px 12px rgba(0,0,0,0.5));
-    pointer-events: none;
-    transition: left 0.12s cubic-bezier(0.34, 1.56, 0.64, 1);
+    transition: left 0.1s cubic-bezier(0.34, 1.56, 0.64, 1);
     will-change: left;
+    pointer-events: none;
   }
-  .keeper.diving {
-    animation: dive 0.3s ease-out;
+  .keeper-svg {
+    filter: drop-shadow(0 8px 16px rgba(0,0,0,0.6));
+    transition: transform 0.15s;
   }
-  @keyframes dive {
-    0% { transform: scale(1) rotate(0deg); }
-    50% { transform: scale(1.3) rotate(15deg); }
-    100% { transform: scale(1) rotate(0deg); }
+  .keeper-wrap.diving .keeper-svg {
+    animation: diveAnim 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
   }
-  @media (max-width: 400px) {
-    .keeper { font-size: 40px; }
+  @keyframes diveAnim {
+    0% { transform: scale(1) rotate(0deg) translateY(0); }
+    40% { transform: scale(1.25) rotate(var(--dive-rot, 20deg)) translateY(-15px); }
+    100% { transform: scale(1) rotate(0deg) translateY(0); }
   }
 
-  /* ============ توپ ============ */
-  .ball {
+  /* ============ توپ SVG ============ */
+  .ball-wrap {
     position: absolute;
-    font-size: 40px;
     z-index: 4;
-    filter: drop-shadow(0 6px 12px rgba(0,0,0,0.6));
     pointer-events: none;
+    filter: drop-shadow(0 8px 16px rgba(0,0,0,0.6));
     will-change: left, top, transform;
   }
-  @media (max-width: 400px) {
-    .ball { font-size: 34px; }
-  }
 
-  /* ============ HUD شیشه‌ای ============ */
+  /* ============ HUD ============ */
   .hud {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    padding: 14px 16px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    position: absolute; top: 0; left: 0; right: 0;
+    padding: 12px 14px;
+    display: flex; justify-content: space-between; align-items: center;
     z-index: 10;
-    background: linear-gradient(180deg, rgba(0,0,0,0.45) 0%, transparent 100%);
+    background: linear-gradient(180deg, rgba(0,0,0,0.55) 0%, transparent 100%);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
   }
   .hud-item {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    font-size: 13px;
-    font-weight: 600;
-    color: #fff;
-    text-shadow: 0 2px 8px rgba(0,0,0,0.6);
+    display: flex; align-items: center; gap: 5px;
+    font-size: 12px; font-weight: 600;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.7);
   }
-  .hud-item .big {
-    font-size: 22px;
-    font-weight: 900;
-    color: #fbbf24;
-    text-shadow: 0 0 20px rgba(251,191,36,0.6);
-  }
-  .flag-badge {
-    font-size: 22px;
-    filter: drop-shadow(0 2px 6px rgba(0,0,0,0.5));
-  }
+  .hud-item .big { font-size: 20px; font-weight: 900; color: #fbbf24; text-shadow: 0 0 20px rgba(251,191,36,0.7); }
+  .flag-badge { font-size: 20px; filter: drop-shadow(0 2px 6px rgba(0,0,0,0.5)); }
   .sound-btn {
-    background: rgba(255,255,255,0.1);
-    border: 1px solid rgba(255,255,255,0.2);
-    border-radius: 10px;
-    width: 36px;
-    height: 36px;
-    font-size: 18px;
-    cursor: pointer;
-    backdrop-filter: blur(10px);
-    transition: 0.2s;
-    color: #fff;
+    background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 10px; width: 34px; height: 34px; font-size: 16px;
+    cursor: pointer; backdrop-filter: blur(10px); color: #fff;
+    display: flex; align-items: center; justify-content: center;
   }
-  .sound-btn:hover { background: rgba(255,255,255,0.2); }
 
   /* ============ پیام راهنما ============ */
   .hint {
-    position: absolute;
-    bottom: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: rgba(0,0,0,0.7);
-    backdrop-filter: blur(12px);
-    color: #fff;
-    padding: 10px 18px;
-    border-radius: 24px;
-    font-size: 12px;
-    white-space: nowrap;
-    z-index: 10;
+    position: absolute; bottom: 18px; left: 50%; transform: translateX(-50%);
+    background: rgba(0,0,0,0.75); backdrop-filter: blur(12px);
+    color: #fff; padding: 8px 16px; border-radius: 22px;
+    font-size: 11px; white-space: nowrap; z-index: 10;
     border: 1px solid rgba(255,255,255,0.1);
-    animation: hintPulse 2s infinite;
-    max-width: 90%;
+    animation: hintPulse 2s infinite; max-width: 92%;
   }
   @keyframes hintPulse {
     0%,100% { opacity: 0.85; transform: translateX(-50%) scale(1); }
@@ -216,30 +186,19 @@
 
   /* ============ افکت گل ============ */
   .goal-flash {
-    position: absolute;
-    inset: 0;
-    background: radial-gradient(circle, rgba(74,222,128,0.7) 0%, transparent 70%);
-    pointer-events: none;
-    z-index: 5;
-    animation: goalFlash 0.7s ease-out forwards;
+    position: absolute; inset: 0;
+    background: radial-gradient(circle, rgba(74,222,128,0.8) 0%, transparent 70%);
+    pointer-events: none; z-index: 5;
+    animation: goalFlash 0.8s ease-out forwards;
   }
-  @keyframes goalFlash {
-    from { opacity: 1; }
-    to { opacity: 0; }
-  }
+  @keyframes goalFlash { from { opacity: 1; } to { opacity: 0; } }
   .goal-text {
-    position: absolute;
-    top: 45%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-size: 64px;
-    font-weight: 900;
-    color: #fbbf24;
+    position: absolute; top: 42%; left: 50%; transform: translate(-50%, -50%);
+    font-size: 60px; font-weight: 900; color: #fbbf24;
     text-shadow: 0 0 40px rgba(251,191,36,0.9), 0 0 80px rgba(251,191,36,0.5), 0 6px 0 rgba(0,0,0,0.3);
     z-index: 6;
     animation: goalText 1.1s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
     pointer-events: none;
-    font-family: 'Vazirmatn', Tahoma, sans-serif;
   }
   @keyframes goalText {
     0% { opacity: 0; transform: translate(-50%, -50%) scale(0.3) rotate(-10deg); }
@@ -247,169 +206,200 @@
     70% { opacity: 1; transform: translate(-50%, -50%) scale(1) rotate(0deg); }
     100% { opacity: 0; transform: translate(-50%, -50%) scale(1.5); }
   }
+  .goal-text.perfect { color: #4ade80; text-shadow: 0 0 40px rgba(74,222,128,0.9), 0 0 80px rgba(74,222,128,0.6); }
 
-  /* ============ ذرات ============ */
   .particle {
-    position: absolute;
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    pointer-events: none;
-    z-index: 7;
-    animation: particleBurst 1s ease-out forwards;
+    position: absolute; width: 10px; height: 10px; border-radius: 50%;
+    pointer-events: none; z-index: 7;
+    animation: particleBurst 1.1s ease-out forwards;
   }
   @keyframes particleBurst {
-    0% { opacity: 1; transform: translate(0, 0) scale(1); }
+    0% { opacity: 1; transform: translate(0,0) scale(1); }
     100% { opacity: 0; transform: translate(var(--dx), var(--dy)) scale(0); }
   }
 
-  /* ============ کمبو ============ */
   .combo-display {
-    position: absolute;
-    top: 65px;
-    right: 16px;
+    position: absolute; top: 62px; right: 14px;
     background: linear-gradient(135deg, #fbbf24, #f59e0b);
-    color: #050a14;
-    padding: 6px 14px;
-    border-radius: 20px;
-    font-size: 13px;
-    font-weight: 900;
-    z-index: 10;
-    display: none;
-    box-shadow: 0 0 20px rgba(251,191,36,0.6);
+    color: #050a14; padding: 5px 12px; border-radius: 18px;
+    font-size: 12px; font-weight: 900; z-index: 10; display: none;
+    box-shadow: 0 0 20px rgba(251,191,36,0.7);
     animation: comboPop 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
   }
   .combo-display.show { display: block; }
-  @keyframes comboPop {
-    from { transform: scale(0.5); }
-    to { transform: scale(1); }
+  @keyframes comboPop { from { transform: scale(0.5); } to { transform: scale(1); } }
+
+  .coin-display {
+    position: absolute; top: 62px; left: 14px;
+    background: linear-gradient(135deg, rgba(251,191,36,0.9), rgba(245,158,11,0.9));
+    color: #050a14; padding: 5px 12px; border-radius: 18px;
+    font-size: 12px; font-weight: 900; z-index: 10;
+    box-shadow: 0 0 15px rgba(251,191,36,0.4);
+    display: flex; align-items: center; gap: 4px;
   }
 
   /* ============ صفحه‌ها ============ */
   .screen {
-    position: absolute;
-    inset: 0;
+    position: absolute; inset: 0;
     background: linear-gradient(135deg, #050a14 0%, #0a2818 100%);
-    display: flex;
-    flex-direction: column;
-    padding: 24px 20px;
-    z-index: 100;
-    overflow-y: auto;
-    transition: opacity 0.4s ease, transform 0.4s ease;
+    display: flex; flex-direction: column;
+    padding: 20px 18px; z-index: 100; overflow-y: auto;
+    transition: opacity 0.4s ease;
   }
-  .screen.hidden {
-    display: none;
-  }
+  .screen.hidden { display: none; }
   .screen h1 {
-    font-size: 32px;
-    text-align: center;
-    margin-bottom: 6px;
-    color: #4ade80;
-    font-weight: 900;
+    font-size: 30px; text-align: center; margin-bottom: 4px;
+    color: #4ade80; font-weight: 900;
     text-shadow: 0 0 30px rgba(74,222,128,0.5);
-    letter-spacing: -0.5px;
   }
-  .screen .subtitle {
-    text-align: center;
-    font-size: 13px;
-    color: #888;
-    margin-bottom: 6px;
-  }
-  .screen .brand-line {
-    text-align: center;
-    font-size: 11px;
-    color: #666;
-    margin-bottom: 18px;
-  }
+  .screen .subtitle { text-align: center; font-size: 12px; color: #888; margin-bottom: 4px; }
+  .screen .brand-line { text-align: center; font-size: 10px; color: #666; margin-bottom: 14px; }
   .screen .brand-line a { color: #4ade80; text-decoration: none; font-weight: 700; }
 
-  /* ============ گرید کشورها ============ */
-  .country-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 8px;
-    margin-bottom: 16px;
-  }
-  @media (max-width: 360px) {
-    .country-grid { grid-template-columns: repeat(3, 1fr); }
-  }
-  .country-btn {
+  /* ============ تب‌ها ============ */
+  .tabs {
+    display: flex; gap: 6px; margin-bottom: 14px;
     background: rgba(255,255,255,0.05);
-    border: 2px solid rgba(255,255,255,0.08);
-    border-radius: 14px;
-    padding: 12px 4px;
-    cursor: pointer;
-    transition: 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
-    text-align: center;
-    font-family: inherit;
-    color: #fff;
+    padding: 4px; border-radius: 12px;
     backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
   }
-  .country-btn:hover {
-    background: rgba(74,222,128,0.15);
-    border-color: rgba(74,222,128,0.5);
-    transform: translateY(-3px) scale(1.05);
+  .tab-btn {
+    flex: 1; background: none; border: none; color: #888;
+    font-family: inherit; font-size: 12px; font-weight: 700;
+    padding: 8px 4px; border-radius: 8px; cursor: pointer;
+    transition: all 0.25s;
   }
+  .tab-btn.active {
+    background: linear-gradient(135deg, #4ade80, #22c55e);
+    color: #050a14;
+    box-shadow: 0 4px 12px rgba(74,222,128,0.4);
+  }
+  .tab-content { display: none; }
+  .tab-content.active { display: block; animation: fadeIn 0.3s ease; }
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+  /* ============ کشورها ============ */
+  .country-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 7px; margin-bottom: 12px; }
+  @media (max-width: 360px) { .country-grid { grid-template-columns: repeat(3, 1fr); } }
+  .country-btn {
+    background: rgba(255,255,255,0.05); border: 2px solid rgba(255,255,255,0.08);
+    border-radius: 12px; padding: 10px 3px; cursor: pointer;
+    transition: 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+    text-align: center; font-family: inherit; color: #fff;
+    backdrop-filter: blur(10px);
+  }
+  .country-btn:hover { background: rgba(74,222,128,0.15); border-color: rgba(74,222,128,0.5); transform: translateY(-3px); }
   .country-btn.selected {
     background: linear-gradient(135deg, rgba(74,222,128,0.3), rgba(34,197,94,0.2));
     border-color: #4ade80;
-    box-shadow: 0 0 25px rgba(74,222,128,0.5), inset 0 0 20px rgba(74,222,128,0.1);
-    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 0 22px rgba(74,222,128,0.5);
+    transform: translateY(-3px);
   }
-  .country-btn .flag { font-size: 28px; display: block; margin-bottom: 4px; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.4)); }
-  .country-btn .name { font-size: 10px; color: #ccc; font-weight: 600; }
+  .country-btn .flag { font-size: 26px; display: block; margin-bottom: 3px; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.4)); }
+  .country-btn .name { font-size: 9px; color: #ccc; font-weight: 600; }
+
+  /* ============ فروشگاه ============ */
+  .shop-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .shop-item {
+    background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 14px; padding: 12px 10px; text-align: center;
+    backdrop-filter: blur(10px); transition: 0.2s;
+    position: relative; overflow: hidden;
+  }
+  .shop-item.owned { border-color: rgba(74,222,128,0.5); background: rgba(74,222,128,0.08); }
+  .shop-item.equipped { border-color: #4ade80; background: rgba(74,222,128,0.2); box-shadow: 0 0 20px rgba(74,222,128,0.3); }
+  .shop-item .item-icon { font-size: 32px; margin-bottom: 4px; display: block; }
+  .shop-item .item-name { font-size: 12px; font-weight: 700; margin-bottom: 4px; }
+  .shop-item .item-desc { font-size: 9px; color: #999; margin-bottom: 8px; min-height: 22px; }
+  .shop-item .item-price {
+    font-size: 11px; color: #fbbf24; font-weight: 700;
+    display: flex; align-items: center; justify-content: center; gap: 3px;
+  }
+  .shop-item .buy-item-btn {
+    background: linear-gradient(135deg, #4ade80, #22c55e);
+    color: #050a14; border: none; border-radius: 8px;
+    padding: 6px 12px; font-family: inherit; font-size: 11px;
+    font-weight: 900; cursor: pointer; margin-top: 6px; width: 100%;
+    transition: 0.2s;
+  }
+  .shop-item .buy-item-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+  .shop-item .buy-item-btn.equip { background: linear-gradient(135deg, #fbbf24, #f59e0b); }
+  .shop-item .buy-item-btn.equipped { background: rgba(255,255,255,0.1); color: #4ade80; cursor: default; }
+  .shop-item .lock-badge {
+    position: absolute; top: 8px; left: 8px;
+    font-size: 10px; background: rgba(0,0,0,0.5);
+    padding: 2px 6px; border-radius: 6px; color: #aaa;
+  }
+
+  /* ============ آپگرید ============ */
+  .upgrade-item {
+    background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 12px; padding: 12px 14px; margin-bottom: 8px;
+    display: flex; justify-content: space-between; align-items: center;
+    backdrop-filter: blur(10px);
+  }
+  .upgrade-info { text-align: right; }
+  .upgrade-name { font-size: 13px; font-weight: 700; margin-bottom: 2px; }
+  .upgrade-level { font-size: 10px; color: #4ade80; font-weight: 700; }
+  .upgrade-desc { font-size: 10px; color: #888; }
+  .upgrade-buy-btn {
+    background: linear-gradient(135deg, #4ade80, #22c55e);
+    color: #050a14; border: none; border-radius: 10px;
+    padding: 8px 14px; font-family: inherit; font-size: 11px;
+    font-weight: 900; cursor: pointer; white-space: nowrap;
+    transition: 0.2s;
+  }
+  .upgrade-buy-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+  /* ============ پاداش روزانه ============ */
+  .daily-box {
+    background: linear-gradient(135deg, rgba(251,191,36,0.15), rgba(245,158,11,0.08));
+    border: 2px solid rgba(251,191,36,0.4);
+    border-radius: 14px; padding: 14px; margin-bottom: 12px;
+    text-align: center;
+  }
+  .daily-box h3 { font-size: 14px; color: #fbbf24; margin-bottom: 6px; }
+  .daily-box p { font-size: 11px; color: #aaa; margin-bottom: 10px; }
+  .daily-claim-btn {
+    background: linear-gradient(135deg, #fbbf24, #f59e0b);
+    color: #050a14; border: none; border-radius: 10px;
+    padding: 10px 22px; font-family: inherit; font-size: 13px;
+    font-weight: 900; cursor: pointer; transition: 0.2s;
+    box-shadow: 0 4px 15px rgba(251,191,36,0.4);
+  }
+  .daily-claim-btn:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(251,191,36,0.6); }
+  .daily-claim-btn:disabled { opacity: 0.4; cursor: not-allowed; box-shadow: none; }
 
   /* ============ دکمه شروع ============ */
   .start-btn {
     background: linear-gradient(135deg, #4ade80, #22c55e, #16a34a);
     background-size: 200% 200%;
-    color: #050a14;
-    border: none;
-    border-radius: 16px;
-    padding: 18px;
-    font-family: inherit;
-    font-size: 18px;
-    font-weight: 900;
-    cursor: pointer;
-    width: 100%;
+    color: #050a14; border: none; border-radius: 16px;
+    padding: 16px; font-family: inherit; font-size: 17px;
+    font-weight: 900; cursor: pointer; width: 100%;
     transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
     box-shadow: 0 8px 25px rgba(74,222,128,0.35), inset 0 1px 0 rgba(255,255,255,0.3);
     animation: gradientShift 3s ease infinite;
-    letter-spacing: 0.5px;
+    margin-top: 8px;
   }
   @keyframes gradientShift {
-    0%, 100% { background-position: 0% 50%; }
+    0%,100% { background-position: 0% 50%; }
     50% { background-position: 100% 50%; }
   }
-  .start-btn:hover:not(:disabled) {
-    transform: translateY(-3px) scale(1.02);
-    box-shadow: 0 12px 35px rgba(74,222,128,0.5);
-  }
+  .start-btn:hover:not(:disabled) { transform: translateY(-3px) scale(1.02); box-shadow: 0 12px 35px rgba(74,222,128,0.5); }
   .start-btn:disabled { opacity: 0.4; cursor: not-allowed; }
 
-  /* ============ جعبه رکورد ============ */
   .best-score-box {
     text-align: center;
     background: linear-gradient(135deg, rgba(251,191,36,0.15), rgba(245,158,11,0.08));
     border: 1px solid rgba(251,191,36,0.35);
-    border-radius: 14px;
-    padding: 12px;
-    font-size: 13px;
-    color: #fbbf24;
-    margin-bottom: 16px;
+    border-radius: 12px; padding: 10px;
+    font-size: 12px; color: #fbbf24; margin-bottom: 10px;
     backdrop-filter: blur(10px);
-    box-shadow: 0 0 20px rgba(251,191,36,0.15);
   }
-
-  /* ============ لیگ ============ */
   .league-badge {
-    display: inline-block;
-    font-size: 10px;
-    padding: 3px 10px;
-    border-radius: 10px;
-    font-weight: 700;
-    margin-top: 4px;
+    display: inline-block; font-size: 9px; padding: 2px 8px;
+    border-radius: 8px; font-weight: 700; margin-top: 3px;
   }
   .league-bronze { background: linear-gradient(135deg, #cd7f32, #a0522d); color: #fff; }
   .league-silver { background: linear-gradient(135deg, #c0c0c0, #808080); color: #050a14; }
@@ -418,194 +408,98 @@
 
   /* ============ صفحه پایان ============ */
   .gameover-screen {
-    position: absolute;
-    inset: 0;
-    background: rgba(5,10,20,0.92);
+    position: absolute; inset: 0;
+    background: rgba(5,10,20,0.94);
     backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    display: none;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 30px;
-    z-index: 200;
-    text-align: center;
+    display: none; flex-direction: column;
+    justify-content: center; align-items: center;
+    padding: 30px; z-index: 200; text-align: center;
     animation: fadeIn 0.4s ease;
   }
   .gameover-screen.active { display: flex; }
-  @keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-  }
-  .gameover-screen h2 {
-    font-size: 26px;
-    color: #4ade80;
-    margin-bottom: 12px;
-    font-weight: 900;
-  }
-  .gameover-screen .score-big {
-    font-size: 72px;
-    font-weight: 900;
+  .gameover-screen h2 { font-size: 24px; color: #4ade80; margin-bottom: 10px; font-weight: 900; }
+  .score-big {
+    font-size: 68px; font-weight: 900;
     background: linear-gradient(135deg, #fbbf24, #f59e0b);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    margin: 8px 0;
-    filter: drop-shadow(0 0 30px rgba(251,191,36,0.5));
-    line-height: 1;
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text; margin: 6px 0;
+    filter: drop-shadow(0 0 30px rgba(251,191,36,0.5)); line-height: 1;
   }
-  .gameover-screen .score-label {
-    font-size: 13px;
-    color: #888;
-    margin-bottom: 18px;
-  }
-  .gameover-screen .new-record {
-    font-size: 15px;
-    color: #fbbf24;
-    margin-bottom: 15px;
+  .score-label { font-size: 12px; color: #888; margin-bottom: 12px; }
+  .reward-box {
+    background: rgba(74,222,128,0.1); border: 1px solid rgba(74,222,128,0.3);
+    border-radius: 12px; padding: 10px 16px;
+    font-size: 13px; color: #4ade80; margin-bottom: 12px;
     font-weight: 700;
-    animation: pulse 1s infinite;
+  }
+  .new-record {
+    font-size: 14px; color: #fbbf24; margin-bottom: 12px;
+    font-weight: 700; animation: pulse 1s infinite;
     text-shadow: 0 0 20px rgba(251,191,36,0.6);
   }
-  @keyframes pulse {
-    0%,100% { opacity: 1; }
-    50% { opacity: 0.6; }
-  }
-  .gameover-btns {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    width: 100%;
-    max-width: 300px;
-  }
+  @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.6; } }
+  .gameover-btns { display: flex; flex-direction: column; gap: 9px; width: 100%; max-width: 300px; }
   .btn-primary {
     background: linear-gradient(135deg, #4ade80, #22c55e);
-    color: #050a14;
-    border: none;
-    border-radius: 14px;
-    padding: 15px;
-    font-family: inherit;
-    font-size: 16px;
-    font-weight: 900;
-    cursor: pointer;
-    transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+    color: #050a14; border: none; border-radius: 14px;
+    padding: 14px; font-family: inherit; font-size: 15px;
+    font-weight: 900; cursor: pointer; transition: 0.25s;
     box-shadow: 0 6px 20px rgba(74,222,128,0.35);
   }
-  .btn-primary:hover { transform: translateY(-3px) scale(1.02); box-shadow: 0 10px 30px rgba(74,222,128,0.5); }
+  .btn-primary:hover { transform: translateY(-3px) scale(1.02); }
   .btn-secondary {
-    background: rgba(255,255,255,0.08);
-    color: #fff;
+    background: rgba(255,255,255,0.08); color: #fff;
     border: 1px solid rgba(255,255,255,0.15);
-    border-radius: 14px;
-    padding: 13px;
-    font-family: inherit;
-    font-size: 14px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: 0.25s;
-    backdrop-filter: blur(10px);
+    border-radius: 14px; padding: 12px; font-family: inherit;
+    font-size: 13px; font-weight: 600; cursor: pointer;
+    transition: 0.25s; backdrop-filter: blur(10px);
   }
-  .btn-secondary:hover { background: rgba(255,255,255,0.15); transform: translateY(-2px); }
+  .btn-secondary:hover { background: rgba(255,255,255,0.15); }
   .btn-share {
     background: linear-gradient(135deg, #3b82f6, #1da1f2);
-    color: #fff;
-    border: none;
-    border-radius: 14px;
-    padding: 13px;
-    font-family: inherit;
-    font-size: 14px;
-    font-weight: 700;
-    cursor: pointer;
-    transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+    color: #fff; border: none; border-radius: 14px;
+    padding: 12px; font-family: inherit; font-size: 13px;
+    font-weight: 700; cursor: pointer; transition: 0.25s;
     box-shadow: 0 6px 20px rgba(59,130,246,0.35);
   }
-  .btn-share:hover { transform: translateY(-3px) scale(1.02); box-shadow: 0 10px 30px rgba(59,130,246,0.5); }
-
-  /* ============ رقیب ============ */
-  .rival-box {
-    background: linear-gradient(135deg, rgba(59,130,246,0.15), rgba(29,161,242,0.08));
-    border: 1px solid rgba(59,130,246,0.35);
-    border-radius: 12px;
-    padding: 10px 14px;
-    margin-bottom: 12px;
-    font-size: 12px;
-    color: #93c5fd;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    backdrop-filter: blur(10px);
-  }
-  .rival-box strong { color: #fff; font-size: 14px; }
+  .btn-share:hover { transform: translateY(-2px); }
 
   /* ============ مودال ============ */
   .modal-overlay {
     position: fixed; inset: 0;
-    background: rgba(5,10,20,0.85);
+    background: rgba(5,10,20,0.88);
     backdrop-filter: blur(15px);
-    -webkit-backdrop-filter: blur(15px);
-    display: none;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
-    padding: 20px;
+    display: none; justify-content: center; align-items: center;
+    z-index: 1000; padding: 20px;
     animation: fadeIn 0.3s ease;
   }
   .modal-overlay.active { display: flex; }
   .modal {
     background: linear-gradient(135deg, #0a1929, #0d2818);
     border: 1px solid rgba(74,222,128,0.3);
-    border-radius: 20px;
-    padding: 28px;
-    max-width: 380px;
-    width: 100%;
-    text-align: center;
-    box-shadow: 0 25px 80px rgba(0,0,0,0.6), 0 0 60px rgba(74,222,128,0.1);
+    border-radius: 20px; padding: 24px;
+    max-width: 380px; width: 100%; text-align: center;
+    box-shadow: 0 25px 80px rgba(0,0,0,0.7), 0 0 60px rgba(74,222,128,0.1);
     animation: modalPop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
   }
   @keyframes modalPop {
     from { opacity: 0; transform: scale(0.85); }
     to { opacity: 1; transform: scale(1); }
   }
-  .modal h3 { font-size: 20px; margin-bottom: 14px; color: #4ade80; font-weight: 900; }
-  .modal p { font-size: 13px; color: #ccc; margin-bottom: 15px; line-height: 1.8; }
+  .modal h3 { font-size: 18px; margin-bottom: 12px; color: #4ade80; font-weight: 900; }
+  .modal p { font-size: 12px; color: #ccc; margin-bottom: 14px; line-height: 1.9; }
   .modal-btn {
     background: linear-gradient(135deg, #4ade80, #22c55e);
-    color: #050a14;
-    border: none;
-    border-radius: 12px;
-    padding: 12px 24px;
-    font-family: inherit;
-    font-weight: 900;
-    font-size: 14px;
-    cursor: pointer;
-    margin: 5px;
-    transition: 0.25s;
+    color: #050a14; border: none; border-radius: 12px;
+    padding: 11px 22px; font-family: inherit; font-weight: 900;
+    font-size: 13px; cursor: pointer; margin: 4px; transition: 0.25s;
   }
   .modal-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(74,222,128,0.4); }
-  .modal-btn.ghost {
-    background: none;
-    border: 1px solid #555;
-    color: #aaa;
-  }
-  .modal-btn.ghost:hover { background: rgba(255,255,255,0.05); box-shadow: none; }
-
-  /* ============ انتخاب کشور مدرن ============ */
-  .country-header {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    margin-bottom: 16px;
-    font-size: 14px;
-    color: #888;
-  }
-  .country-header strong { color: #4ade80; }
+  .modal-btn.ghost { background: none; border: 1px solid #555; color: #aaa; }
 </style>
 </head>
 <body>
 
-<!-- پس‌زمینه متحرک -->
 <div class="bg-orbs">
   <div class="orb"></div>
   <div class="orb"></div>
@@ -614,11 +508,32 @@
 
 <div class="game-wrap">
 
-  <!-- زمین -->
-  <div class="field">
-    <div class="goal" id="goal"></div>
-    <div class="keeper" id="keeper">🐱</div>
-    <div class="ball" id="ball" style="display:none;">⚽</div>
+  <div class="field" id="field">
+    <div class="chalk chalk-penalty"></div>
+    <div class="floodlight"></div>
+    <div class="floodlight"></div>
+
+    <!-- دروازه SVG -->
+    <svg class="goal-svg" id="goalSvg" viewBox="0 0 300 100" preserveAspectRatio="none">
+      <defs>
+        <pattern id="netPattern" x="0" y="0" width="12" height="12" patternUnits="userSpaceOnUse">
+          <path d="M 12 0 L 0 0 0 12" fill="none" stroke="rgba(255,255,255,0.35)" stroke-width="0.8"/>
+        </pattern>
+      </defs>
+      <rect x="0" y="0" width="300" height="100" fill="url(#netPattern)" opacity="0.6"/>
+      <rect x="0" y="0" width="300" height="100" fill="none" stroke="#fff" stroke-width="4" rx="3"/>
+      <rect x="0" y="0" width="300" height="8" fill="#fff" opacity="0.9"/>
+    </svg>
+
+    <!-- دروازه‌بان -->
+    <div class="keeper-wrap" id="keeperWrap">
+      <svg class="keeper-svg" id="keeperSvg" width="70" height="70" viewBox="0 0 70 70"></svg>
+    </div>
+
+    <!-- توپ -->
+    <div class="ball-wrap" id="ballWrap" style="display:none;">
+      <svg id="ballSvg" width="40" height="40" viewBox="0 0 40 40"></svg>
+    </div>
   </div>
 
   <!-- HUD -->
@@ -635,17 +550,17 @@
       <span>رکورد:</span>
       <span id="hudBest">0</span>
     </div>
-    <button class="sound-btn" id="soundBtn" title="صدا">🔊</button>
+    <button class="sound-btn" id="soundBtn">🔊</button>
   </div>
 
+  <div class="coin-display" id="coinDisplay">🪙 <span id="coinCount">0</span></div>
   <div class="combo-display" id="comboDisplay"></div>
-
   <div class="hint" id="hint">👆 توپ رو بگیر و بکش به سمت دروازه</div>
 
-  <!-- صفحه انتخاب کشور -->
+  <!-- صفحه اصلی -->
   <div class="screen" id="startScreen">
     <h1>⚽ گلستان</h1>
-    <div class="subtitle">کشورت رو انتخاب کن و گل بزن!</div>
+    <div class="subtitle">گل بزن، سکه بگیر، دروازه‌بان بخر!</div>
     <div class="brand-line">ساخته <a href="https://www.instagram.com/amirrezagholamiofficialpage/" target="_blank">امیررضا غلامی</a></div>
 
     <div class="best-score-box" id="bestBox" style="display:none;">
@@ -653,29 +568,54 @@
       <br><span class="league-badge league-bronze" id="leagueBadge">لیگ برنز</span>
     </div>
 
-    <div class="rival-box" id="rivalBox" style="display:none;">
-      ⚔️ رقیب امروزت: <strong id="rivalName">—</strong> <span id="rivalFlag"></span>
-      <br>رکورد رقیب: <strong id="rivalScore">0</strong> گل
+    <div class="tabs">
+      <button class="tab-btn active" data-tab="play">🎮 بازی</button>
+      <button class="tab-btn" data-tab="shop">🛒 فروشگاه</button>
+      <button class="tab-btn" data-tab="upgrade">⬆️ آپگرید</button>
     </div>
 
-    <div class="country-header">
-      <span>🌍 کشورت رو انتخاب کن</span>
-    </div>
-    <div class="country-grid" id="countryGrid"></div>
+    <!-- تب بازی -->
+    <div class="tab-content active" id="tab-play">
+      <div class="daily-box" id="dailyBox" style="display:none;">
+        <h3>🎁 پاداش روزانه</h3>
+        <p id="dailyText">هر روز بیا و سکه بگیر!</p>
+        <button class="daily-claim-btn" id="dailyClaimBtn">دریافت پاداش</button>
+      </div>
 
-    <button class="start-btn" id="startBtn" disabled>⚽ شروع بازی</button>
+      <div style="font-size:12px; color:#888; text-align:center; margin-bottom:8px;">🌍 کشورت رو انتخاب کن</div>
+      <div class="country-grid" id="countryGrid"></div>
+      <button class="start-btn" id="startBtn" disabled>⚽ شروع بازی</button>
+    </div>
+
+    <!-- تب فروشگاه -->
+    <div class="tab-content" id="tab-shop">
+      <div style="font-size:12px; color:#aaa; text-align:center; margin-bottom:10px;">🪙 سکه‌هات: <strong id="shopCoins" style="color:#fbbf24;">0</strong></div>
+      <div style="font-size:11px; color:#888; margin-bottom:6px;">🐾 دروازه‌بان‌ها</div>
+      <div class="shop-grid" id="keeperShop"></div>
+      <div style="font-size:11px; color:#888; margin:10px 0 6px;">⚽ توپ‌ها</div>
+      <div class="shop-grid" id="ballShop"></div>
+      <div style="font-size:11px; color:#888; margin:10px 0 6px;">🏟️ زمین‌ها</div>
+      <div class="shop-grid" id="fieldShop"></div>
+    </div>
+
+    <!-- تب آپگرید -->
+    <div class="tab-content" id="tab-upgrade">
+      <div style="font-size:12px; color:#aaa; text-align:center; margin-bottom:10px;">🪙 سکه‌هات: <strong id="upgradeCoins" style="color:#fbbf24;">0</strong></div>
+      <div id="upgradeList"></div>
+    </div>
   </div>
 
-  <!-- صفحه پایان بازی -->
+  <!-- صفحه پایان -->
   <div class="gameover-screen" id="gameoverScreen">
     <h2 id="goTitle">پایان بازی!</h2>
     <div class="score-big" id="goScore">0</div>
     <div class="score-label">گل زدی</div>
-    <div class="new-record" id="newRecord" style="display:none;">🎉 رکورد جدید زدی!</div>
+    <div class="reward-box" id="rewardBox" style="display:none;">🪙 +<span id="rewardAmount">0</span> سکه</div>
+    <div class="new-record" id="newRecord" style="display:none;">🎉 رکورد جدید!</div>
     <div class="gameover-btns">
       <button class="btn-primary" id="playAgainBtn">🔄 دوباره بازی کن</button>
-      <button class="btn-share" id="shareBtn">📤 اشتراک‌گذاری رکورد</button>
-      <button class="btn-secondary" id="changeCountryBtn">🌍 تغییر کشور</button>
+      <button class="btn-share" id="shareBtn">📤 اشتراک‌گذاری</button>
+      <button class="btn-secondary" id="menuBtn">🏠 منوی اصلی</button>
     </div>
   </div>
 
@@ -686,18 +626,21 @@
   <div class="modal">
     <h3>🎮 چطور بازی کنم؟</h3>
     <p>
-      1️⃣ توپ پایین صفحه رو بگیر<br>
+      1️⃣ توپ پایین رو بگیر<br>
       2️⃣ بکش به سمت دروازه<br>
       3️⃣ ولش کن تا شوت بشه ⚽<br>
-      4️⃣ هر گل = ۱ امتیاز<br>
-      5️⃣ کمبو = امتیاز بیشتر 🔥
+      4️⃣ گوشه‌ها = امتیاز بیشتر ✨<br>
+      5️⃣ هر گل = سکه! 🪙
     </p>
     <button class="modal-btn" id="tutorialClose">فهمیدم، بریم!</button>
   </div>
 </div>
 
 <script>
-const VERSION = '3.4.0';
+// ============================================================
+// گلستان v4.0.0
+// ============================================================
+const VERSION = '4.0.0';
 const SITE_URL = 'https://amirrezagholami86.github.io/coin-factory-game-1/';
 
 // ---- کشورها ----
@@ -720,26 +663,89 @@ const COUNTRIES = [
   { code: 'HR', name: 'کرواسی', flag: '🇭🇷' },
 ];
 
-const KEEPERS = ['🐱', '🐶', '🐸', '🦊', '🐼', '🐰', '🐨'];
-const RIVAL_NAMES = ['مسی کوچیک', 'رونالدو', 'نیمار', 'امباپه', 'صلاح', 'کین', 'مودریچ', 'لواندوفسکی'];
+// ---- دروازه‌بان‌ها ----
+const KEEPERS = {
+  cat: {
+    id: 'cat', name: 'گربه', icon: '🐱', price: 0,
+    speed: 1.0, smart: 1.0, desc: 'سریع و چابک',
+    colors: { body: '#f59e0b', accent: '#fff', eye: '#000' }
+  },
+  bear: {
+    id: 'bear', name: 'خرس', icon: '🐻', price: 500,
+    speed: 0.7, smart: 0.9, desc: 'قوی ولی کند',
+    colors: { body: '#78350f', accent: '#fbbf24', eye: '#000' }
+  },
+  turtle: {
+    id: 'turtle', name: 'لاک‌پشت', icon: '🐢', price: 1500,
+    speed: 0.5, smart: 1.5, desc: 'کند ولی دقیق',
+    colors: { body: '#16a34a', accent: '#a3a300', eye: '#000' }
+  },
+  fox: {
+    id: 'fox', name: 'روباه', icon: '🦊', price: 3000,
+    speed: 1.3, smart: 1.7, desc: 'حیله‌گر و سریع',
+    colors: { body: '#ea580c', accent: '#fff', eye: '#000' }
+  },
+};
 
-// ---- وضعیت ----
+// ---- توپ‌ها ----
+const BALLS = {
+  classic: { id: 'classic', name: 'کلاسیک', icon: '⚽', price: 0, colors: { base: '#fff', accent: '#111' }, trail: '#fff' },
+  gold: { id: 'gold', name: 'طلایی', icon: '⚽', price: 1000, colors: { base: '#fbbf24', accent: '#92400e' }, trail: '#fbbf24' },
+  fire: { id: 'fire', name: 'آتشین', icon: '🔥', price: 4000, colors: { base: '#ef4444', accent: '#fbbf24' }, trail: '#ef4444' },
+};
+
+// ---- زمین‌ها ----
+const FIELDS = {
+  grass: { id: 'grass', name: 'چمن', icon: '🏟️', price: 0, cls: '' },
+  night: { id: 'night', name: 'شب', icon: '🌙', price: 2000, cls: 'night' },
+  snow: { id: 'snow', name: 'برفی', icon: '❄️', price: 5000, cls: 'snow' },
+};
+
+// ---- آپگریدها ----
+const UPGRADES = [
+  { id: 'power', name: '💪 قدرت شوت', desc: 'شوت سریع‌تر و قوی‌تر', baseCost: 200, maxLevel: 10 },
+  { id: 'accuracy', name: '🎯 دقت', desc: 'کنترل بیشتر روی جهت', baseCost: 300, maxLevel: 10 },
+  { id: 'brain', name: '🧠 هوش', desc: 'دروازه‌بان رو گول بزن', baseCost: 400, maxLevel: 10 },
+  { id: 'speed', name: '⚡ سرعت', desc: 'توپ سریع‌تر حرکت می‌کنه', baseCost: 250, maxLevel: 10 },
+];
+
+// ---- ذخیره ----
 let state = {
   bestScore: 0,
+  coins: 0,
   selectedCountry: null,
   soundOn: true,
   tutorialSeen: false,
+  ownedKeepers: ['cat'],
+  ownedBalls: ['classic'],
+  ownedFields: ['grass'],
+  equippedKeeper: 'cat',
+  equippedBall: 'classic',
+  equippedField: 'grass',
+  upgrades: { power: 0, accuracy: 0, brain: 0, speed: 0 },
+  lastDailyClaim: 0,
+  dailyStreak: 0,
+  totalGoals: 0,
 };
 
-let game = null;
-let lastTime = 0;
-let animationFrame = null;
-let audioCtx = null;
+function loadState() {
+  const saved = localStorage.getItem('goalestan_v4');
+  if (saved) {
+    try { state = Object.assign(state, JSON.parse(saved)); } catch(e) {}
+  }
+}
+
+function saveState() {
+  localStorage.setItem('goalestan_v4', JSON.stringify(state));
+}
 
 // ---- DOM ----
-const goalEl = document.getElementById('goal');
-const keeperEl = document.getElementById('keeper');
-const ballEl = document.getElementById('ball');
+const fieldEl = document.getElementById('field');
+const goalSvg = document.getElementById('goalSvg');
+const keeperWrap = document.getElementById('keeperWrap');
+const keeperSvg = document.getElementById('keeperSvg');
+const ballWrap = document.getElementById('ballWrap');
+const ballSvg = document.getElementById('ballSvg');
 const hudFlag = document.getElementById('hudFlag');
 const hudCountry = document.getElementById('hudCountry');
 const hudScore = document.getElementById('hudScore');
@@ -751,82 +757,97 @@ const countryGrid = document.getElementById('countryGrid');
 const startBtn = document.getElementById('startBtn');
 const bestBox = document.getElementById('bestBox');
 const bestDisplay = document.getElementById('bestDisplay');
-const comboDisplay = document.getElementById('comboDisplay');
-const soundBtn = document.getElementById('soundBtn');
-const rivalBox = document.getElementById('rivalBox');
-const rivalName = document.getElementById('rivalName');
-const rivalFlag = document.getElementById('rivalFlag');
-const rivalScoreEl = document.getElementById('rivalScore');
 const leagueBadge = document.getElementById('leagueBadge');
+const comboDisplay = document.getElementById('comboDisplay');
+const coinDisplay = document.getElementById('coinDisplay');
+const coinCount = document.getElementById('coinCount');
+const soundBtn = document.getElementById('soundBtn');
+const shopCoins = document.getElementById('shopCoins');
+const upgradeCoins = document.getElementById('upgradeCoins');
 
-// ---- ذخیره/بارگذاری ----
-function loadState() {
-  const saved = localStorage.getItem('goalestan_v34');
-  if (saved) {
-    try { state = Object.assign(state, JSON.parse(saved)); } catch(e) {}
-  }
-  if (state.bestScore > 0) {
-    bestBox.style.display = 'block';
-    bestDisplay.textContent = state.bestScore.toLocaleString('fa-IR');
-    updateLeagueBadge();
-  }
-  hudBest.textContent = state.bestScore.toLocaleString('fa-IR');
-  soundBtn.textContent = state.soundOn ? '🔊' : '🔇';
-}
-function saveState() {
-  localStorage.setItem('goalestan_v34', JSON.stringify(state));
-}
-
-function updateLeagueBadge() {
-  const s = state.bestScore;
-  let league = 'لیگ برنز', cls = 'league-bronze';
-  if (s >= 50) { league = 'لیگ الماس'; cls = 'league-diamond'; }
-  else if (s >= 30) { league = 'لیگ طلا'; cls = 'league-gold'; }
-  else if (s >= 15) { league = 'لیگ نقره'; cls = 'league-silver'; }
-  leagueBadge.textContent = league;
-  leagueBadge.className = 'league-badge ' + cls;
-}
-
-// ---- صدا با Web Audio ----
+// ---- صدا ----
+let audioCtx = null;
 function initAudio() {
   if (!audioCtx) {
     try { audioCtx = new (window.AudioContext || window.webkitAudioContext)(); } catch(e) {}
   }
   if (audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
 }
-
-function playTone(freq, duration, type = 'sine', volume = 0.15) {
+function playTone(freq, dur, type='sine', vol=0.15) {
   if (!state.soundOn || !audioCtx) return;
   try {
-    const osc = audioCtx.createOscillator();
-    const gain = audioCtx.createGain();
-    osc.type = type;
-    osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
-    gain.gain.setValueAtTime(volume, audioCtx.currentTime);
-    gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + duration);
-    osc.connect(gain);
-    gain.connect(audioCtx.destination);
-    osc.start();
-    osc.stop(audioCtx.currentTime + duration);
+    const o = audioCtx.createOscillator();
+    const g = audioCtx.createGain();
+    o.type = type;
+    o.frequency.setValueAtTime(freq, audioCtx.currentTime);
+    g.gain.setValueAtTime(vol, audioCtx.currentTime);
+    g.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + dur);
+    o.connect(g); g.connect(audioCtx.destination);
+    o.start(); o.stop(audioCtx.currentTime + dur);
   } catch(e) {}
 }
+function soundShoot() { playTone(220,0.12,'square',0.1); setTimeout(()=>playTone(330,0.08,'square',0.08),40); }
+function soundGoal() { playTone(523,0.12,'sine',0.15); setTimeout(()=>playTone(659,0.12,'sine',0.15),110); setTimeout(()=>playTone(784,0.25,'sine',0.18),220); }
+function soundMiss() { playTone(300,0.18,'sawtooth',0.1); setTimeout(()=>playTone(200,0.25,'sawtooth',0.1),110); }
+function soundCombo() { playTone(880,0.08,'sine',0.12); setTimeout(()=>playTone(1100,0.12,'sine',0.12),70); }
 
-function soundShoot() {
-  playTone(220, 0.15, 'square', 0.1);
-  setTimeout(() => playTone(330, 0.1, 'square', 0.08), 50);
+// ---- SVG دروازه‌بان ----
+function drawKeeper(keeperId) {
+  const k = KEEPERS[keeperId];
+  const c = k.colors;
+  keeperSvg.innerHTML = `
+    <ellipse cx="35" cy="60" rx="22" ry="8" fill="rgba(0,0,0,0.3)"/>
+    <ellipse cx="35" cy="40" rx="18" ry="20" fill="${c.body}"/>
+    <ellipse cx="35" cy="38" rx="14" ry="16" fill="${c.accent}" opacity="0.6"/>
+    <circle cx="26" cy="32" r="2.5" fill="${c.eye}"/>
+    <circle cx="44" cy="32" r="2.5" fill="${c.eye}"/>
+    <ellipse cx="35" cy="44" rx="3" ry="2" fill="${c.eye}"/>
+    <path d="M 25 24 Q 35 18 45 24" stroke="${c.eye}" stroke-width="1.5" fill="none"/>
+    <ellipse cx="20" cy="55" rx="6" ry="4" fill="${c.body}"/>
+    <ellipse cx="50" cy="55" rx="6" ry="4" fill="${c.body}"/>
+  `;
 }
-function soundGoal() {
-  playTone(523, 0.15, 'sine', 0.15);
-  setTimeout(() => playTone(659, 0.15, 'sine', 0.15), 120);
-  setTimeout(() => playTone(784, 0.3, 'sine', 0.18), 240);
+
+// ---- SVG توپ ----
+function drawBall(ballId) {
+  const b = BALLS[ballId];
+  const c = b.colors;
+  ballSvg.innerHTML = `
+    <defs>
+      <radialGradient id="ballShine" cx="35%" cy="30%">
+        <stop offset="0%" stop-color="#fff" stop-opacity="0.7"/>
+        <stop offset="60%" stop-color="${c.base}"/>
+        <stop offset="100%" stop-color="${c.base}"/>
+      </radialGradient>
+    </defs>
+    <circle cx="20" cy="20" r="18" fill="url(#ballShine)"/>
+    <circle cx="20" cy="20" r="18" fill="none" stroke="${c.accent}" stroke-width="1.2"/>
+    <polygon points="20,8 26,15 23,23 17,23 14,15" fill="${c.accent}"/>
+    <line x1="20" y1="8" x2="20" y2="2" stroke="${c.accent}" stroke-width="1"/>
+    <line x1="26" y1="15" x2="33" y2="12" stroke="${c.accent}" stroke-width="1"/>
+    <line x1="23" y1="23" x2="27" y2="30" stroke="${c.accent}" stroke-width="1"/>
+    <line x1="17" y1="23" x2="13" y2="30" stroke="${c.accent}" stroke-width="1"/>
+    <line x1="14" y1="15" x2="7" y2="12" stroke="${c.accent}" stroke-width="1"/>
+  `;
 }
-function soundMiss() {
-  playTone(300, 0.2, 'sawtooth', 0.1);
-  setTimeout(() => playTone(200, 0.3, 'sawtooth', 0.1), 120);
-}
-function soundCombo() {
-  playTone(880, 0.1, 'sine', 0.12);
-  setTimeout(() => playTone(1100, 0.15, 'sine', 0.12), 80);
+
+// ---- ذخیره/بازیابی UI ----
+function updateHUD() {
+  hudBest.textContent = state.bestScore.toLocaleString('fa-IR');
+  coinCount.textContent = state.coins.toLocaleString('fa-IR');
+  shopCoins.textContent = state.coins.toLocaleString('fa-IR');
+  upgradeCoins.textContent = state.coins.toLocaleString('fa-IR');
+  if (state.bestScore > 0) {
+    bestBox.style.display = 'block';
+    bestDisplay.textContent = state.bestScore.toLocaleString('fa-IR');
+    let league = 'لیگ برنز', cls = 'league-bronze';
+    if (state.bestScore >= 50) { league = 'لیگ الماس'; cls = 'league-diamond'; }
+    else if (state.bestScore >= 30) { league = 'لیگ طلا'; cls = 'league-gold'; }
+    else if (state.bestScore >= 15) { league = 'لیگ نقره'; cls = 'league-silver'; }
+    leagueBadge.textContent = league;
+    leagueBadge.className = 'league-badge ' + cls;
+  }
+  soundBtn.textContent = state.soundOn ? '🔊' : '🔇';
 }
 
 // ---- رندر کشورها ----
@@ -835,11 +856,8 @@ function renderCountries() {
   COUNTRIES.forEach(c => {
     const btn = document.createElement('button');
     btn.className = 'country-btn';
-    btn.dataset.code = c.code;
+    if (state.selectedCountry && state.selectedCountry.code === c.code) btn.classList.add('selected');
     btn.innerHTML = `<span class="flag">${c.flag}</span><span class="name">${c.name}</span>`;
-    if (state.selectedCountry && state.selectedCountry.code === c.code) {
-      btn.classList.add('selected');
-    }
     btn.onclick = () => {
       state.selectedCountry = c;
       document.querySelectorAll('.country-btn').forEach(b => b.classList.remove('selected'));
@@ -847,78 +865,290 @@ function renderCountries() {
       startBtn.disabled = false;
       hudFlag.textContent = c.flag;
       hudCountry.textContent = c.name;
-      generateRival();
       initAudio();
+      saveState();
     };
     countryGrid.appendChild(btn);
   });
 }
 
-// ---- تولید رقیب ----
-function generateRival() {
-  const name = RIVAL_NAMES[Math.floor(Math.random() * RIVAL_NAMES.length)];
-  const country = COUNTRIES[Math.floor(Math.random() * COUNTRIES.length)];
-  const base = state.bestScore || 5;
-  const rivalScore = Math.max(3, Math.floor(base * (0.6 + Math.random() * 0.9)));
-  rivalBox.style.display = 'flex';
-  rivalName.textContent = name;
-  rivalFlag.textContent = country.flag;
-  rivalScoreEl.textContent = rivalScore.toLocaleString('fa-IR');
-  game && (game.rivalScore = rivalScore);
-  window._rivalScore = rivalScore;
-  window._rivalName = name;
+// ---- رندر فروشگاه ----
+function renderShop() {
+  // دروازه‌بان‌ها
+  const keeperShop = document.getElementById('keeperShop');
+  keeperShop.innerHTML = '';
+  Object.values(KEEPERS).forEach(k => {
+    const owned = state.ownedKeepers.includes(k.id);
+    const equipped = state.equippedKeeper === k.id;
+    const div = document.createElement('div');
+    div.className = 'shop-item' + (equipped ? ' equipped' : owned ? ' owned' : '');
+    div.innerHTML = `
+      <span class="item-icon">${k.icon}</span>
+      <div class="item-name">${k.name}</div>
+      <div class="item-desc">${k.desc}</div>
+      ${owned ? 
+        (equipped ? `<button class="buy-item-btn equipped" disabled>✓ فعال</button>` : `<button class="buy-item-btn equip" data-action="equip-keeper" data-id="${k.id}">انتخاب</button>`) :
+        `<div class="item-price">🪙 ${k.price.toLocaleString('fa-IR')}</div><button class="buy-item-btn" data-action="buy-keeper" data-id="${k.id}">خرید</button>`
+      }
+    `;
+    keeperShop.appendChild(div);
+  });
+
+  // توپ‌ها
+  const ballShop = document.getElementById('ballShop');
+  ballShop.innerHTML = '';
+  Object.values(BALLS).forEach(b => {
+    const owned = state.ownedBalls.includes(b.id);
+    const equipped = state.equippedBall === b.id;
+    const div = document.createElement('div');
+    div.className = 'shop-item' + (equipped ? ' equipped' : owned ? ' owned' : '');
+    div.innerHTML = `
+      <span class="item-icon">${b.icon}</span>
+      <div class="item-name">${b.name}</div>
+      ${owned ?
+        (equipped ? `<button class="buy-item-btn equipped" disabled>✓ فعال</button>` : `<button class="buy-item-btn equip" data-action="equip-ball" data-id="${b.id}">انتخاب</button>`) :
+        `<div class="item-price">🪙 ${b.price.toLocaleString('fa-IR')}</div><button class="buy-item-btn" data-action="buy-ball" data-id="${b.id}">خرید</button>`
+      }
+    `;
+    ballShop.appendChild(div);
+  });
+
+  // زمین‌ها
+  const fieldShop = document.getElementById('fieldShop');
+  fieldShop.innerHTML = '';
+  Object.values(FIELDS).forEach(f => {
+    const owned = state.ownedFields.includes(f.id);
+    const equipped = state.equippedField === f.id;
+    const div = document.createElement('div');
+    div.className = 'shop-item' + (equipped ? ' equipped' : owned ? ' owned' : '');
+    div.innerHTML = `
+      <span class="item-icon">${f.icon}</span>
+      <div class="item-name">${f.name}</div>
+      ${owned ?
+        (equipped ? `<button class="buy-item-btn equipped" disabled>✓ فعال</button>` : `<button class="buy-item-btn equip" data-action="equip-field" data-id="${f.id}">انتخاب</button>`) :
+        `<div class="item-price">🪙 ${f.price.toLocaleString('fa-IR')}</div><button class="buy-item-btn" data-action="buy-field" data-id="${f.id}">خرید</button>`
+      }
+    `;
+    fieldShop.appendChild(div);
+  });
+
+  // اتصال رویدادها
+  document.querySelectorAll('[data-action]').forEach(btn => {
+    btn.onclick = () => handleShopAction(btn.dataset.action, btn.dataset.id);
+  });
 }
 
-// ---- شروع بازی ----
+function handleShopAction(action, id) {
+  if (action === 'buy-keeper') {
+    const k = KEEPERS[id];
+    if (state.coins < k.price) { alert('سکه کافی نداری!'); return; }
+    state.coins -= k.price;
+    state.ownedKeepers.push(id);
+    state.equippedKeeper = id;
+    saveState();
+    updateHUD();
+    renderShop();
+    drawKeeper(id);
+  } else if (action === 'equip-keeper') {
+    state.equippedKeeper = id;
+    saveState();
+    renderShop();
+    drawKeeper(id);
+  } else if (action === 'buy-ball') {
+    const b = BALLS[id];
+    if (state.coins < b.price) { alert('سکه کافی نداری!'); return; }
+    state.coins -= b.price;
+    state.ownedBalls.push(id);
+    state.equippedBall = id;
+    saveState();
+    updateHUD();
+    renderShop();
+    drawBall(id);
+  } else if (action === 'equip-ball') {
+    state.equippedBall = id;
+    saveState();
+    renderShop();
+    drawBall(id);
+  } else if (action === 'buy-field') {
+    const f = FIELDS[id];
+    if (state.coins < f.price) { alert('سکه کافی نداری!'); return; }
+    state.coins -= f.price;
+    state.ownedFields.push(id);
+    state.equippedField = id;
+    saveState();
+    updateHUD();
+    renderShop();
+    applyField();
+  } else if (action === 'equip-field') {
+    state.equippedField = id;
+    saveState();
+    renderShop();
+    applyField();
+  }
+}
+
+function applyField() {
+  const f = FIELDS[state.equippedField];
+  fieldEl.className = 'field ' + f.cls;
+}
+
+// ---- آپگرید ----
+function getUpgradeCost(up) {
+  const lvl = state.upgrades[up.id] || 0;
+  return Math.floor(up.baseCost * Math.pow(1.8, lvl));
+}
+
+function renderUpgrades() {
+  const list = document.getElementById('upgradeList');
+  list.innerHTML = '';
+  UPGRADES.forEach(up => {
+    const lvl = state.upgrades[up.id] || 0;
+    const cost = getUpgradeCost(up);
+    const maxed = lvl >= up.maxLevel;
+    const canBuy = !maxed && state.coins >= cost;
+    const div = document.createElement('div');
+    div.className = 'upgrade-item';
+    div.innerHTML = `
+      <div class="upgrade-info">
+        <div class="upgrade-name">${up.name}</div>
+        <div class="upgrade-level">سطح ${lvl}/${up.maxLevel}</div>
+        <div class="upgrade-desc">${up.desc}</div>
+      </div>
+      <button class="upgrade-buy-btn" data-upgrade="${up.id}" ${canBuy ? '' : 'disabled'}>
+        ${maxed ? 'حداکثر' : `🪙 ${cost.toLocaleString('fa-IR')}`}
+      </button>
+    `;
+    list.appendChild(div);
+  });
+  list.querySelectorAll('[data-upgrade]').forEach(btn => {
+    btn.onclick = () => {
+      const up = UPGRADES.find(u => u.id === btn.dataset.upgrade);
+      if (!up) return;
+      const cost = getUpgradeCost(up);
+      if (state.coins < cost) return;
+      if ((state.upgrades[up.id] || 0) >= up.maxLevel) return;
+      state.coins -= cost;
+      state.upgrades[up.id] = (state.upgrades[up.id] || 0) + 1;
+      saveState();
+      updateHUD();
+      renderUpgrades();
+    };
+  });
+}
+
+// ---- پاداش روزانه ----
+function checkDaily() {
+  const now = Date.now();
+  const day = 24 * 60 * 60 * 1000;
+  const last = state.lastDailyClaim || 0;
+  const diff = now - last;
+  const box = document.getElementById('dailyBox');
+  const text = document.getElementById('dailyText');
+  const btn = document.getElementById('dailyClaimBtn');
+
+  if (diff >= day || last === 0) {
+    box.style.display = 'block';
+    const streak = (diff > day * 2) ? 1 : (state.dailyStreak + 1);
+    const reward = Math.min(50 + (streak - 1) * 10, 200);
+    text.textContent = `روز ${streak} — ${reward} سکه منتظرته!`;
+    btn.disabled = false;
+    btn.textContent = `دریافت ${reward} سکه`;
+    btn.onclick = () => {
+      state.coins += reward;
+      state.lastDailyClaim = now;
+      state.dailyStreak = streak;
+      saveState();
+      updateHUD();
+      box.style.display = 'none';
+      alert(`🎁 ${reward} سکه گرفتی!`);
+    };
+  } else {
+    box.style.display = 'none';
+  }
+}
+
+// ---- رندر اولیه ----
+function renderAll() {
+  updateHUD();
+  renderCountries();
+  renderShop();
+  renderUpgrades();
+  applyField();
+  drawKeeper(state.equippedKeeper);
+  drawBall(state.equippedBall);
+  checkDaily();
+  if (state.selectedCountry) {
+    hudFlag.textContent = state.selectedCountry.flag;
+    hudCountry.textContent = state.selectedCountry.name;
+    startBtn.disabled = false;
+  }
+}
+
+// ---- تب‌ها ----
+document.querySelectorAll('.tab-btn').forEach(btn => {
+  btn.onclick = () => {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
+  };
+});
+
+// ---- بازی ----
+let game = null;
+let lastTime = 0;
+let animationFrame = null;
+
 function startGame() {
   if (!state.selectedCountry) return;
   initAudio();
 
   const wrapRect = document.querySelector('.game-wrap').getBoundingClientRect();
-  const goalRect = goalEl.getBoundingClientRect();
+  const goalRect = goalSvg.getBoundingClientRect();
 
   const goalLeft = goalRect.left - wrapRect.left;
   const goalTop = goalRect.top - wrapRect.top;
   const goalWidth = goalRect.width;
   const goalHeight = goalRect.height;
 
+  const keeperData = KEEPERS[state.equippedKeeper];
+
   game = {
     score: 0,
     combo: 0,
     maxCombo: 0,
     isPlaying: true,
-    rivalScore: window._rivalScore || 0,
     ball: {
       x: wrapRect.width / 2,
       y: wrapRect.height * 0.85,
       vx: 0,
       vy: 0,
-      radius: 20,
       isMoving: false,
+      curve: 0,
     },
     keeper: {
       x: goalLeft + goalWidth / 2,
       y: goalTop + goalHeight - 30,
       direction: 1,
-      speed: 120,
+      speed: 120 * keeperData.speed,
       minX: goalLeft + 30,
       maxX: goalLeft + goalWidth - 30,
       smartLevel: 0,
     },
     goal: { left: goalLeft, top: goalTop, width: goalWidth, height: goalHeight },
-    drag: { active: false, startX: 0, startY: 0, currentX: 0, currentY: 0 },
-    keeperType: KEEPERS[Math.floor(Math.random() * KEEPERS.length)],
+    drag: { active: false, startX: 0, startY: 0, currentX: 0, currentY: 0, startTime: 0 },
+    keeperId: state.equippedKeeper,
     wrapWidth: wrapRect.width,
     wrapHeight: wrapRect.height,
+    goalsScored: 0,
+    coinsEarned: 0,
   };
 
-  keeperEl.textContent = game.keeperType;
-  keeperEl.style.left = (game.keeper.x - 24) + 'px';
-  keeperEl.style.top = (game.keeper.y - 24) + 'px';
-
-  ballEl.style.display = 'block';
-  ballEl.style.left = (game.ball.x - 20) + 'px';
-  ballEl.style.top = (game.ball.y - 20) + 'px';
+  keeperWrap.style.left = (game.keeper.x - 35) + 'px';
+  keeperWrap.style.top = (game.keeper.y - 35) + 'px';
+  ballWrap.style.display = 'block';
+  ballWrap.style.left = (game.ball.x - 20) + 'px';
+  ballWrap.style.top = (game.ball.y - 20) + 'px';
 
   hudScore.textContent = '0';
   comboDisplay.classList.remove('show');
@@ -931,56 +1161,56 @@ function startGame() {
   animationFrame = requestAnimationFrame(gameLoop);
 }
 
-// ---- حلقه بازی ----
 function gameLoop(now) {
   if (!game || !game.isPlaying) return;
   const dt = Math.min((now - lastTime) / 1000, 0.05);
   lastTime = now;
-
   updateKeeper(dt);
   updateBall(dt);
-
   animationFrame = requestAnimationFrame(gameLoop);
 }
 
 function updateKeeper(dt) {
   const k = game.keeper;
   k.x += k.direction * k.speed * dt;
-
   if (k.x <= k.minX) { k.x = k.minX; k.direction = 1; }
   if (k.x >= k.maxX) { k.x = k.maxX; k.direction = -1; }
 
-  keeperEl.style.left = (k.x - 24) + 'px';
+  // هوش
+  if (k.smartLevel > 0 && game.ball.isMoving && Math.random() < 0.03 * k.smartLevel) {
+    const pred = game.ball.x + game.ball.vx * 0.1;
+    k.direction = pred < k.x ? -1 : 1;
+  }
+
+  keeperWrap.style.left = (k.x - 35) + 'px';
 }
 
 function updateBall(dt) {
   const b = game.ball;
   if (!b.isMoving) return;
 
+  // پیچ (curve)
+  if (b.curve !== 0) {
+    b.vx += b.curve * 200 * dt;
+    b.curve *= 0.98;
+  }
+
   b.x += b.vx * dt;
   b.y += b.vy * dt;
 
-  // چرخش توپ
-  const rot = (b.vx * dt + b.vy * dt) * 3;
-  ballEl.style.transform = `rotate(${rot}deg)`;
-
-  // هوش مصنوعی دروازه‌بان (پیش‌بینی)
-  if (game.keeper.smartLevel > 0 && Math.random() < 0.02 * game.keeper.smartLevel) {
-    const predictedX = b.x + b.vx * 0.15;
-    if (predictedX < game.keeper.x) game.keeper.direction = -1;
-    else game.keeper.direction = 1;
-    game.keeper.speed = 150 + game.score * 20;
-  }
+  ballWrap.style.left = (b.x - 20) + 'px';
+  ballWrap.style.top = (b.y - 20) + 'px';
+  ballWrap.style.transform = `rotate(${(b.x + b.y) * 2}deg)`;
 
   // برخورد با دروازه‌بان
   const k = game.keeper;
   const dx = b.x - k.x;
   const dy = b.y - k.y;
-  const dist = Math.sqrt(dx*dx + dy*dy);
-  if (dist < 45) {
+  if (Math.sqrt(dx*dx + dy*dy) < 42) {
     soundMiss();
-    keeperEl.classList.add('diving');
-    setTimeout(() => keeperEl.classList.remove('diving'), 300);
+    keeperWrap.classList.add('diving');
+    keeperWrap.style.setProperty('--dive-rot', (Math.random() > 0.5 ? 25 : -25) + 'deg');
+    setTimeout(() => keeperWrap.classList.remove('diving'), 400);
     game.combo = 0;
     endGame('گرفت! 🧤');
     return;
@@ -999,62 +1229,77 @@ function updateBall(dt) {
     endGame('بیرون رفت! 😅');
     return;
   }
-
-  ballEl.style.left = (b.x - 20) + 'px';
-  ballEl.style.top = (b.y - 20) + 'px';
 }
 
 function scoreGoal() {
-  game.score++;
+  const b = game.ball;
+  const g = game.goal;
+
+  // امتیاز بر اساس دقت (نزدیکی به گوشه)
+  const relX = (b.x - g.left) / g.width;
+  const relY = (b.y - g.top) / g.height;
+  let accuracy = 1;
+  if (relX < 0.2 || relX > 0.8) accuracy = 3;
+  else if (relX < 0.35 || relX > 0.65) accuracy = 2;
+
+  game.score += accuracy;
+  game.goalsScored++;
+  state.totalGoals++;
   game.combo++;
   if (game.combo > game.maxCombo) game.maxCombo = game.combo;
+
+  // سکه
+  const coinsFromGoal = 10 + (accuracy - 1) * 10;
+  state.coins += coinsFromGoal;
+  game.coinsEarned += coinsFromGoal;
+
   hudScore.textContent = game.score.toLocaleString('fa-IR');
   soundGoal();
 
-  // ذرات
-  spawnParticles();
+  spawnParticles(accuracy === 3);
 
-  // افکت گل
   const flash = document.createElement('div');
   flash.className = 'goal-flash';
   document.querySelector('.game-wrap').appendChild(flash);
-  setTimeout(() => flash.remove(), 700);
+  setTimeout(() => flash.remove(), 800);
 
   const gtext = document.createElement('div');
-  gtext.className = 'goal-text';
-  gtext.textContent = '⚽ گل!';
+  gtext.className = 'goal-text' + (accuracy === 3 ? ' perfect' : '');
+  gtext.textContent = accuracy === 3 ? '⚽ عالی!' : (accuracy === 2 ? '⚽ گل!' : '⚽ گل');
   document.querySelector('.game-wrap').appendChild(gtext);
   setTimeout(() => gtext.remove(), 1100);
 
-  // کمبو
   if (game.combo >= 2) {
     comboDisplay.classList.add('show');
     comboDisplay.textContent = `🔥 کمبو ×${game.combo}`;
     soundCombo();
   }
 
-  // دروازه‌بان سریع‌تر و باهوش‌تر
-  game.keeper.speed = 120 + game.score * 22;
+  // دروازه‌بان سریع‌تر
+  game.keeper.speed = 120 * KEEPERS[state.equippedKeeper].speed + game.score * 15;
   game.keeper.smartLevel = Math.min(game.score / 5, 3);
 
+  saveState();
+  updateHUD();
   resetBall();
 }
 
-function spawnParticles() {
+function spawnParticles(isPerfect) {
   const wrap = document.querySelector('.game-wrap');
-  const colors = ['#fbbf24', '#4ade80', '#22c55e', '#f59e0b', '#fff'];
-  for (let i = 0; i < 15; i++) {
+  const colors = isPerfect ? ['#4ade80','#22c55e','#fbbf24','#fff'] : ['#fbbf24','#f59e0b','#fff'];
+  const count = isPerfect ? 20 : 12;
+  for (let i = 0; i < count; i++) {
     const p = document.createElement('div');
     p.className = 'particle';
-    const angle = (Math.PI * 2 * i) / 15;
+    const angle = (Math.PI * 2 * i) / count;
     const dist = 80 + Math.random() * 120;
     p.style.setProperty('--dx', Math.cos(angle) * dist + 'px');
     p.style.setProperty('--dy', Math.sin(angle) * dist + 'px');
     p.style.background = colors[Math.floor(Math.random() * colors.length)];
     p.style.left = '50%';
-    p.style.top = '40%';
+    p.style.top = '35%';
     wrap.appendChild(p);
-    setTimeout(() => p.remove(), 1000);
+    setTimeout(() => p.remove(), 1100);
   }
 }
 
@@ -1062,12 +1307,11 @@ function resetBall() {
   const b = game.ball;
   b.x = game.wrapWidth / 2;
   b.y = game.wrapHeight * 0.85;
-  b.vx = 0;
-  b.vy = 0;
+  b.vx = 0; b.vy = 0; b.curve = 0;
   b.isMoving = false;
-  ballEl.style.left = (b.x - 20) + 'px';
-  ballEl.style.top = (b.y - 20) + 'px';
-  ballEl.style.transform = 'rotate(0deg)';
+  ballWrap.style.left = (b.x - 20) + 'px';
+  ballWrap.style.top = (b.y - 20) + 'px';
+  ballWrap.style.transform = 'rotate(0deg)';
   hint.classList.remove('hidden');
 }
 
@@ -1079,33 +1323,31 @@ function endGame(reason) {
   const isNewRecord = finalScore > state.bestScore;
   if (isNewRecord) {
     state.bestScore = finalScore;
-    saveState();
-    hudBest.textContent = state.bestScore.toLocaleString('fa-IR');
-    updateLeagueBadge();
   }
+  saveState();
+  updateHUD();
 
   document.getElementById('goTitle').textContent = reason || 'پایان بازی!';
   document.getElementById('goScore').textContent = finalScore.toLocaleString('fa-IR');
   document.getElementById('newRecord').style.display = isNewRecord ? 'block' : 'none';
+
+  const rewardBox = document.getElementById('rewardBox');
+  if (game.coinsEarned > 0) {
+    rewardBox.style.display = 'block';
+    document.getElementById('rewardAmount').textContent = game.coinsEarned.toLocaleString('fa-IR');
+  } else {
+    rewardBox.style.display = 'none';
+  }
+
   gameoverScreen.classList.add('active');
   hint.classList.add('hidden');
   comboDisplay.classList.remove('show');
-
-  if (game.rivalScore > 0) {
-    if (finalScore > game.rivalScore) {
-      setTimeout(() => {
-        alert(`🏆 رقیب رو شکست دادی!\nتو: ${finalScore} - ${window._rivalName}: ${game.rivalScore}`);
-      }, 300);
-    }
-  }
 }
 
-// ---- کشیدن توپ ----
+// ---- کنترل کشیدن ----
 function getPointerPos(e) {
   const rect = document.querySelector('.game-wrap').getBoundingClientRect();
-  if (e.touches) {
-    return { x: e.touches[0].clientX - rect.left, y: e.touches[0].clientY - rect.top };
-  }
+  if (e.touches) return { x: e.touches[0].clientX - rect.left, y: e.touches[0].clientY - rect.top };
   return { x: e.clientX - rect.left, y: e.clientY - rect.top };
 }
 
@@ -1121,6 +1363,7 @@ function handlePointerDown(e) {
     game.drag.startY = b.y;
     game.drag.currentX = pos.x;
     game.drag.currentY = pos.y;
+    game.drag.startTime = Date.now();
     hint.classList.add('hidden');
     initAudio();
     e.preventDefault();
@@ -1143,17 +1386,37 @@ function handlePointerUp(e) {
   const dx = game.drag.startX - game.drag.currentX;
   const dy = game.drag.startY - game.drag.currentY;
   const dist = Math.sqrt(dx*dx + dy*dy);
+  const dragTime = Date.now() - game.drag.startTime;
 
   if (dist < 20) return;
 
-  const power = Math.min(dist * 8, 1400);
-  const angle = Math.atan2(dy, dx);
+  // آپگریدها
+  const powerLvl = state.upgrades.power || 0;
+  const accLvl = state.upgrades.accuracy || 0;
+  const speedLvl = state.upgrades.speed || 0;
+  const brainLvl = state.upgrades.brain || 0;
+
+  const powerMult = 1 + powerLvl * 0.08;
+  const accMult = 1 - accLvl * 0.02;
+
+  const power = Math.min(dist * 8 * powerMult, 1400 * powerMult);
+  const angle = Math.atan2(dy, dx) + (Math.random() - 0.5) * 0.2 * accMult;
 
   b.vx = Math.cos(angle) * power;
   b.vy = Math.sin(angle) * power;
+
+  // پیچ: اگه کشش منحنی بود یا زمان کشش زیاد بود
+  if (dragTime > 400) {
+    b.curve = (Math.random() - 0.5) * 300;
+  }
+
+  // فریب: کشش سریع → دروازه‌بان گول می‌خوره
+  if (dragTime < 200 && brainLvl > 0) {
+    game.keeper.direction *= -1;
+  }
+
   b.isMoving = true;
   soundShoot();
-
   e.preventDefault();
 }
 
@@ -1184,15 +1447,14 @@ document.getElementById('tutorialClose').onclick = () => {
 
 document.getElementById('playAgainBtn').onclick = () => {
   gameoverScreen.classList.remove('active');
-  generateRival();
   startGame();
 };
 
-document.getElementById('changeCountryBtn').onclick = () => {
+document.getElementById('menuBtn').onclick = () => {
   gameoverScreen.classList.remove('active');
   startScreen.classList.remove('hidden');
-  hint.classList.add('hidden');
-  ballEl.style.display = 'none';
+  ballWrap.style.display = 'none';
+  renderAll();
 };
 
 document.getElementById('shareBtn').onclick = () => {
@@ -1202,7 +1464,7 @@ document.getElementById('shareBtn').onclick = () => {
     navigator.share({ title: 'گلستان', text: text }).catch(() => {});
   } else {
     navigator.clipboard.writeText(text).then(() => {
-      alert('📋 متن کپی شد! حالا برای دوستات بفرست');
+      alert('📋 متن کپی شد!');
     }).catch(() => {
       const ta = document.createElement('textarea');
       ta.value = text;
@@ -1224,7 +1486,7 @@ soundBtn.onclick = () => {
 
 // ---- شروع ----
 loadState();
-renderCountries();
+renderAll();
 </script>
 </body>
- </html>
+       </html>
