@@ -58,6 +58,7 @@
     gap: 8px;
     min-height: 24px;
     margin-bottom: 10px;
+    flex-wrap: wrap;
   }
   .buff-badge {
     font-size: 11px;
@@ -120,6 +121,29 @@
   .ad-btn:hover { background: rgba(255,215,0,0.15); }
   .ad-btn:disabled { opacity: 0.4; cursor: not-allowed; }
 
+  .social-reward {
+    background: linear-gradient(135deg, #E1306C, #F77737);
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    padding: 10px 15px;
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 10px;
+    width: 100%;
+    transition: 0.2s;
+  }
+  .social-reward:hover { filter: brightness(1.1); transform: translateY(-1px); }
+  .social-reward:disabled {
+    background: rgba(255,255,255,0.08);
+    color: #666;
+    cursor: not-allowed;
+    filter: none;
+    transform: none;
+  }
+
   .upgrades { margin-top: 20px; text-align: right; }
   .upgrades h2 { font-size: 16px; margin-bottom: 12px; color: #aaa; }
   .upgrade {
@@ -177,6 +201,35 @@
   footer a { color: #888; text-decoration: none; }
   footer a:hover { color: #ffd700; }
 
+  .social-icons {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-bottom: 12px;
+    flex-wrap: wrap;
+  }
+  .social-icons a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px; height: 40px;
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 50%;
+    color: #fff;
+    font-size: 18px;
+    text-decoration: none;
+    transition: 0.2s;
+  }
+  .social-icons a:hover {
+    background: rgba(255,215,0,0.2);
+    border-color: #ffd700;
+    transform: translateY(-3px);
+  }
+  .social-icons a.ig:hover { background: linear-gradient(135deg, #833AB4, #FD1D1D, #FCB045); border-color: transparent; }
+  .social-icons a.virasty:hover { background: linear-gradient(135deg, #1e40af, #3b82f6); border-color: transparent; }
+  .social-icons a.mydot:hover { background: linear-gradient(135deg, #16a34a, #22c55e); border-color: transparent; }
+
   .float {
     position: fixed;
     pointer-events: none;
@@ -191,7 +244,6 @@
     to { opacity: 0; transform: translateY(-80px); }
   }
 
-  /* مودال‌ها */
   .modal-overlay {
     position: fixed; inset: 0;
     background: rgba(0,0,0,0.75);
@@ -239,7 +291,6 @@
     font-size: 12px;
   }
 
-  /* دستاوردها */
   .achievements { margin-top: 20px; text-align: right; }
   .achievements h2 { font-size: 16px; margin-bottom: 10px; color: #aaa; }
   .ach-list {
@@ -265,6 +316,62 @@
     border-color: rgba(255,215,0,0.5);
     box-shadow: 0 0 10px rgba(255,215,0,0.2);
   }
+
+  /* مودال خوش‌آمدگویی */
+  .welcome-modal {
+    max-width: 420px;
+  }
+  .welcome-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 15px;
+  }
+  .welcome-avatar {
+    width: 60px; height: 60px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #833AB4, #FD1D1D, #FCB045);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 28px;
+    border: 2px solid #ffd700;
+  }
+  .welcome-name {
+    font-size: 16px;
+    font-weight: bold;
+    color: #ffd700;
+  }
+  .welcome-bio {
+    font-size: 11px;
+    color: #999;
+    line-height: 1.8;
+    text-align: center;
+    margin: 10px 0 15px;
+    padding: 12px;
+    background: rgba(255,255,255,0.03);
+    border-radius: 10px;
+  }
+  .welcome-socials {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    margin-bottom: 15px;
+  }
+  .welcome-socials a {
+    flex: 1;
+    padding: 10px 8px;
+    border-radius: 10px;
+    text-decoration: none;
+    color: #fff;
+    font-size: 11px;
+    font-weight: bold;
+    text-align: center;
+    transition: 0.2s;
+  }
+  .welcome-socials a.ig { background: linear-gradient(135deg, #833AB4, #FD1D1D, #FCB045); }
+  .welcome-socials a.virasty { background: linear-gradient(135deg, #1e40af, #3b82f6); }
+  .welcome-socials a.mydot { background: linear-gradient(135deg, #16a34a, #22c55e); }
+  .welcome-socials a:hover { transform: translateY(-2px); filter: brightness(1.15); }
 </style>
 </head>
 <body>
@@ -272,9 +379,9 @@
 <div class="game">
   <h1>🏭 کارخانه سکه</h1>
   <div class="brand">
-    ساخته شده توسط <a href="https://github.com/amirrezagholami" target="_blank">amirrezagholami 1386</a>
+    ساخته شده توسط <a href="https://www.instagram.com/amirrezagholamiofficialpage/" target="_blank">amirrezagholami 1386</a>
   </div>
-  <div class="version">نسخه 1.2.0</div>
+  <div class="version">نسخه 1.3.0</div>
 
   <div class="coins" id="coins">0</div>
   <div class="per-sec" id="perSec"></div>
@@ -284,6 +391,7 @@
   <button class="special-btn" id="specialBtn">⚡ کلیک طوفانی! (۱۰ ثانیه)</button>
 
   <button class="ad-btn" id="adBtn">📺 تماشای تبلیغ — جایزه ۵۰٪ سکه فعلی</button>
+  <button class="social-reward" id="socialReward">📸 ما رو دنبال کن +۵۰۰ سکه (یک بار)</button>
 
   <div class="upgrades">
     <h2>⚡ ارتقاها</h2>
@@ -298,9 +406,44 @@
   <button class="reset" id="resetBtn">🔄 شروع مجدد</button>
 
   <footer>
-    © ۲۰۲۶ <a href="https://github.com/amirrezagholami" target="_blank">amirrezagholami 1386</a> — همه حقوق محفوظ است
-    <br><span style="font-size:10px;">نسخه 1.2.0</span>
+    <div class="social-icons">
+      <a href="https://www.instagram.com/amirrezagholamiofficialpage/" target="_blank" title="اینستاگرام" class="ig">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+      </a>
+      <a href="https://virasty.com/Amirrezagholami_ir" target="_blank" title="ویراستی" class="virasty">
+        <span style="font-weight:bold; font-size:14px;">و</span>
+      </a>
+      <a href="https://mydot.one/profile/Amirrezagh" target="_blank" title="مای‌دات" class="mydot">
+        <span style="font-weight:bold; font-size:14px;">●</span>
+      </a>
+    </div>
+    © ۲۰۲۶ <a href="https://www.instagram.com/amirrezagholamiofficialpage/" target="_blank">amirrezagholami 1386</a> — همه حقوق محفوظ است
+    <br><span style="font-size:10px;">نسخه 1.3.0</span>
   </footer>
+</div>
+
+<!-- مودال خوش‌آمدگویی -->
+<div class="modal-overlay" id="welcomeModal">
+  <div class="modal welcome-modal">
+    <div class="welcome-header">
+      <div class="welcome-avatar">⚽</div>
+      <div>
+        <div class="welcome-name">Amirreza Gholami</div>
+        <div style="font-size:10px; color:#888;">حساب رسمی</div>
+      </div>
+    </div>
+    <div class="welcome-bio">
+      ⚽ Football | 🏋️ Fitness | 📸 Lifestyle<br>
+      🕌 Faith • Family • Life<br>
+      ✨ Just getting started...
+    </div>
+    <div class="welcome-socials">
+      <a href="https://www.instagram.com/amirrezagholamiofficialpage/" target="_blank" class="ig">📸 اینستاگرام</a>
+      <a href="https://virasty.com/Amirrezagholami_ir" target="_blank" class="virasty">ویراستی</a>
+      <a href="https://mydot.one/profile/Amirrezagh" target="_blank" class="mydot">مای‌دات</a>
+    </div>
+    <button class="modal-btn" id="welcomeClose">بزن بریم بازی! 🎮</button>
+  </div>
 </div>
 
 <!-- مودال تبلیغ -->
@@ -327,7 +470,13 @@
 </div>
 
 <script>
-const VERSION = '1.2.0';
+const VERSION = '1.3.0';
+
+const SOCIAL_LINKS = {
+  instagram: 'https://www.instagram.com/amirrezagholamiofficialpage/',
+  virasty: 'https://virasty.com/Amirrezagholami_ir',
+  mydot: 'https://mydot.one/profile/Amirrezagh',
+};
 
 const UPGRADES = [
   { id: 'click',   name: '💪 قدرت کلیک',  desc: 'هر کلیک +1 سکه',    baseCost: 10,    effect: 1,   type: 'click' },
@@ -338,15 +487,16 @@ const UPGRADES = [
 ];
 
 const ACHIEVEMENTS = [
-  { id: 'first100',  icon: '🥉', name: 'اولین ۱۰۰ سکه',     check: s => s.coins >= 100,     reward: 50 },
-  { id: 'first1k',   icon: '🥈', name: '۱۰۰۰ سکه',          check: s => s.coins >= 1000,    reward: 200 },
-  { id: 'first10k',  icon: '🥇', name: '۱۰۰۰۰ سکه',         check: s => s.coins >= 10000,   reward: 1000 },
-  { id: 'worker1',   icon: '👷', name: 'اولین کارگر',       check: s => (s.owned.worker||0) >= 1,  reward: 100 },
-  { id: 'factory1',  icon: '🏭', name: 'اولین کارخانه',     check: s => (s.owned.factory||0) >= 1, reward: 500 },
-  { id: 'robot1',    icon: '🤖', name: 'اولین ربات',        check: s => (s.owned.robot||0) >= 1,   reward: 2000 },
-  { id: 'click100',  icon: '👆', name: '۱۰۰ کلیک',          check: s => s.totalClicks >= 100, reward: 100 },
-  { id: 'click1000', icon: '🖱️', name: '۱۰۰۰ کلیک',        check: s => s.totalClicks >= 1000, reward: 500 },
-  { id: 'ad5',       icon: '📺', name: '۵ تبلیغ دیده',     check: s => s.adsWatched >= 5, reward: 300 },
+  { id: 'first100',  icon: '🥉', name: 'اولین ۱۰۰ سکه',  check: s => s.coins >= 100,     reward: 50 },
+  { id: 'first1k',   icon: '🥈', name: '۱۰۰۰ سکه',       check: s => s.coins >= 1000,    reward: 200 },
+  { id: 'first10k',  icon: '🥇', name: '۱۰۰۰۰ سکه',      check: s => s.coins >= 10000,   reward: 1000 },
+  { id: 'worker1',   icon: '👷', name: 'اولین کارگر',    check: s => (s.owned.worker||0) >= 1,  reward: 100 },
+  { id: 'factory1',  icon: '🏭', name: 'اولین کارخانه',  check: s => (s.owned.factory||0) >= 1, reward: 500 },
+  { id: 'robot1',    icon: '🤖', name: 'اولین ربات',     check: s => (s.owned.robot||0) >= 1,   reward: 2000 },
+  { id: 'click100',  icon: '👆', name: '۱۰۰ کلیک',       check: s => s.totalClicks >= 100, reward: 100 },
+  { id: 'click1000', icon: '🖱️', name: '۱۰۰۰ کلیک',     check: s => s.totalClicks >= 1000, reward: 500 },
+  { id: 'ad5',       icon: '📺', name: '۵ تبلیغ دیده',   check: s => s.adsWatched >= 5, reward: 300 },
+  { id: 'social1',   icon: '❤️', name: 'دنبال‌کننده',    check: s => s.socialFollowed, reward: 0 },
 ];
 
 let state = {
@@ -356,9 +506,11 @@ let state = {
   unlockedAch: [],
   totalClicks: 0,
   adsWatched: 0,
+  socialFollowed: false,
+  welcomeSeen: false,
   lastSeen: Date.now(),
-  stormUntil: 0,     // زمان پایان کلیک طوفانی
-  adBuffUntil: 0,    // زمان پایان باف تبلیغ
+  stormUntil: 0,
+  adBuffUntil: 0,
   nextStormAt: Date.now() + 60000,
 };
 
@@ -398,7 +550,6 @@ function render() {
   const ps = getPerSec();
   document.getElementById('perSec').textContent = ps > 0 ? `+${ps.toLocaleString('fa-IR')} سکه در ثانیه` : '';
 
-  // باف‌ها
   const buffs = [];
   if (state.adBuffUntil > Date.now()) {
     const s = Math.ceil((state.adBuffUntil - Date.now())/1000);
@@ -410,7 +561,6 @@ function render() {
   }
   document.getElementById('buffs').innerHTML = buffs.join('');
 
-  // کلیک طوفانی
   const stormBtn = document.getElementById('specialBtn');
   if (state.stormUntil > Date.now()) {
     stormBtn.style.display = 'none';
@@ -420,7 +570,13 @@ function render() {
     stormBtn.style.display = 'none';
   }
 
-  // ارتقاها
+  // دکمه شبکه اجتماعی
+  const socialBtn = document.getElementById('socialReward');
+  if (state.socialFollowed) {
+    socialBtn.disabled = true;
+    socialBtn.textContent = '✅ قبلاً پاداش رو گرفتی';
+  }
+
   const list = document.getElementById('upgradeList');
   list.innerHTML = '';
   for (const up of UPGRADES) {
@@ -443,7 +599,6 @@ function render() {
     btn.onclick = () => buy(btn.dataset.id);
   });
 
-  // دستاوردها
   const achList = document.getElementById('achList');
   achList.innerHTML = '';
   for (const a of ACHIEVEMENTS) {
@@ -461,19 +616,23 @@ function checkAchievements() {
     if (state.unlockedAch.includes(a.id)) continue;
     if (a.check(state)) {
       state.unlockedAch.push(a.id);
-      state.coins += a.reward;
-      showToast(`🏆 دستاورد: ${a.name} +${a.reward} سکه`);
+      if (a.reward > 0) {
+        state.coins += a.reward;
+        showToast(`🏆 دستاورد: ${a.name} +${a.reward} سکه`);
+      } else {
+        showToast(`🏆 دستاورد: ${a.name}`);
+      }
     }
   }
 }
 
 function showToast(msg) {
   const t = document.createElement('div');
-  t.style.cssText = 'position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#ffd700;color:#1a1a2e;padding:10px 20px;border-radius:10px;font-weight:bold;font-size:13px;z-index:2000;box-shadow:0 4px 20px rgba(0,0,0,0.4);';
+  t.style.cssText = 'position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#ffd700;color:#1a1a2e;padding:10px 20px;border-radius:10px;font-weight:bold;font-size:13px;z-index:2000;box-shadow:0 4px 20px rgba(0,0,0,0.4);max-width:90vw;text-align:center;';
   t.textContent = msg;
   document.body.appendChild(t);
-  setTimeout(() => { t.style.transition='opacity 0.5s'; t.style.opacity='0'; }, 2000);
-  setTimeout(() => t.remove(), 2600);
+  setTimeout(() => { t.style.transition='opacity 0.5s'; t.style.opacity='0'; }, 2200);
+  setTimeout(() => t.remove(), 2800);
 }
 
 function buy(id) {
@@ -489,12 +648,10 @@ function buy(id) {
   render();
 }
 
-// ---- کلیک ----
 document.getElementById('clickBtn').addEventListener('click', (e) => {
   const power = getClickPower();
   state.coins += power;
   state.totalClicks++;
-
   const f = document.createElement('div');
   f.className = 'float';
   f.textContent = `+${power}`;
@@ -502,21 +659,18 @@ document.getElementById('clickBtn').addEventListener('click', (e) => {
   f.style.top = e.clientY - 20 + 'px';
   document.body.appendChild(f);
   setTimeout(() => f.remove(), 800);
-
   save();
   checkAchievements();
   render();
 });
 
-// ---- کلیک طوفانی ----
 document.getElementById('specialBtn').addEventListener('click', () => {
   state.stormUntil = Date.now() + 10000;
-  state.nextStormAt = Date.now() + 120000; // هر ۲ دقیقه
+  state.nextStormAt = Date.now() + 120000;
   showToast('⚡ کلیک طوفانی فعال شد! ۱۰ ثانیه');
   render();
 });
 
-// ---- تبلیغ ----
 let adInterval = null;
 document.getElementById('adBtn').addEventListener('click', () => {
   const modal = document.getElementById('adModal');
@@ -526,14 +680,10 @@ document.getElementById('adBtn').addEventListener('click', () => {
   timerEl.textContent = sec;
   claim.disabled = true;
   modal.classList.add('active');
-
   adInterval = setInterval(() => {
     sec--;
     timerEl.textContent = sec;
-    if (sec <= 0) {
-      clearInterval(adInterval);
-      claim.disabled = false;
-    }
+    if (sec <= 0) { clearInterval(adInterval); claim.disabled = false; }
   }, 1000);
 });
 
@@ -554,16 +704,27 @@ document.getElementById('adClose').addEventListener('click', () => {
   document.getElementById('adModal').classList.remove('active');
 });
 
+// ---- پاداش شبکه اجتماعی ----
+document.getElementById('socialReward').addEventListener('click', () => {
+  if (state.socialFollowed) return;
+  window.open(SOCIAL_LINKS.instagram, '_blank');
+  state.socialFollowed = true;
+  state.coins += 500;
+  showToast('🎁 +۵۰۰ سکه! ممنون که دنبال کردی ❤️');
+  save();
+  checkAchievements();
+  render();
+});
+
 // ---- درآمد آفلاین ----
 function checkOffline() {
   const now = Date.now();
-  const diff = (now - (state.lastSeen || now)) / 1000; // ثانیه
-  if (diff < 60) return; // کمتر از ۱ دقیقه نادیده بگیر
+  const diff = (now - (state.lastSeen || now)) / 1000;
+  if (diff < 60) return;
   const ps = getPerSec();
   if (ps <= 0) return;
-  const earned = Math.floor(ps * Math.min(diff, 8 * 3600)); // حداکثر ۸ ساعت
+  const earned = Math.floor(ps * Math.min(diff, 8 * 3600));
   if (earned < 1) return;
-
   document.getElementById('offlineAmount').textContent = earned.toLocaleString('fa-IR');
   document.getElementById('offlineModal').classList.add('active');
   document.getElementById('offlineClaim').onclick = () => {
@@ -575,7 +736,17 @@ function checkOffline() {
   };
 }
 
-// ---- حلقه بازی ----
+// ---- مودال خوش‌آمدگویی ----
+function checkWelcome() {
+  if (state.welcomeSeen) return;
+  document.getElementById('welcomeModal').classList.add('active');
+  document.getElementById('welcomeClose').onclick = () => {
+    state.welcomeSeen = true;
+    save();
+    document.getElementById('welcomeModal').classList.remove('active');
+  };
+}
+
 setInterval(() => {
   const ps = getPerSec();
   if (ps > 0) { state.coins += ps; checkAchievements(); render(); }
@@ -583,7 +754,6 @@ setInterval(() => {
 
 setInterval(save, 5000);
 
-// ---- ریست ----
 document.getElementById('resetBtn').addEventListener('click', () => {
   if (confirm('مطمئنی می‌خوای از اول شروع کنی؟')) {
     localStorage.removeItem('coinFactorySave');
@@ -591,9 +761,9 @@ document.getElementById('resetBtn').addEventListener('click', () => {
   }
 });
 
-// ---- شروع ----
 load();
 checkOffline();
+checkWelcome();
 checkAchievements();
 render();
 </script>
