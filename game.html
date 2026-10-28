@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🏭 کارخانه سکه</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: Tahoma, sans-serif;
+    background: linear-gradient(135deg, #1a1a2e, #16213e);
+    color: #fff;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+  }
+  .game {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 20px;
+    padding: 30px;
+    max-width: 500px;
+    width: 100%;
+    text-align: center;
+    backdrop-filter: blur(10px);
+  }
+  h1 { font-size: 24px; margin-bottom: 10px; }
+  .coins {
+    font-size: 42px;
+    font-weight: bold;
+    color: #ffd700;
+    margin: 15px 0;
+    text-shadow: 0 0 20px rgba(255,215,0,0.4);
+  }
+  .per-sec {
+    font-size: 14px;
+    color: #8f8;
+    margin-bottom: 20px;
+    min-height: 20px;
+  }
+  .click-btn {
+    font-size: 80px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    transition: transform 0.1s;
+    user-select: none;
+    margin: 10px 0;
+  }
+  .click-btn:active { transform: scale(0.85); }
+  .click-btn:hover { transform: scale(1.05); }
+
+  .upgrades {
+    margin-top: 25px;
+    text-align: right;
+  }
+  .upgrades h2 { font-size: 16px; margin-bottom: 12px; color: #aaa; }
+  .upgrade {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 12px;
+    padding: 12px 15px;
+    margin-bottom: 10px;
+    transition: 0.2s;
+  }
+  .upgrade:hover { background: rgba(255,255,255,0.12); }
+  .upgrade-info { text-align: right; }
+  .upgrade-name { font-size: 15px; font-weight: bold; }
+  .upgrade-desc { font-size: 12px; color: #999; margin-top: 3px; }
+  .buy-btn {
+    background: #ffd700;
+    color: #1a1a2e;
+    border: none;
+    border-radius: 8px;
+    padding: 8px 14px;
+    font-family: inherit;
+    font-weight: bold;
+    font-size: 13px;
+    cursor: pointer;
+    transition: 0.2s;
+    white-space: nowrap;
+  }
+  .buy-btn:hover:not(:disabled) { background: #ffe44d; transform: translateY(-2px); }
+  .buy-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+
+  .reset {
+    margin-top: 20px;
+    background: none;
+    border: 1px solid #444;
+    color: #666;
+    border-radius: 8px;
+    padding: 6px 12px;
+    font-family: inherit;
+    font-size: 11px;
+    cursor: pointer;
+  }
+  .reset:hover { color: #f66; border-color: #f66; }
+
+  .float {
+    position: fixed;
+    pointer-events: none;
+    font-size: 24px;
+    color: #ffd700;
+    font-weight: bold;
+    animation: floatUp 0.8s ease-out forwards;
+    z-index: 999;
+  }
+  @keyframes floatUp {
+    from { opacity: 1; transform: translateY(0); }
+    to { opacity: 0; transform: translateY(-80px); }
+  }
+</style>
+</head>
+<body>
+
+<div class="game">
+  <h1>🏭 کارخانه سکه</h1>
+  <div class="coins" id="coins">0</div>
+  <div class="per-sec" id="perSec"></div>
+
+  <button class="click-btn" id="clickBtn">🪙</button>
+
+  <div class="upgrades">
+    <h2>⚡ ارتقاها</h2>
+    <div id="upgradeList"></div>
+  </div>
+
+  <button class="reset" id="resetBtn">🔄 شروع مجدد</button>
+</div>
+
+<script>
+// ---- تعریف ارتقاها ----
+const UPGRADES = [
+  { id: 'click',   name: '💪 قدرت کلیک',      desc: 'هر کلیک +1 سکه',      baseCost: 10,   effect: 1,  type: 'click' },
+  { id: 'worker',  name: '👷 کارگر',          desc: '+1 سکه در ثانیه',     baseCost: 50,   effect: 1,  type: 'auto' },
+  { id: 'machine', name: '⚙️ ماشین',          desc: '+5 سکه در ثانیه',     baseCost: 300,  effect: 5,  type: 'auto' },
+  { id: 'factory', name: '🏭 کارخانه',         desc: '+25 سکه در ثانیه',    baseCost: 2000, effect: 25, type: 'auto' },
+  { id: 'robot',   name: '🤖 ربات',           desc: '+100 سکه در ثانیه',   baseCost: 10000,effect: 100,type: 'auto' },
+];
+
+// ---- حالت بازی ----
+let state = {
+  coins: 0,
+  clickPower: 1,
+  owned: {} // { upgradeId: count }
+};
+
+// ---- بارگذاری از localStorage ----
+function load() {
+  const saved = localStorage.getItem('coinFactorySave');
+  if (saved) {
+    try { state = JSON.parse(saved); } catch(e) {}
+  }
+}
+function save() {
+  localStorage.setItem('coinFactorySave', JSON.stringify(state));
+}
+
+// ---- محاسبه سکه در ثانیه ----
+function getPerSec() {
+  let total = 0;
+  for (const up of UPGRADES) {
+    if (up.type === 'auto') {
+      total += (state.owned[up.id] || 0) * up.effect;
+    }
+  }
+  return total;
+}
+
+// ---- هزینه ارتقا (قیمت رشد می‌کنه) ----
+function getCost(up) {
+  const count = state.owned[up.id] || 0;
+  return Math.floor(up.baseCost * Math.pow(1.15, count));
+}
+
+// ---- رندر صفحه ----
+function render() {
+  document.getElementById('coins').textContent = Math.floor(state.coins).toLocaleString('fa-IR');
+
+  const ps = getPerSec();
+  document.getElementById('perSec').textContent =
+    ps > 0 ? `+${ps.toLocaleString('fa-IR')} سکه در ثانیه` : '';
+
+  const list = document.getElementById('upgradeList');
+  list.innerHTML = '';
+
+  for (const up of UPGRADES) {
+    const cost = getCost(up);
+    const count = state.owned[up.id] || 0;
+    const canBuy = state.coins >= cost;
+
+    const div = document.createElement('div');
+    div.className = 'upgrade';
+    div.innerHTML = `
+      <div class="upgrade-info">
+        <div class="upgrade-name">${up.name} ${count > 0 ? `(${count})` : ''}</div>
+        <div class="upgrade-desc">${up.desc}</div>
+      </div>
+      <button class="buy-btn" ${canBuy ? '' : 'disabled'} data-id="${up.id}">
+        ${Math.floor(cost).toLocaleString('fa-IR')} 🪙
+      </button>
+    `;
+    list.appendChild(div);
+  }
+
+  // اتصال دکمه‌های خرید
+  list.querySelectorAll('.buy-btn').forEach(btn => {
+    btn.onclick = () => buy(btn.dataset.id);
+  });
+}
+
+// ---- خرید ارتقا ----
+function buy(id) {
+  const up = UPGRADES.find(u => u.id === id);
+  if (!up) return;
+  const cost = getCost(up);
+  if (state.coins < cost) return;
+
+  state.coins -= cost;
+  state.owned[id] = (state.owned[id] || 0) + 1;
+
+  if (up.type === 'click') {
+    state.clickPower += up.effect;
+  }
+
+  save();
+  render();
+}
+
+// ---- کلیک روی سکه ----
+const clickBtn = document.getElementById('clickBtn');
+clickBtn.addEventListener('click', (e) => {
+  state.coins += state.clickPower;
+
+  // افکت شناور
+  const f = document.createElement('div');
+  f.className = 'float';
+  f.textContent = `+${state.clickPower}`;
+  f.style.left = e.clientX - 15 + 'px';
+  f.style.top = e.clientY - 20 + 'px';
+  document.body.appendChild(f);
+  setTimeout(() => f.remove(), 800);
+
+  save();
+  render();
+});
+
+// ---- حلقه بازی (درآمد خودکار) ----
+setInterval(() => {
+  const ps = getPerSec();
+  if (ps > 0) {
+    state.coins += ps;
+    render();
+  }
+}, 1000);
+
+// ---- ذخیره خودکار ----
+setInterval(save, 5000);
+
+// ---- ریست ----
+document.getElementById('resetBtn').addEventListener('click', () => {
+  if (confirm('مطمئنی می‌خوای از اول شروع کنی؟')) {
+    localStorage.removeItem('coinFactorySave');
+    state = { coins: 0, clickPower: 1, owned: {} };
+    render();
+  }
+});
+
+// ---- شروع ----
+load();
+render();
+</script>
+</body>
+  </html>
