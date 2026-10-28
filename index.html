@@ -2,7 +2,7 @@
 <html lang="fa" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <title>⚽ گلستان | بازی امیررضا غلامی</title>
 <meta name="author" content="امیررضا غلامی">
 <meta name="description" content="بازی گلستان - گل بزن، رکورد بشکن! ساخته امیررضا غلامی">
@@ -11,11 +11,14 @@
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://amirrezagholami86.github.io/coin-factory-game-1/">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚽</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;600;700;900&display=swap" rel="stylesheet">
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
   html, body {
-    font-family: Tahoma, sans-serif;
-    background: linear-gradient(180deg, #0a1929 0%, #1a3a1a 100%);
+    font-family: 'Vazirmatn', Tahoma, sans-serif;
+    background: #050a14;
     color: #fff;
     min-height: 100vh;
     overflow: hidden;
@@ -27,34 +30,65 @@
     align-items: center;
     padding: 10px;
   }
+
+  /* ============ پس‌زمینه متحرک ============ */
+  .bg-orbs {
+    position: fixed;
+    inset: 0;
+    overflow: hidden;
+    z-index: 0;
+    pointer-events: none;
+  }
+  .orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(60px);
+    opacity: 0.4;
+    animation: orbFloat 20s infinite ease-in-out;
+  }
+  .orb:nth-child(1) { width: 300px; height: 300px; background: #22c55e; top: -100px; left: -100px; animation-delay: 0s; }
+  .orb:nth-child(2) { width: 250px; height: 250px; background: #fbbf24; bottom: -80px; right: -80px; animation-delay: -5s; }
+  .orb:nth-child(3) { width: 200px; height: 200px; background: #3b82f6; top: 50%; left: 50%; animation-delay: -10s; }
+  @keyframes orbFloat {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    33% { transform: translate(60px, -40px) scale(1.2); }
+    66% { transform: translate(-40px, 60px) scale(0.9); }
+  }
+
+  /* ============ باکس اصلی ============ */
   .game-wrap {
     position: relative;
     width: 100%;
     max-width: 480px;
     height: 95vh;
     max-height: 800px;
-    background: #0d2818;
-    border-radius: 20px;
+    background: linear-gradient(180deg, #0a2818 0%, #0d3a22 100%);
+    border-radius: 24px;
     overflow: hidden;
-    box-shadow: 0 20px 60px rgba(0,0,0,0.5);
-    border: 2px solid rgba(74,222,128,0.3);
+    box-shadow: 0 25px 80px rgba(0,0,0,0.6), 0 0 0 1px rgba(74,222,128,0.15), inset 0 0 100px rgba(74,222,128,0.05);
+    z-index: 1;
   }
 
-  /* زمین */
+  /* ============ زمین ============ */
   .field {
     position: absolute;
     inset: 0;
-    background: linear-gradient(180deg, #1a4d2e 0%, #2d7a4a 40%, #3a9a5a 70%, #4aba6a 100%);
+    background: linear-gradient(180deg, #0f3d22 0%, #1a5c33 30%, #2d8a4a 65%, #45b865 100%);
     overflow: hidden;
   }
   .field::before {
     content: '';
     position: absolute;
     inset: 0;
-    background-image: repeating-linear-gradient(180deg, transparent 0px, transparent 40px, rgba(255,255,255,0.03) 40px, rgba(255,255,255,0.03) 80px);
+    background-image: repeating-linear-gradient(180deg, transparent 0px, transparent 50px, rgba(255,255,255,0.02) 50px, rgba(255,255,255,0.02) 100px);
+    animation: fieldScroll 8s linear infinite;
+  }
+  @keyframes fieldScroll {
+    from { transform: translateY(0); }
+    to { transform: translateY(100px); }
   }
 
-  /* دروازه */
+  /* ============ دروازه ============ */
   .goal {
     position: absolute;
     top: 15%;
@@ -64,279 +98,130 @@
     height: 22%;
     border: 4px solid #fff;
     border-bottom: none;
-    border-radius: 8px 8px 0 0;
-    background: repeating-linear-gradient(90deg, transparent 0px, transparent 15px, rgba(255,255,255,0.15) 15px, rgba(255,255,255,0.15) 16px), repeating-linear-gradient(0deg, transparent 0px, transparent 15px, rgba(255,255,255,0.15) 15px, rgba(255,255,255,0.15) 16px);
-    box-shadow: inset 0 0 30px rgba(0,0,0,0.3);
+    border-radius: 10px 10px 0 0;
+    background:
+      repeating-linear-gradient(90deg, transparent 0px, transparent 18px, rgba(255,255,255,0.12) 18px, rgba(255,255,255,0.12) 19px),
+      repeating-linear-gradient(0deg, transparent 0px, transparent 18px, rgba(255,255,255,0.12) 18px, rgba(255,255,255,0.12) 19px),
+      linear-gradient(180deg, rgba(0,0,0,0.2), rgba(0,0,0,0.4));
+    box-shadow: inset 0 0 40px rgba(0,0,0,0.5), 0 0 30px rgba(255,255,255,0.15);
     z-index: 2;
   }
 
-  /* دروازه‌بان */
+  /* ============ دروازه‌بان ============ */
   .keeper {
     position: absolute;
     font-size: 48px;
-    transition: left 0.15s ease-out;
     z-index: 3;
-    filter: drop-shadow(0 4px 8px rgba(0,0,0,0.4));
+    filter: drop-shadow(0 6px 12px rgba(0,0,0,0.5));
     pointer-events: none;
+    transition: left 0.12s cubic-bezier(0.34, 1.56, 0.64, 1);
+    will-change: left;
+  }
+  .keeper.diving {
+    animation: dive 0.3s ease-out;
+  }
+  @keyframes dive {
+    0% { transform: scale(1) rotate(0deg); }
+    50% { transform: scale(1.3) rotate(15deg); }
+    100% { transform: scale(1) rotate(0deg); }
   }
   @media (max-width: 400px) {
     .keeper { font-size: 40px; }
   }
 
-  /* توپ */
+  /* ============ توپ ============ */
   .ball {
     position: absolute;
     font-size: 40px;
     z-index: 4;
-    filter: drop-shadow(0 4px 8px rgba(0,0,0,0.5));
+    filter: drop-shadow(0 6px 12px rgba(0,0,0,0.6));
     pointer-events: none;
-    transition: none;
+    will-change: left, top, transform;
   }
   @media (max-width: 400px) {
     .ball { font-size: 34px; }
   }
 
-  /* HUD */
+  /* ============ HUD شیشه‌ای ============ */
   .hud {
     position: absolute;
     top: 0;
     left: 0;
     right: 0;
-    padding: 12px 16px;
+    padding: 14px 16px;
     display: flex;
     justify-content: space-between;
     align-items: center;
     z-index: 10;
-    background: linear-gradient(180deg, rgba(0,0,0,0.5) 0%, transparent 100%);
+    background: linear-gradient(180deg, rgba(0,0,0,0.45) 0%, transparent 100%);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
   }
   .hud-item {
     display: flex;
     align-items: center;
     gap: 6px;
-    font-size: 14px;
-    font-weight: bold;
+    font-size: 13px;
+    font-weight: 600;
     color: #fff;
-    text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+    text-shadow: 0 2px 8px rgba(0,0,0,0.6);
   }
   .hud-item .big {
     font-size: 22px;
+    font-weight: 900;
     color: #fbbf24;
+    text-shadow: 0 0 20px rgba(251,191,36,0.6);
   }
   .flag-badge {
-    font-size: 24px;
-    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5));
+    font-size: 22px;
+    filter: drop-shadow(0 2px 6px rgba(0,0,0,0.5));
   }
-
-  /* صفحه انتخاب کشور */
-  .screen {
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(135deg, #0a1929, #1a3a1a);
-    display: flex;
-    flex-direction: column;
-    padding: 20px;
-    z-index: 100;
-    overflow-y: auto;
-  }
-  .screen.hidden { display: none; }
-  .screen h1 {
-    font-size: 28px;
-    text-align: center;
-    margin-bottom: 5px;
-    color: #4ade80;
-    text-shadow: 0 0 20px rgba(74,222,128,0.5);
-  }
-  .screen .subtitle {
-    text-align: center;
-    font-size: 12px;
-    color: #888;
-    margin-bottom: 20px;
-  }
-  .screen .brand-line {
-    text-align: center;
-    font-size: 11px;
-    color: #666;
-    margin-bottom: 15px;
-  }
-  .screen .brand-line a { color: #4ade80; text-decoration: none; }
-
-  .country-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 8px;
-    margin-bottom: 15px;
-  }
-  @media (max-width: 360px) {
-    .country-grid { grid-template-columns: repeat(3, 1fr); }
-  }
-  .country-btn {
-    background: rgba(255,255,255,0.06);
-    border: 2px solid rgba(255,255,255,0.1);
-    border-radius: 12px;
-    padding: 10px 4px;
-    cursor: pointer;
-    transition: 0.2s;
-    text-align: center;
-    font-family: inherit;
-    color: #fff;
-  }
-  .country-btn:hover {
-    background: rgba(74,222,128,0.15);
-    border-color: #4ade80;
-    transform: translateY(-2px);
-  }
-  .country-btn.selected {
-    background: rgba(74,222,128,0.25);
-    border-color: #4ade80;
-    box-shadow: 0 0 15px rgba(74,222,128,0.4);
-  }
-  .country-btn .flag { font-size: 26px; display: block; margin-bottom: 4px; }
-  .country-btn .name { font-size: 10px; color: #ccc; }
-
-  .start-btn {
-    background: linear-gradient(135deg, #4ade80, #22c55e);
-    color: #0a1929;
-    border: none;
-    border-radius: 14px;
-    padding: 16px;
-    font-family: inherit;
-    font-size: 18px;
-    font-weight: bold;
-    cursor: pointer;
-    width: 100%;
-    transition: 0.2s;
-    box-shadow: 0 6px 20px rgba(74,222,128,0.3);
-  }
-  .start-btn:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(74,222,128,0.5); }
-  .start-btn:disabled { opacity: 0.4; cursor: not-allowed; }
-
-  .best-score-box {
-    text-align: center;
-    background: rgba(251,191,36,0.1);
-    border: 1px solid rgba(251,191,36,0.3);
-    border-radius: 12px;
-    padding: 10px;
-    font-size: 13px;
-    color: #fbbf24;
-    margin-bottom: 15px;
-  }
-
-  /* صفحه بازی تموم شده */
-  .gameover-screen {
-    position: absolute;
-    inset: 0;
-    background: rgba(0,0,0,0.85);
-    display: none;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 30px;
-    z-index: 200;
-    text-align: center;
-  }
-  .gameover-screen.active { display: flex; }
-  .gameover-screen h2 {
-    font-size: 26px;
-    color: #4ade80;
-    margin-bottom: 15px;
-  }
-  .gameover-screen .score-big {
-    font-size: 60px;
-    font-weight: bold;
-    color: #fbbf24;
-    margin: 10px 0;
-    text-shadow: 0 0 30px rgba(251,191,36,0.5);
-  }
-  .gameover-screen .score-label {
-    font-size: 13px;
-    color: #888;
-    margin-bottom: 20px;
-  }
-  .gameover-screen .new-record {
-    font-size: 14px;
-    color: #fbbf24;
-    margin-bottom: 15px;
-    animation: pulse 1s infinite;
-  }
-  @keyframes pulse {
-    0%,100% { opacity: 1; }
-    50% { opacity: 0.5; }
-  }
-  .gameover-btns {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    width: 100%;
-    max-width: 280px;
-  }
-  .btn-primary {
-    background: linear-gradient(135deg, #4ade80, #22c55e);
-    color: #0a1929;
-    border: none;
-    border-radius: 12px;
-    padding: 14px;
-    font-family: inherit;
-    font-size: 16px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: 0.2s;
-  }
-  .btn-primary:hover { transform: translateY(-2px); }
-  .btn-secondary {
+  .sound-btn {
     background: rgba(255,255,255,0.1);
-    color: #fff;
     border: 1px solid rgba(255,255,255,0.2);
-    border-radius: 12px;
-    padding: 12px;
-    font-family: inherit;
-    font-size: 14px;
+    border-radius: 10px;
+    width: 36px;
+    height: 36px;
+    font-size: 18px;
     cursor: pointer;
+    backdrop-filter: blur(10px);
     transition: 0.2s;
-  }
-  .btn-secondary:hover { background: rgba(255,255,255,0.15); }
-  .btn-share {
-    background: linear-gradient(135deg, #1da1f2, #0d8ddb);
     color: #fff;
-    border: none;
-    border-radius: 12px;
-    padding: 12px;
-    font-family: inherit;
-    font-size: 14px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: 0.2s;
   }
-  .btn-share:hover { transform: translateY(-2px); }
+  .sound-btn:hover { background: rgba(255,255,255,0.2); }
 
-  /* پیام راهنما */
+  /* ============ پیام راهنما ============ */
   .hint {
     position: absolute;
     bottom: 20px;
     left: 50%;
     transform: translateX(-50%);
-    background: rgba(0,0,0,0.6);
+    background: rgba(0,0,0,0.7);
+    backdrop-filter: blur(12px);
     color: #fff;
-    padding: 8px 16px;
-    border-radius: 20px;
+    padding: 10px 18px;
+    border-radius: 24px;
     font-size: 12px;
     white-space: nowrap;
     z-index: 10;
+    border: 1px solid rgba(255,255,255,0.1);
     animation: hintPulse 2s infinite;
+    max-width: 90%;
   }
   @keyframes hintPulse {
-    0%,100% { opacity: 0.8; }
-    50% { opacity: 1; }
+    0%,100% { opacity: 0.85; transform: translateX(-50%) scale(1); }
+    50% { opacity: 1; transform: translateX(-50%) scale(1.03); }
   }
   .hint.hidden { display: none; }
 
-  /* افکت گل */
+  /* ============ افکت گل ============ */
   .goal-flash {
     position: absolute;
     inset: 0;
-    background: radial-gradient(circle, rgba(74,222,128,0.6) 0%, transparent 70%);
+    background: radial-gradient(circle, rgba(74,222,128,0.7) 0%, transparent 70%);
     pointer-events: none;
     z-index: 5;
-    animation: goalFlash 0.6s ease-out forwards;
+    animation: goalFlash 0.7s ease-out forwards;
   }
   @keyframes goalFlash {
     from { opacity: 1; }
@@ -344,38 +229,388 @@
   }
   .goal-text {
     position: absolute;
-    top: 50%;
+    top: 45%;
     left: 50%;
     transform: translate(-50%, -50%);
-    font-size: 60px;
-    font-weight: bold;
+    font-size: 64px;
+    font-weight: 900;
     color: #fbbf24;
-    text-shadow: 0 0 30px rgba(251,191,36,0.8), 0 0 60px rgba(251,191,36,0.4);
+    text-shadow: 0 0 40px rgba(251,191,36,0.9), 0 0 80px rgba(251,191,36,0.5), 0 6px 0 rgba(0,0,0,0.3);
     z-index: 6;
-    animation: goalText 1s ease-out forwards;
+    animation: goalText 1.1s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
     pointer-events: none;
+    font-family: 'Vazirmatn', Tahoma, sans-serif;
   }
   @keyframes goalText {
-    0% { opacity: 0; transform: translate(-50%, -50%) scale(0.3); }
-    30% { opacity: 1; transform: translate(-50%, -50%) scale(1.2); }
-    70% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+    0% { opacity: 0; transform: translate(-50%, -50%) scale(0.3) rotate(-10deg); }
+    30% { opacity: 1; transform: translate(-50%, -50%) scale(1.3) rotate(5deg); }
+    70% { opacity: 1; transform: translate(-50%, -50%) scale(1) rotate(0deg); }
     100% { opacity: 0; transform: translate(-50%, -50%) scale(1.5); }
   }
 
-  /* افکت کشیدن */
-  .aim-line {
+  /* ============ ذرات ============ */
+  .particle {
     position: absolute;
-    height: 3px;
-    background: linear-gradient(90deg, #fbbf24, transparent);
-    transform-origin: left center;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
     pointer-events: none;
-    z-index: 5;
-    border-radius: 2px;
-    box-shadow: 0 0 10px rgba(251,191,36,0.8);
+    z-index: 7;
+    animation: particleBurst 1s ease-out forwards;
   }
+  @keyframes particleBurst {
+    0% { opacity: 1; transform: translate(0, 0) scale(1); }
+    100% { opacity: 0; transform: translate(var(--dx), var(--dy)) scale(0); }
+  }
+
+  /* ============ کمبو ============ */
+  .combo-display {
+    position: absolute;
+    top: 65px;
+    right: 16px;
+    background: linear-gradient(135deg, #fbbf24, #f59e0b);
+    color: #050a14;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 900;
+    z-index: 10;
+    display: none;
+    box-shadow: 0 0 20px rgba(251,191,36,0.6);
+    animation: comboPop 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  .combo-display.show { display: block; }
+  @keyframes comboPop {
+    from { transform: scale(0.5); }
+    to { transform: scale(1); }
+  }
+
+  /* ============ صفحه‌ها ============ */
+  .screen {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, #050a14 0%, #0a2818 100%);
+    display: flex;
+    flex-direction: column;
+    padding: 24px 20px;
+    z-index: 100;
+    overflow-y: auto;
+    transition: opacity 0.4s ease, transform 0.4s ease;
+  }
+  .screen.hidden {
+    display: none;
+  }
+  .screen h1 {
+    font-size: 32px;
+    text-align: center;
+    margin-bottom: 6px;
+    color: #4ade80;
+    font-weight: 900;
+    text-shadow: 0 0 30px rgba(74,222,128,0.5);
+    letter-spacing: -0.5px;
+  }
+  .screen .subtitle {
+    text-align: center;
+    font-size: 13px;
+    color: #888;
+    margin-bottom: 6px;
+  }
+  .screen .brand-line {
+    text-align: center;
+    font-size: 11px;
+    color: #666;
+    margin-bottom: 18px;
+  }
+  .screen .brand-line a { color: #4ade80; text-decoration: none; font-weight: 700; }
+
+  /* ============ گرید کشورها ============ */
+  .country-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+    margin-bottom: 16px;
+  }
+  @media (max-width: 360px) {
+    .country-grid { grid-template-columns: repeat(3, 1fr); }
+  }
+  .country-btn {
+    background: rgba(255,255,255,0.05);
+    border: 2px solid rgba(255,255,255,0.08);
+    border-radius: 14px;
+    padding: 12px 4px;
+    cursor: pointer;
+    transition: 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+    text-align: center;
+    font-family: inherit;
+    color: #fff;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+  }
+  .country-btn:hover {
+    background: rgba(74,222,128,0.15);
+    border-color: rgba(74,222,128,0.5);
+    transform: translateY(-3px) scale(1.05);
+  }
+  .country-btn.selected {
+    background: linear-gradient(135deg, rgba(74,222,128,0.3), rgba(34,197,94,0.2));
+    border-color: #4ade80;
+    box-shadow: 0 0 25px rgba(74,222,128,0.5), inset 0 0 20px rgba(74,222,128,0.1);
+    transform: translateY(-3px) scale(1.05);
+  }
+  .country-btn .flag { font-size: 28px; display: block; margin-bottom: 4px; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.4)); }
+  .country-btn .name { font-size: 10px; color: #ccc; font-weight: 600; }
+
+  /* ============ دکمه شروع ============ */
+  .start-btn {
+    background: linear-gradient(135deg, #4ade80, #22c55e, #16a34a);
+    background-size: 200% 200%;
+    color: #050a14;
+    border: none;
+    border-radius: 16px;
+    padding: 18px;
+    font-family: inherit;
+    font-size: 18px;
+    font-weight: 900;
+    cursor: pointer;
+    width: 100%;
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    box-shadow: 0 8px 25px rgba(74,222,128,0.35), inset 0 1px 0 rgba(255,255,255,0.3);
+    animation: gradientShift 3s ease infinite;
+    letter-spacing: 0.5px;
+  }
+  @keyframes gradientShift {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+  }
+  .start-btn:hover:not(:disabled) {
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 12px 35px rgba(74,222,128,0.5);
+  }
+  .start-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+  /* ============ جعبه رکورد ============ */
+  .best-score-box {
+    text-align: center;
+    background: linear-gradient(135deg, rgba(251,191,36,0.15), rgba(245,158,11,0.08));
+    border: 1px solid rgba(251,191,36,0.35);
+    border-radius: 14px;
+    padding: 12px;
+    font-size: 13px;
+    color: #fbbf24;
+    margin-bottom: 16px;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 0 20px rgba(251,191,36,0.15);
+  }
+
+  /* ============ لیگ ============ */
+  .league-badge {
+    display: inline-block;
+    font-size: 10px;
+    padding: 3px 10px;
+    border-radius: 10px;
+    font-weight: 700;
+    margin-top: 4px;
+  }
+  .league-bronze { background: linear-gradient(135deg, #cd7f32, #a0522d); color: #fff; }
+  .league-silver { background: linear-gradient(135deg, #c0c0c0, #808080); color: #050a14; }
+  .league-gold { background: linear-gradient(135deg, #ffd700, #daa520); color: #050a14; }
+  .league-diamond { background: linear-gradient(135deg, #b9f2ff, #00bfff); color: #050a14; }
+
+  /* ============ صفحه پایان ============ */
+  .gameover-screen {
+    position: absolute;
+    inset: 0;
+    background: rgba(5,10,20,0.92);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 30px;
+    z-index: 200;
+    text-align: center;
+    animation: fadeIn 0.4s ease;
+  }
+  .gameover-screen.active { display: flex; }
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  .gameover-screen h2 {
+    font-size: 26px;
+    color: #4ade80;
+    margin-bottom: 12px;
+    font-weight: 900;
+  }
+  .gameover-screen .score-big {
+    font-size: 72px;
+    font-weight: 900;
+    background: linear-gradient(135deg, #fbbf24, #f59e0b);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin: 8px 0;
+    filter: drop-shadow(0 0 30px rgba(251,191,36,0.5));
+    line-height: 1;
+  }
+  .gameover-screen .score-label {
+    font-size: 13px;
+    color: #888;
+    margin-bottom: 18px;
+  }
+  .gameover-screen .new-record {
+    font-size: 15px;
+    color: #fbbf24;
+    margin-bottom: 15px;
+    font-weight: 700;
+    animation: pulse 1s infinite;
+    text-shadow: 0 0 20px rgba(251,191,36,0.6);
+  }
+  @keyframes pulse {
+    0%,100% { opacity: 1; }
+    50% { opacity: 0.6; }
+  }
+  .gameover-btns {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+    max-width: 300px;
+  }
+  .btn-primary {
+    background: linear-gradient(135deg, #4ade80, #22c55e);
+    color: #050a14;
+    border: none;
+    border-radius: 14px;
+    padding: 15px;
+    font-family: inherit;
+    font-size: 16px;
+    font-weight: 900;
+    cursor: pointer;
+    transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+    box-shadow: 0 6px 20px rgba(74,222,128,0.35);
+  }
+  .btn-primary:hover { transform: translateY(-3px) scale(1.02); box-shadow: 0 10px 30px rgba(74,222,128,0.5); }
+  .btn-secondary {
+    background: rgba(255,255,255,0.08);
+    color: #fff;
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 14px;
+    padding: 13px;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.25s;
+    backdrop-filter: blur(10px);
+  }
+  .btn-secondary:hover { background: rgba(255,255,255,0.15); transform: translateY(-2px); }
+  .btn-share {
+    background: linear-gradient(135deg, #3b82f6, #1da1f2);
+    color: #fff;
+    border: none;
+    border-radius: 14px;
+    padding: 13px;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+    box-shadow: 0 6px 20px rgba(59,130,246,0.35);
+  }
+  .btn-share:hover { transform: translateY(-3px) scale(1.02); box-shadow: 0 10px 30px rgba(59,130,246,0.5); }
+
+  /* ============ رقیب ============ */
+  .rival-box {
+    background: linear-gradient(135deg, rgba(59,130,246,0.15), rgba(29,161,242,0.08));
+    border: 1px solid rgba(59,130,246,0.35);
+    border-radius: 12px;
+    padding: 10px 14px;
+    margin-bottom: 12px;
+    font-size: 12px;
+    color: #93c5fd;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    backdrop-filter: blur(10px);
+  }
+  .rival-box strong { color: #fff; font-size: 14px; }
+
+  /* ============ مودال ============ */
+  .modal-overlay {
+    position: fixed; inset: 0;
+    background: rgba(5,10,20,0.85);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    padding: 20px;
+    animation: fadeIn 0.3s ease;
+  }
+  .modal-overlay.active { display: flex; }
+  .modal {
+    background: linear-gradient(135deg, #0a1929, #0d2818);
+    border: 1px solid rgba(74,222,128,0.3);
+    border-radius: 20px;
+    padding: 28px;
+    max-width: 380px;
+    width: 100%;
+    text-align: center;
+    box-shadow: 0 25px 80px rgba(0,0,0,0.6), 0 0 60px rgba(74,222,128,0.1);
+    animation: modalPop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  @keyframes modalPop {
+    from { opacity: 0; transform: scale(0.85); }
+    to { opacity: 1; transform: scale(1); }
+  }
+  .modal h3 { font-size: 20px; margin-bottom: 14px; color: #4ade80; font-weight: 900; }
+  .modal p { font-size: 13px; color: #ccc; margin-bottom: 15px; line-height: 1.8; }
+  .modal-btn {
+    background: linear-gradient(135deg, #4ade80, #22c55e);
+    color: #050a14;
+    border: none;
+    border-radius: 12px;
+    padding: 12px 24px;
+    font-family: inherit;
+    font-weight: 900;
+    font-size: 14px;
+    cursor: pointer;
+    margin: 5px;
+    transition: 0.25s;
+  }
+  .modal-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(74,222,128,0.4); }
+  .modal-btn.ghost {
+    background: none;
+    border: 1px solid #555;
+    color: #aaa;
+  }
+  .modal-btn.ghost:hover { background: rgba(255,255,255,0.05); box-shadow: none; }
+
+  /* ============ انتخاب کشور مدرن ============ */
+  .country-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 16px;
+    font-size: 14px;
+    color: #888;
+  }
+  .country-header strong { color: #4ade80; }
 </style>
 </head>
 <body>
+
+<!-- پس‌زمینه متحرک -->
+<div class="bg-orbs">
+  <div class="orb"></div>
+  <div class="orb"></div>
+  <div class="orb"></div>
+</div>
 
 <div class="game-wrap">
 
@@ -400,9 +635,12 @@
       <span>رکورد:</span>
       <span id="hudBest">0</span>
     </div>
+    <button class="sound-btn" id="soundBtn" title="صدا">🔊</button>
   </div>
 
-  <div class="hint" id="hint">👆 توپ رو بکش و به سمت دروازه شوت کن</div>
+  <div class="combo-display" id="comboDisplay"></div>
+
+  <div class="hint" id="hint">👆 توپ رو بگیر و بکش به سمت دروازه</div>
 
   <!-- صفحه انتخاب کشور -->
   <div class="screen" id="startScreen">
@@ -411,9 +649,18 @@
     <div class="brand-line">ساخته <a href="https://www.instagram.com/amirrezagholamiofficialpage/" target="_blank">امیررضا غلامی</a></div>
 
     <div class="best-score-box" id="bestBox" style="display:none;">
-      🏆 بهترین رکورد تو: <strong id="bestDisplay">0</strong> گل
+      🏆 بهترین رکورد: <strong id="bestDisplay">0</strong> گل
+      <br><span class="league-badge league-bronze" id="leagueBadge">لیگ برنز</span>
     </div>
 
+    <div class="rival-box" id="rivalBox" style="display:none;">
+      ⚔️ رقیب امروزت: <strong id="rivalName">—</strong> <span id="rivalFlag"></span>
+      <br>رکورد رقیب: <strong id="rivalScore">0</strong> گل
+    </div>
+
+    <div class="country-header">
+      <span>🌍 کشورت رو انتخاب کن</span>
+    </div>
     <div class="country-grid" id="countryGrid"></div>
 
     <button class="start-btn" id="startBtn" disabled>⚽ شروع بازی</button>
@@ -424,18 +671,33 @@
     <h2 id="goTitle">پایان بازی!</h2>
     <div class="score-big" id="goScore">0</div>
     <div class="score-label">گل زدی</div>
-    <div class="new-record" id="newRecord" style="display:none;">🎉 رکورد جدید!</div>
+    <div class="new-record" id="newRecord" style="display:none;">🎉 رکورد جدید زدی!</div>
     <div class="gameover-btns">
       <button class="btn-primary" id="playAgainBtn">🔄 دوباره بازی کن</button>
-      <button class="btn-share" id="shareBtn">📤 رکوردم رو به اشتراک بذار</button>
+      <button class="btn-share" id="shareBtn">📤 اشتراک‌گذاری رکورد</button>
       <button class="btn-secondary" id="changeCountryBtn">🌍 تغییر کشور</button>
     </div>
   </div>
 
 </div>
 
+<!-- مودال راهنما -->
+<div class="modal-overlay" id="tutorialModal">
+  <div class="modal">
+    <h3>🎮 چطور بازی کنم؟</h3>
+    <p>
+      1️⃣ توپ پایین صفحه رو بگیر<br>
+      2️⃣ بکش به سمت دروازه<br>
+      3️⃣ ولش کن تا شوت بشه ⚽<br>
+      4️⃣ هر گل = ۱ امتیاز<br>
+      5️⃣ کمبو = امتیاز بیشتر 🔥
+    </p>
+    <button class="modal-btn" id="tutorialClose">فهمیدم، بریم!</button>
+  </div>
+</div>
+
 <script>
-const VERSION = '3.0.0';
+const VERSION = '3.4.0';
 const SITE_URL = 'https://amirrezagholami86.github.io/coin-factory-game-1/';
 
 // ---- کشورها ----
@@ -459,17 +721,20 @@ const COUNTRIES = [
 ];
 
 const KEEPERS = ['🐱', '🐶', '🐸', '🦊', '🐼', '🐰', '🐨'];
+const RIVAL_NAMES = ['مسی کوچیک', 'رونالدو', 'نیمار', 'امباپه', 'صلاح', 'کین', 'مودریچ', 'لواندوفسکی'];
 
 // ---- وضعیت ----
 let state = {
   bestScore: 0,
   selectedCountry: null,
-  keeperType: '🐱',
+  soundOn: true,
+  tutorialSeen: false,
 };
 
 let game = null;
 let lastTime = 0;
 let animationFrame = null;
+let audioCtx = null;
 
 // ---- DOM ----
 const goalEl = document.getElementById('goal');
@@ -486,21 +751,82 @@ const countryGrid = document.getElementById('countryGrid');
 const startBtn = document.getElementById('startBtn');
 const bestBox = document.getElementById('bestBox');
 const bestDisplay = document.getElementById('bestDisplay');
+const comboDisplay = document.getElementById('comboDisplay');
+const soundBtn = document.getElementById('soundBtn');
+const rivalBox = document.getElementById('rivalBox');
+const rivalName = document.getElementById('rivalName');
+const rivalFlag = document.getElementById('rivalFlag');
+const rivalScoreEl = document.getElementById('rivalScore');
+const leagueBadge = document.getElementById('leagueBadge');
 
 // ---- ذخیره/بارگذاری ----
 function loadState() {
-  const saved = localStorage.getItem('goalestan_v3');
+  const saved = localStorage.getItem('goalestan_v34');
   if (saved) {
     try { state = Object.assign(state, JSON.parse(saved)); } catch(e) {}
   }
   if (state.bestScore > 0) {
     bestBox.style.display = 'block';
     bestDisplay.textContent = state.bestScore.toLocaleString('fa-IR');
+    updateLeagueBadge();
   }
   hudBest.textContent = state.bestScore.toLocaleString('fa-IR');
+  soundBtn.textContent = state.soundOn ? '🔊' : '🔇';
 }
 function saveState() {
-  localStorage.setItem('goalestan_v3', JSON.stringify(state));
+  localStorage.setItem('goalestan_v34', JSON.stringify(state));
+}
+
+function updateLeagueBadge() {
+  const s = state.bestScore;
+  let league = 'لیگ برنز', cls = 'league-bronze';
+  if (s >= 50) { league = 'لیگ الماس'; cls = 'league-diamond'; }
+  else if (s >= 30) { league = 'لیگ طلا'; cls = 'league-gold'; }
+  else if (s >= 15) { league = 'لیگ نقره'; cls = 'league-silver'; }
+  leagueBadge.textContent = league;
+  leagueBadge.className = 'league-badge ' + cls;
+}
+
+// ---- صدا با Web Audio ----
+function initAudio() {
+  if (!audioCtx) {
+    try { audioCtx = new (window.AudioContext || window.webkitAudioContext)(); } catch(e) {}
+  }
+  if (audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
+}
+
+function playTone(freq, duration, type = 'sine', volume = 0.15) {
+  if (!state.soundOn || !audioCtx) return;
+  try {
+    const osc = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+    osc.type = type;
+    osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+    gain.gain.setValueAtTime(volume, audioCtx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + duration);
+    osc.connect(gain);
+    gain.connect(audioCtx.destination);
+    osc.start();
+    osc.stop(audioCtx.currentTime + duration);
+  } catch(e) {}
+}
+
+function soundShoot() {
+  playTone(220, 0.15, 'square', 0.1);
+  setTimeout(() => playTone(330, 0.1, 'square', 0.08), 50);
+}
+function soundGoal() {
+  playTone(523, 0.15, 'sine', 0.15);
+  setTimeout(() => playTone(659, 0.15, 'sine', 0.15), 120);
+  setTimeout(() => playTone(784, 0.3, 'sine', 0.18), 240);
+}
+function soundMiss() {
+  playTone(300, 0.2, 'sawtooth', 0.1);
+  setTimeout(() => playTone(200, 0.3, 'sawtooth', 0.1), 120);
+}
+function soundCombo() {
+  playTone(880, 0.1, 'sine', 0.12);
+  setTimeout(() => playTone(1100, 0.15, 'sine', 0.12), 80);
 }
 
 // ---- رندر کشورها ----
@@ -521,20 +847,36 @@ function renderCountries() {
       startBtn.disabled = false;
       hudFlag.textContent = c.flag;
       hudCountry.textContent = c.name;
+      generateRival();
+      initAudio();
     };
     countryGrid.appendChild(btn);
   });
 }
 
+// ---- تولید رقیب ----
+function generateRival() {
+  const name = RIVAL_NAMES[Math.floor(Math.random() * RIVAL_NAMES.length)];
+  const country = COUNTRIES[Math.floor(Math.random() * COUNTRIES.length)];
+  const base = state.bestScore || 5;
+  const rivalScore = Math.max(3, Math.floor(base * (0.6 + Math.random() * 0.9)));
+  rivalBox.style.display = 'flex';
+  rivalName.textContent = name;
+  rivalFlag.textContent = country.flag;
+  rivalScoreEl.textContent = rivalScore.toLocaleString('fa-IR');
+  game && (game.rivalScore = rivalScore);
+  window._rivalScore = rivalScore;
+  window._rivalName = name;
+}
+
 // ---- شروع بازی ----
 function startGame() {
   if (!state.selectedCountry) return;
+  initAudio();
 
-  const rect = document.querySelector('.game-wrap').getBoundingClientRect();
+  const wrapRect = document.querySelector('.game-wrap').getBoundingClientRect();
   const goalRect = goalEl.getBoundingClientRect();
-  const wrapRect = rect;
 
-  // موقعیت دروازه نسبت به wrapper
   const goalLeft = goalRect.left - wrapRect.left;
   const goalTop = goalRect.top - wrapRect.top;
   const goalWidth = goalRect.width;
@@ -542,7 +884,10 @@ function startGame() {
 
   game = {
     score: 0,
+    combo: 0,
+    maxCombo: 0,
     isPlaying: true,
+    rivalScore: window._rivalScore || 0,
     ball: {
       x: wrapRect.width / 2,
       y: wrapRect.height * 0.85,
@@ -555,9 +900,10 @@ function startGame() {
       x: goalLeft + goalWidth / 2,
       y: goalTop + goalHeight - 30,
       direction: 1,
-      speed: 120, // px per second
+      speed: 120,
       minX: goalLeft + 30,
       maxX: goalLeft + goalWidth - 30,
+      smartLevel: 0,
     },
     goal: { left: goalLeft, top: goalTop, width: goalWidth, height: goalHeight },
     drag: { active: false, startX: 0, startY: 0, currentX: 0, currentY: 0 },
@@ -575,6 +921,7 @@ function startGame() {
   ballEl.style.top = (game.ball.y - 20) + 'px';
 
   hudScore.textContent = '0';
+  comboDisplay.classList.remove('show');
   hint.classList.remove('hidden');
   startScreen.classList.add('hidden');
   gameoverScreen.classList.remove('active');
@@ -613,13 +960,28 @@ function updateBall(dt) {
   b.x += b.vx * dt;
   b.y += b.vy * dt;
 
+  // چرخش توپ
+  const rot = (b.vx * dt + b.vy * dt) * 3;
+  ballEl.style.transform = `rotate(${rot}deg)`;
+
+  // هوش مصنوعی دروازه‌بان (پیش‌بینی)
+  if (game.keeper.smartLevel > 0 && Math.random() < 0.02 * game.keeper.smartLevel) {
+    const predictedX = b.x + b.vx * 0.15;
+    if (predictedX < game.keeper.x) game.keeper.direction = -1;
+    else game.keeper.direction = 1;
+    game.keeper.speed = 150 + game.score * 20;
+  }
+
   // برخورد با دروازه‌بان
   const k = game.keeper;
   const dx = b.x - k.x;
   const dy = b.y - k.y;
   const dist = Math.sqrt(dx*dx + dy*dy);
   if (dist < 45) {
-    // دروازه‌بان گرفت
+    soundMiss();
+    keeperEl.classList.add('diving');
+    setTimeout(() => keeperEl.classList.remove('diving'), 300);
+    game.combo = 0;
     endGame('گرفت! 🧤');
     return;
   }
@@ -631,38 +993,69 @@ function updateBall(dt) {
     return;
   }
 
-  // خارج از زمین
   if (b.y < -50 || b.x < -50 || b.x > game.wrapWidth + 50) {
+    soundMiss();
+    game.combo = 0;
     endGame('بیرون رفت! 😅');
     return;
   }
 
-  // هنوز توپ در حال حرکته - بروزرسانی
   ballEl.style.left = (b.x - 20) + 'px';
   ballEl.style.top = (b.y - 20) + 'px';
 }
 
 function scoreGoal() {
   game.score++;
+  game.combo++;
+  if (game.combo > game.maxCombo) game.maxCombo = game.combo;
   hudScore.textContent = game.score.toLocaleString('fa-IR');
+  soundGoal();
+
+  // ذرات
+  spawnParticles();
 
   // افکت گل
   const flash = document.createElement('div');
   flash.className = 'goal-flash';
   document.querySelector('.game-wrap').appendChild(flash);
-  setTimeout(() => flash.remove(), 600);
+  setTimeout(() => flash.remove(), 700);
 
   const gtext = document.createElement('div');
   gtext.className = 'goal-text';
   gtext.textContent = '⚽ گل!';
   document.querySelector('.game-wrap').appendChild(gtext);
-  setTimeout(() => gtext.remove(), 1000);
+  setTimeout(() => gtext.remove(), 1100);
 
-  // سرعت دروازه‌بان بیشتر می‌شه
-  game.keeper.speed = 120 + game.score * 25;
+  // کمبو
+  if (game.combo >= 2) {
+    comboDisplay.classList.add('show');
+    comboDisplay.textContent = `🔥 کمبو ×${game.combo}`;
+    soundCombo();
+  }
 
-  // ریست توپ
+  // دروازه‌بان سریع‌تر و باهوش‌تر
+  game.keeper.speed = 120 + game.score * 22;
+  game.keeper.smartLevel = Math.min(game.score / 5, 3);
+
   resetBall();
+}
+
+function spawnParticles() {
+  const wrap = document.querySelector('.game-wrap');
+  const colors = ['#fbbf24', '#4ade80', '#22c55e', '#f59e0b', '#fff'];
+  for (let i = 0; i < 15; i++) {
+    const p = document.createElement('div');
+    p.className = 'particle';
+    const angle = (Math.PI * 2 * i) / 15;
+    const dist = 80 + Math.random() * 120;
+    p.style.setProperty('--dx', Math.cos(angle) * dist + 'px');
+    p.style.setProperty('--dy', Math.sin(angle) * dist + 'px');
+    p.style.background = colors[Math.floor(Math.random() * colors.length)];
+    p.style.left = '50%';
+    p.style.top = '40%';
+    wrap.appendChild(p);
+    setTimeout(() => p.remove(), 1000);
+  }
 }
 
 function resetBall() {
@@ -674,6 +1067,7 @@ function resetBall() {
   b.isMoving = false;
   ballEl.style.left = (b.x - 20) + 'px';
   ballEl.style.top = (b.y - 20) + 'px';
+  ballEl.style.transform = 'rotate(0deg)';
   hint.classList.remove('hidden');
 }
 
@@ -687,6 +1081,7 @@ function endGame(reason) {
     state.bestScore = finalScore;
     saveState();
     hudBest.textContent = state.bestScore.toLocaleString('fa-IR');
+    updateLeagueBadge();
   }
 
   document.getElementById('goTitle').textContent = reason || 'پایان بازی!';
@@ -694,6 +1089,15 @@ function endGame(reason) {
   document.getElementById('newRecord').style.display = isNewRecord ? 'block' : 'none';
   gameoverScreen.classList.add('active');
   hint.classList.add('hidden');
+  comboDisplay.classList.remove('show');
+
+  if (game.rivalScore > 0) {
+    if (finalScore > game.rivalScore) {
+      setTimeout(() => {
+        alert(`🏆 رقیب رو شکست دادی!\nتو: ${finalScore} - ${window._rivalName}: ${game.rivalScore}`);
+      }, 300);
+    }
+  }
 }
 
 // ---- کشیدن توپ ----
@@ -718,6 +1122,7 @@ function handlePointerDown(e) {
     game.drag.currentX = pos.x;
     game.drag.currentY = pos.y;
     hint.classList.add('hidden');
+    initAudio();
     e.preventDefault();
   }
 }
@@ -739,7 +1144,7 @@ function handlePointerUp(e) {
   const dy = game.drag.startY - game.drag.currentY;
   const dist = Math.sqrt(dx*dx + dy*dy);
 
-  if (dist < 20) return; // خیلی کم کشیده
+  if (dist < 20) return;
 
   const power = Math.min(dist * 8, 1400);
   const angle = Math.atan2(dy, dx);
@@ -747,6 +1152,7 @@ function handlePointerUp(e) {
   b.vx = Math.cos(angle) * power;
   b.vy = Math.sin(angle) * power;
   b.isMoving = true;
+  soundShoot();
 
   e.preventDefault();
 }
@@ -762,11 +1168,23 @@ gameWrap.addEventListener('touchend', handlePointerUp, { passive: false });
 
 // ---- دکمه‌ها ----
 startBtn.onclick = () => {
+  if (!state.tutorialSeen) {
+    document.getElementById('tutorialModal').classList.add('active');
+    state.tutorialSeen = true;
+    saveState();
+  } else {
+    startGame();
+  }
+};
+
+document.getElementById('tutorialClose').onclick = () => {
+  document.getElementById('tutorialModal').classList.remove('active');
   startGame();
 };
 
 document.getElementById('playAgainBtn').onclick = () => {
   gameoverScreen.classList.remove('active');
+  generateRival();
   startGame();
 };
 
@@ -795,6 +1213,13 @@ document.getElementById('shareBtn').onclick = () => {
       alert('📋 متن کپی شد!');
     });
   }
+};
+
+soundBtn.onclick = () => {
+  state.soundOn = !state.soundOn;
+  soundBtn.textContent = state.soundOn ? '🔊' : '🔇';
+  saveState();
+  if (state.soundOn) initAudio();
 };
 
 // ---- شروع ----
