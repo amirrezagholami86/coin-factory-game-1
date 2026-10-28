@@ -30,17 +30,19 @@
     backdrop-filter: blur(10px);
   }
   h1 { font-size: 24px; margin-bottom: 8px; }
-  .brand {
-    font-size: 12px;
-    color: #888;
+  .brand { font-size: 12px; color: #888; margin-bottom: 6px; }
+  .brand a { color: #ffd700; text-decoration: none; font-weight: bold; }
+  .brand a:hover { text-decoration: underline; }
+  .version {
+    display: inline-block;
+    font-size: 10px;
+    color: #ffd700;
+    background: rgba(255,215,0,0.1);
+    border: 1px solid rgba(255,215,0,0.3);
+    border-radius: 20px;
+    padding: 2px 10px;
     margin-bottom: 15px;
   }
-  .brand a {
-    color: #ffd700;
-    text-decoration: none;
-    font-weight: bold;
-  }
-  .brand a:hover { text-decoration: underline; }
   .coins {
     font-size: 42px;
     font-weight: bold;
@@ -48,12 +50,29 @@
     margin: 15px 0;
     text-shadow: 0 0 20px rgba(255,215,0,0.4);
   }
-  .per-sec {
-    font-size: 14px;
-    color: #8f8;
-    margin-bottom: 20px;
-    min-height: 20px;
+  .per-sec { font-size: 14px; color: #8f8; margin-bottom: 10px; min-height: 20px; }
+
+  .buffs {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    min-height: 24px;
+    margin-bottom: 10px;
   }
+  .buff-badge {
+    font-size: 11px;
+    background: rgba(0,255,150,0.15);
+    border: 1px solid rgba(0,255,150,0.4);
+    color: #0f9;
+    padding: 3px 10px;
+    border-radius: 20px;
+    animation: pulse 1s infinite;
+  }
+  @keyframes pulse {
+    0%,100% { opacity: 1; }
+    50% { opacity: 0.6; }
+  }
+
   .click-btn {
     font-size: 80px;
     background: none;
@@ -66,10 +85,42 @@
   .click-btn:active { transform: scale(0.85); }
   .click-btn:hover { transform: scale(1.05); }
 
-  .upgrades {
-    margin-top: 25px;
-    text-align: right;
+  .special-btn {
+    display: none;
+    background: linear-gradient(135deg, #ff6b00, #ffd700);
+    color: #1a1a2e;
+    border: none;
+    border-radius: 12px;
+    padding: 10px 20px;
+    font-family: inherit;
+    font-weight: bold;
+    font-size: 14px;
+    cursor: pointer;
+    margin: 10px auto;
+    animation: glow 0.8s infinite;
   }
+  @keyframes glow {
+    0%,100% { box-shadow: 0 0 10px rgba(255,107,0,0.5); }
+    50% { box-shadow: 0 0 25px rgba(255,215,0,0.9); }
+  }
+
+  .ad-btn {
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,215,0,0.4);
+    color: #ffd700;
+    border-radius: 10px;
+    padding: 10px 15px;
+    font-family: inherit;
+    font-size: 13px;
+    cursor: pointer;
+    margin-top: 5px;
+    width: 100%;
+    transition: 0.2s;
+  }
+  .ad-btn:hover { background: rgba(255,215,0,0.15); }
+  .ad-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+  .upgrades { margin-top: 20px; text-align: right; }
   .upgrades h2 { font-size: 16px; margin-bottom: 12px; color: #aaa; }
   .upgrade {
     display: flex;
@@ -139,6 +190,81 @@
     from { opacity: 1; transform: translateY(0); }
     to { opacity: 0; transform: translateY(-80px); }
   }
+
+  /* مودال‌ها */
+  .modal-overlay {
+    position: fixed; inset: 0;
+    background: rgba(0,0,0,0.75);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    padding: 20px;
+  }
+  .modal-overlay.active { display: flex; }
+  .modal {
+    background: #1a1a2e;
+    border: 1px solid rgba(255,215,0,0.3);
+    border-radius: 16px;
+    padding: 25px;
+    max-width: 380px;
+    width: 100%;
+    text-align: center;
+  }
+  .modal h3 { font-size: 18px; margin-bottom: 12px; color: #ffd700; }
+  .modal p { font-size: 13px; color: #ccc; margin-bottom: 15px; line-height: 1.7; }
+  .modal-btn {
+    background: #ffd700;
+    color: #1a1a2e;
+    border: none;
+    border-radius: 10px;
+    padding: 10px 20px;
+    font-family: inherit;
+    font-weight: bold;
+    font-size: 14px;
+    cursor: pointer;
+    margin: 5px;
+  }
+  .modal-btn.ghost {
+    background: none;
+    border: 1px solid #555;
+    color: #aaa;
+  }
+  .ad-fake {
+    background: linear-gradient(135deg, #333, #555);
+    border-radius: 12px;
+    padding: 30px 15px;
+    margin: 15px 0;
+    color: #888;
+    font-size: 12px;
+  }
+
+  /* دستاوردها */
+  .achievements { margin-top: 20px; text-align: right; }
+  .achievements h2 { font-size: 16px; margin-bottom: 10px; color: #aaa; }
+  .ach-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: center;
+  }
+  .ach {
+    width: 44px; height: 44px;
+    display: flex; align-items: center; justify-content: center;
+    border-radius: 10px;
+    font-size: 20px;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    opacity: 0.3;
+    position: relative;
+    cursor: help;
+  }
+  .ach.unlocked {
+    opacity: 1;
+    background: rgba(255,215,0,0.15);
+    border-color: rgba(255,215,0,0.5);
+    box-shadow: 0 0 10px rgba(255,215,0,0.2);
+  }
 </style>
 </head>
 <body>
@@ -148,25 +274,61 @@
   <div class="brand">
     ساخته شده توسط <a href="https://github.com/amirrezagholami" target="_blank">amirrezagholami 1386</a>
   </div>
+  <div class="version">نسخه 1.2.0</div>
 
   <div class="coins" id="coins">0</div>
   <div class="per-sec" id="perSec"></div>
+  <div class="buffs" id="buffs"></div>
 
   <button class="click-btn" id="clickBtn">🪙</button>
+  <button class="special-btn" id="specialBtn">⚡ کلیک طوفانی! (۱۰ ثانیه)</button>
+
+  <button class="ad-btn" id="adBtn">📺 تماشای تبلیغ — جایزه ۵۰٪ سکه فعلی</button>
 
   <div class="upgrades">
     <h2>⚡ ارتقاها</h2>
     <div id="upgradeList"></div>
   </div>
 
+  <div class="achievements">
+    <h2>🏆 دستاوردها</h2>
+    <div class="ach-list" id="achList"></div>
+  </div>
+
   <button class="reset" id="resetBtn">🔄 شروع مجدد</button>
 
   <footer>
     © ۲۰۲۶ <a href="https://github.com/amirrezagholami" target="_blank">amirrezagholami 1386</a> — همه حقوق محفوظ است
+    <br><span style="font-size:10px;">نسخه 1.2.0</span>
   </footer>
 </div>
 
+<!-- مودال تبلیغ -->
+<div class="modal-overlay" id="adModal">
+  <div class="modal">
+    <h3>📺 تبلیغ</h3>
+    <div class="ad-fake">
+      فضای تبلیغات شما<br>
+      (بعداً به AdSense یا شبکه تبلیغاتی وصل می‌شه)
+    </div>
+    <p>تا <span id="adTimer">5</span> ثانیه دیگه جایزه می‌گیری...</p>
+    <button class="modal-btn" id="adClaim" disabled>دریافت جایزه</button>
+    <button class="modal-btn ghost" id="adClose">بستن</button>
+  </div>
+</div>
+
+<!-- مودال درآمد آفلاین -->
+<div class="modal-overlay" id="offlineModal">
+  <div class="modal">
+    <h3>💤 در مدتی که نبودی...</h3>
+    <p>کارخانه‌ات <strong id="offlineAmount" style="color:#ffd700; font-size:18px;">0</strong> سکه تولید کرد!</p>
+    <button class="modal-btn" id="offlineClaim">دریافت</button>
+  </div>
+</div>
+
 <script>
+const VERSION = '1.2.0';
+
 const UPGRADES = [
   { id: 'click',   name: '💪 قدرت کلیک',  desc: 'هر کلیک +1 سکه',    baseCost: 10,    effect: 1,   type: 'click' },
   { id: 'worker',  name: '👷 کارگر',      desc: '+1 سکه در ثانیه',   baseCost: 50,    effect: 1,   type: 'auto' },
@@ -175,13 +337,42 @@ const UPGRADES = [
   { id: 'robot',   name: '🤖 ربات',       desc: '+100 سکه در ثانیه', baseCost: 10000, effect: 100, type: 'auto' },
 ];
 
-let state = { coins: 0, clickPower: 1, owned: {} };
+const ACHIEVEMENTS = [
+  { id: 'first100',  icon: '🥉', name: 'اولین ۱۰۰ سکه',     check: s => s.coins >= 100,     reward: 50 },
+  { id: 'first1k',   icon: '🥈', name: '۱۰۰۰ سکه',          check: s => s.coins >= 1000,    reward: 200 },
+  { id: 'first10k',  icon: '🥇', name: '۱۰۰۰۰ سکه',         check: s => s.coins >= 10000,   reward: 1000 },
+  { id: 'worker1',   icon: '👷', name: 'اولین کارگر',       check: s => (s.owned.worker||0) >= 1,  reward: 100 },
+  { id: 'factory1',  icon: '🏭', name: 'اولین کارخانه',     check: s => (s.owned.factory||0) >= 1, reward: 500 },
+  { id: 'robot1',    icon: '🤖', name: 'اولین ربات',        check: s => (s.owned.robot||0) >= 1,   reward: 2000 },
+  { id: 'click100',  icon: '👆', name: '۱۰۰ کلیک',          check: s => s.totalClicks >= 100, reward: 100 },
+  { id: 'click1000', icon: '🖱️', name: '۱۰۰۰ کلیک',        check: s => s.totalClicks >= 1000, reward: 500 },
+  { id: 'ad5',       icon: '📺', name: '۵ تبلیغ دیده',     check: s => s.adsWatched >= 5, reward: 300 },
+];
+
+let state = {
+  coins: 0,
+  clickPower: 1,
+  owned: {},
+  unlockedAch: [],
+  totalClicks: 0,
+  adsWatched: 0,
+  lastSeen: Date.now(),
+  stormUntil: 0,     // زمان پایان کلیک طوفانی
+  adBuffUntil: 0,    // زمان پایان باف تبلیغ
+  nextStormAt: Date.now() + 60000,
+};
 
 function load() {
   const saved = localStorage.getItem('coinFactorySave');
-  if (saved) { try { state = JSON.parse(saved); } catch(e) {} }
+  if (saved) {
+    try {
+      const s = JSON.parse(saved);
+      state = Object.assign(state, s);
+    } catch(e) {}
+  }
 }
 function save() {
+  state.lastSeen = Date.now();
   localStorage.setItem('coinFactorySave', JSON.stringify(state));
 }
 function getPerSec() {
@@ -190,6 +381,12 @@ function getPerSec() {
     if (up.type === 'auto') total += (state.owned[up.id] || 0) * up.effect;
   }
   return total;
+}
+function getClickPower() {
+  let p = state.clickPower;
+  if (state.adBuffUntil > Date.now()) p *= 2;
+  if (state.stormUntil > Date.now()) p *= 10;
+  return p;
 }
 function getCost(up) {
   const count = state.owned[up.id] || 0;
@@ -201,6 +398,29 @@ function render() {
   const ps = getPerSec();
   document.getElementById('perSec').textContent = ps > 0 ? `+${ps.toLocaleString('fa-IR')} سکه در ثانیه` : '';
 
+  // باف‌ها
+  const buffs = [];
+  if (state.adBuffUntil > Date.now()) {
+    const s = Math.ceil((state.adBuffUntil - Date.now())/1000);
+    buffs.push(`<span class="buff-badge">📺 ۲× سکه (${s}s)</span>`);
+  }
+  if (state.stormUntil > Date.now()) {
+    const s = Math.ceil((state.stormUntil - Date.now())/1000);
+    buffs.push(`<span class="buff-badge">⚡ ۱۰× کلیک (${s}s)</span>`);
+  }
+  document.getElementById('buffs').innerHTML = buffs.join('');
+
+  // کلیک طوفانی
+  const stormBtn = document.getElementById('specialBtn');
+  if (state.stormUntil > Date.now()) {
+    stormBtn.style.display = 'none';
+  } else if (Date.now() >= state.nextStormAt) {
+    stormBtn.style.display = 'block';
+  } else {
+    stormBtn.style.display = 'none';
+  }
+
+  // ارتقاها
   const list = document.getElementById('upgradeList');
   list.innerHTML = '';
   for (const up of UPGRADES) {
@@ -222,6 +442,38 @@ function render() {
   list.querySelectorAll('.buy-btn').forEach(btn => {
     btn.onclick = () => buy(btn.dataset.id);
   });
+
+  // دستاوردها
+  const achList = document.getElementById('achList');
+  achList.innerHTML = '';
+  for (const a of ACHIEVEMENTS) {
+    const unlocked = state.unlockedAch.includes(a.id);
+    const div = document.createElement('div');
+    div.className = 'ach' + (unlocked ? ' unlocked' : '');
+    div.textContent = a.icon;
+    div.title = a.name + (unlocked ? ' ✓' : ' (قفل)');
+    achList.appendChild(div);
+  }
+}
+
+function checkAchievements() {
+  for (const a of ACHIEVEMENTS) {
+    if (state.unlockedAch.includes(a.id)) continue;
+    if (a.check(state)) {
+      state.unlockedAch.push(a.id);
+      state.coins += a.reward;
+      showToast(`🏆 دستاورد: ${a.name} +${a.reward} سکه`);
+    }
+  }
+}
+
+function showToast(msg) {
+  const t = document.createElement('div');
+  t.style.cssText = 'position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#ffd700;color:#1a1a2e;padding:10px 20px;border-radius:10px;font-weight:bold;font-size:13px;z-index:2000;box-shadow:0 4px 20px rgba(0,0,0,0.4);';
+  t.textContent = msg;
+  document.body.appendChild(t);
+  setTimeout(() => { t.style.transition='opacity 0.5s'; t.style.opacity='0'; }, 2000);
+  setTimeout(() => t.remove(), 2600);
 }
 
 function buy(id) {
@@ -233,38 +485,116 @@ function buy(id) {
   state.owned[id] = (state.owned[id] || 0) + 1;
   if (up.type === 'click') state.clickPower += up.effect;
   save();
+  checkAchievements();
   render();
 }
 
+// ---- کلیک ----
 document.getElementById('clickBtn').addEventListener('click', (e) => {
-  state.coins += state.clickPower;
+  const power = getClickPower();
+  state.coins += power;
+  state.totalClicks++;
+
   const f = document.createElement('div');
   f.className = 'float';
-  f.textContent = `+${state.clickPower}`;
+  f.textContent = `+${power}`;
   f.style.left = e.clientX - 15 + 'px';
   f.style.top = e.clientY - 20 + 'px';
   document.body.appendChild(f);
   setTimeout(() => f.remove(), 800);
+
   save();
+  checkAchievements();
   render();
 });
 
+// ---- کلیک طوفانی ----
+document.getElementById('specialBtn').addEventListener('click', () => {
+  state.stormUntil = Date.now() + 10000;
+  state.nextStormAt = Date.now() + 120000; // هر ۲ دقیقه
+  showToast('⚡ کلیک طوفانی فعال شد! ۱۰ ثانیه');
+  render();
+});
+
+// ---- تبلیغ ----
+let adInterval = null;
+document.getElementById('adBtn').addEventListener('click', () => {
+  const modal = document.getElementById('adModal');
+  const claim = document.getElementById('adClaim');
+  const timerEl = document.getElementById('adTimer');
+  let sec = 5;
+  timerEl.textContent = sec;
+  claim.disabled = true;
+  modal.classList.add('active');
+
+  adInterval = setInterval(() => {
+    sec--;
+    timerEl.textContent = sec;
+    if (sec <= 0) {
+      clearInterval(adInterval);
+      claim.disabled = false;
+    }
+  }, 1000);
+});
+
+document.getElementById('adClaim').addEventListener('click', () => {
+  const reward = Math.max(50, Math.floor(state.coins * 0.5));
+  state.coins += reward;
+  state.adsWatched++;
+  state.adBuffUntil = Date.now() + 30000;
+  document.getElementById('adModal').classList.remove('active');
+  showToast(`🎁 +${reward.toLocaleString('fa-IR')} سکه و ۲× برای ۳۰ ثانیه!`);
+  save();
+  checkAchievements();
+  render();
+});
+
+document.getElementById('adClose').addEventListener('click', () => {
+  clearInterval(adInterval);
+  document.getElementById('adModal').classList.remove('active');
+});
+
+// ---- درآمد آفلاین ----
+function checkOffline() {
+  const now = Date.now();
+  const diff = (now - (state.lastSeen || now)) / 1000; // ثانیه
+  if (diff < 60) return; // کمتر از ۱ دقیقه نادیده بگیر
+  const ps = getPerSec();
+  if (ps <= 0) return;
+  const earned = Math.floor(ps * Math.min(diff, 8 * 3600)); // حداکثر ۸ ساعت
+  if (earned < 1) return;
+
+  document.getElementById('offlineAmount').textContent = earned.toLocaleString('fa-IR');
+  document.getElementById('offlineModal').classList.add('active');
+  document.getElementById('offlineClaim').onclick = () => {
+    state.coins += earned;
+    document.getElementById('offlineModal').classList.remove('active');
+    save();
+    checkAchievements();
+    render();
+  };
+}
+
+// ---- حلقه بازی ----
 setInterval(() => {
   const ps = getPerSec();
-  if (ps > 0) { state.coins += ps; render(); }
+  if (ps > 0) { state.coins += ps; checkAchievements(); render(); }
 }, 1000);
 
 setInterval(save, 5000);
 
+// ---- ریست ----
 document.getElementById('resetBtn').addEventListener('click', () => {
   if (confirm('مطمئنی می‌خوای از اول شروع کنی؟')) {
     localStorage.removeItem('coinFactorySave');
-    state = { coins: 0, clickPower: 1, owned: {} };
-    render();
+    location.reload();
   }
 });
 
+// ---- شروع ----
 load();
+checkOffline();
+checkAchievements();
 render();
 </script>
 </body>
